@@ -1,0 +1,523 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip General Session Data API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: General Session Data
+  description: Retrieve session summaries and detailed session results from a test.
+paths:
+  /api/v2/sessionResults:
+    get:
+      description: "Returns a paginated list of summaries for each completed session in a test. Each summary includes the session ID, status, and timestamps. \n\n  In the response, sessions are sorted in descending order, i.e., from newest to oldest.\n  \n  _Compatibility:_\n  - All tests with the \"STUDYV2\" type are compatible. These include tests with the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test) \n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n  \n  _Best practices:_\n  - Always use pagination query parameters (_limit_ and _offset_) along with the appropriate logic to ensure all sessions are retrieved.\n  - Use the response data from _limit_, _offset_, and _totalCount_ in the _meta.pagination_ property to calculate the number of pagination iterations (API requests) needed to collect all sessions in the test.\n  \n  _Use case examples:_\n  - For an example on near real-time polling, go to [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira).\n  - For an example on how to add session summaries into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n  "
+      operationId: SessionResultsController_getSessionSummaryResults
+      parameters:
+      - name: testId
+        required: true
+        in: query
+        description: ID of the test containing the sessions.
+        schema:
+          format: uuid
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of sessions to return in the result set.
+        schema:
+          minimum: 1
+          maximum: 500
+          default: 25
+          example: 25
+          type: number
+      - name: offset
+        required: false
+        in: query
+        description: Number of sessions to skip before starting to collect the result set.
+        schema:
+          minimum: 0
+          maximum: 10000
+          default: 0
+          example: 0
+          type: number
+      responses:
+        '200':
+          description: Session summaries successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionSummaryResultsResponseDto'
+        '400':
+          description: Bad request. The offset must be between 0-10000 and limit must be between 1-500.
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Test not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all sessions in a test
+      tags:
+      - General Session Data
+  /api/v3/sessionResults/{sessionId}:
+    get:
+      description: "Returns detailed information about a session, including participant demographics, task-group metadata, and individual task responses.\n\n  _Compatibility:_\n  - All sessions found within tests with the \"STUDYV2\" type are compatible. These include tests from the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test)\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Use case examples:_\n  - For an example on how to understand and model session-level details and participant demographics, go to [Model Session Details & Demographics](https://developer.usertesting.com/v2.0/docs/understand-and-model-session-details-demographics).\n  - For an example on how to add session details into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n  - For an example on near real-time polling, go to [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira)."
+      operationId: SessionResultsV3Controller_getSessionResults
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Session details successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResultsV3ResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Session not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Retrieve session details (v3)
+      tags:
+      - General Session Data
+components:
+  schemas:
+    SessionSummaryResultsMetaDto:
+      type: object
+      properties:
+        pagination:
+          description: Pagination metadata for the response.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryPaginationDto'
+      required:
+      - pagination
+    SessionSummaryPaginationDto:
+      type: object
+      properties:
+        limit:
+          type: number
+          description: Maximum number of sessions returned in the result set.
+          example: 25
+        offset:
+          type: number
+          description: Number of sessions skipped before starting to collect the result set.
+          example: 0
+        totalCount:
+          type: number
+          description: Total number of sessions within the test.
+          example: 1
+      required:
+      - limit
+      - offset
+      - totalCount
+    TaskGroupResponseQxScoreDto:
+      type: object
+      properties:
+        score:
+          type: number
+          description: The participant's QXscore (0-100).
+          example: 85
+      required:
+      - score
+    TaskResponseDataDto:
+      type: object
+      properties:
+        startTimeMs:
+          type: number
+          description: Task start time (ms since session start).
+          example: 15000
+        endTimeMs:
+          type: number
+          description: Task end time (ms since session start).
+          example: 20000
+        skipped:
+          type: boolean
+          description: Whether the participant skipped the task.
+          example: false
+        answer:
+          description: Task-type-specific answer payload.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/TaskAnswerDto'
+      required:
+      - startTimeMs
+      - endTimeMs
+      - skipped
+      - answer
+    SessionSummaryResultItemDto:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: ID of the session.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f5751596ec
+        audienceId:
+          type: string
+          description: Identifier of the audience that the session participant belongs to. Null if session has no assigned audience.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+          nullable: true
+        status:
+          type: string
+          description: Session completion status.
+          example: COMPLETE
+        startTime:
+          type: string
+          description: Timestamp representing when the session started. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:23:52.614Z'
+          format: date-time
+        finishTime:
+          type: string
+          description: Timestamp representing when the session finished. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:25:03.347Z'
+          format: date-time
+          nullable: true
+      required:
+      - sessionId
+      - status
+      - startTime
+    SessionResultsV3ResponseDto:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: ID of the session.
+          format: uuid
+          example: f3c00502-256d-4693-b1b3-7dbd7eb64ca9
+          nullable: true
+        audienceId:
+          type: string
+          description: ID of the audience.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+          nullable: true
+        testPlanId:
+          type: string
+          description: ID of the test plan.
+          format: uuid
+          example: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+          nullable: true
+        sessionParticipant:
+          description: Participant ID and their demographic information.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SessionParticipantDto'
+        taskGroups:
+          description: List of task groups and their responses. May be empty if the session has no task groups.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskGroupItemDto'
+        tasks:
+          description: List of individual tasks and their responses. May be empty if the session has no tasks.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskItemDto'
+      required:
+      - sessionId
+      - audienceId
+      - testPlanId
+      - sessionParticipant
+      - taskGroups
+      - tasks
+    SessionParticipantDto:
+      type: object
+      properties:
+        participantId:
+          type: string
+          description: ID of the participant.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+          nullable: true
+        demographicsInfo:
+          description: Demographic questions and answers.
+          type: array
+          items:
+            $ref: '#/components/schemas/DemographicInfoDto'
+      required:
+      - participantId
+      - demographicsInfo
+    TaskGroupResponseBalancedComparisonDto:
+      type: object
+      properties:
+        sequence:
+          type: string
+          description: Order in which the participant saw the comparison groups.
+          example: BA
+      required:
+      - sequence
+    TaskItemDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the task.
+          format: uuid
+          example: 12debc51-0948-4d2e-9abe-9844ddd5c5ff
+        text:
+          type: string
+          description: Task prompt text.
+          example: Rate Website A
+        type:
+          type: string
+          description: "Type of the task.\n  \n  - BLANK: Simple placeholder task. Baseline for test creation.\n  - RATING_SCALE: Likert-style rating scales.\n  - MULTIPLE_CHOICE: Supports single-select and multi-select options. Includes multiSelect, randomizedOptions, and maxLimit metadata when available.\n  - IMAGE: Displays an image in the study. Common in survey-style workflows.\n  - NPS: Captures Net Promoter Score (0-10).\n  - URL: Opens an external URL.\n  - RANK_ORDER: Users rank options (for example: Chocolate, Strawberry, Vanilla, Mint Chocolate).\n  - WRITTEN: Captures spoken responses (think-aloud).\n  - FIGMA: Embeds interactive Figma prototypes. Metadata includes prototypeUrl, figmaPrototypeTitle, and figmaPrototypeDisplaySetting.\n  - MATRIX: Grid-style question for rating multiple items."
+          enum:
+          - BLANK
+          - RATING_SCALE
+          - MULTIPLE_CHOICE
+          - IMAGE
+          - NPS
+          - URL
+          - RANK_ORDER
+          - WRITTEN
+          - FIGMA
+          - MATRIX
+          - UNRECOGNIZED
+          example: RATING_SCALE
+        response:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/TaskResponseDataDto'
+      required:
+      - uuid
+      - text
+      - type
+      - response
+    SessionSummaryResultsResponseDto:
+      type: object
+      properties:
+        testId:
+          type: string
+          description: ID of the test queried for session summaries.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        sessions:
+          description: Collection of session summaries.
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionSummaryResultItemDto'
+        meta:
+          description: Response metadata.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryResultsMetaDto'
+      required:
+      - testId
+      - sessions
+      - meta
+    DemographicInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the demographic question.
+          example: 3f1b8c2e-9a44-4c3d-b8b7-1a7f4c0a9d21
+          nullable: true
+        code:
+          type: string
+          description: 'Code or key identifying the demographic question category. For example: GENDER, AGE_GROUP, INTERESTS, or INCOME.'
+          example: GENDER
+          nullable: true
+        label:
+          type: string
+          description: Human-readable label for the demographic question.
+          example: What is your gender?
+          nullable: true
+        value:
+          type: string
+          description: Answer(s) selected by the participant. Multiple values are separated by commas.
+          example: Male
+          nullable: true
+        type:
+          type: string
+          description: The question choice type. For example, single or multiple choice.
+          example: DEMOGRAPHIC_QUESTION_TYPE_SINGLE
+          enum:
+          - DEMOGRAPHIC_QUESTION_TYPE_SINGLE
+          - DEMOGRAPHIC_QUESTION_TYPE_MULTIPLE
+          - UNRECOGNIZED
+          nullable: true
+      required:
+      - id
+      - code
+      - label
+      - value
+      - type
+    TaskAnswerDto:
+      type: object
+      properties:
+        blank:
+          type: object
+          nullable: true
+          description: Simple placeholder task. Baseline for test creation.
+        ratingScale:
+          type: object
+          nullable: true
+          description: Likert-style rating scales.
+        multipleChoice:
+          type: object
+          nullable: true
+          description: Supports single-select and multi-select options. Includes multiSelect, randomizedOptions, and maxLimit metadata when available.
+        image:
+          type: object
+          nullable: true
+          description: Displays an image in the study. Common in survey-style workflows.
+        nps:
+          type: object
+          nullable: true
+          description: Captures Net Promoter Score (0-10).
+        url:
+          type: object
+          nullable: true
+          description: Opens an external URL.
+        rankOrder:
+          type: object
+          nullable: true
+          description: 'Users rank options (for example: Chocolate, Strawberry, Vanilla, Mint Chocolate).'
+        written:
+          type: object
+          nullable: true
+          description: Captures spoken responses (think-aloud).
+        figma:
+          type: object
+          nullable: true
+          description: Embeds interactive Figma prototypes. Metadata includes prototypeUrl, figmaPrototypeTitle, and figmaPrototypeDisplaySetting.
+        matrix:
+          type: object
+          nullable: true
+          description: Grid-style question for rating multiple items.
+    TaskGroupItemDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the task group.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        type:
+          type: string
+          description: Type of the task group.
+          enum:
+          - QX_SCORE
+          - BALANCED_COMPARISON
+          - UNRECOGNIZED
+          example: QX_SCORE
+        response:
+          description: "Type-specific response payload. Shape is determined by \"type\": \n  - QX_SCORE → { score }\n  - BALANCED_COMPARISON → { sequence }."
+          oneOf:
+          - $ref: '#/components/schemas/TaskGroupResponseQxScoreDto'
+          - $ref: '#/components/schemas/TaskGroupResponseBalancedComparisonDto'
+          nullable: true
+      required:
+      - uuid
+      - type
+      - response
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.

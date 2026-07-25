@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip Session API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: Session
+paths:
+  /v1/session/{sessionUuid}:
+    get:
+      description: "Returns session metadata. \n\nA session is an individual participant taking a test (also known as a launched study)."
+      parameters:
+      - description: '[UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for.'
+        in: path
+        name: sessionUuid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve session metadata
+      tags:
+      - Session
+components:
+  schemas:
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    Session:
+      properties:
+        duration:
+          description: Duration of the session in seconds.
+          type: number
+          example: 245.5
+        notes:
+          description: The note which the session creator provided
+          type: string
+          example: Participant hesitated at checkout.
+        securePoster:
+          description: Poster image of the video session
+          type: string
+          example: https://cdn.usertesting.com/posters/session_123.jpg
+        sequenceNumber:
+          description: Sequence number for the session
+          type: integer
+          example: 1
+        sessionId:
+          description: Internal session identifier in UserTesting systems.
+          type: string
+          example: '15280'
+        stateUpdatedAt:
+          description: Timestamp when the session state was last updated (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T15:01:07Z'
+        title:
+          description: Title of session
+          type: string
+          example: Participant 1 Session
+        uid:
+          description: External UUID used to identify this session in API requests.
+          type: string
+          example: 3339d946-3b60-4f09-8433-a2a7598d5d26
+      type: object
+      example:
+        duration: 245.5
+        notes: Participant hesitated at checkout.
+        securePoster: https://cdn.usertesting.com/posters/session_123.jpg
+        sequenceNumber: 1
+        sessionId: '15280'
+        stateUpdatedAt: '2024-05-01T15:01:07Z'
+        title: Participant 1 Session
+        uid: 3339d946-3b60-4f09-8433-a2a7598d5d26
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.

@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip Highlightreel API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: Highlightreel
+paths:
+  /v1/highlightreel/{highlightReelToken}:
+    get:
+      description: "Highlight Reel API allows you to build rich previews and embed highlight reels in your solutions. \n\nA highlight reel is a curated selection of video clips UserTesting customers have created. Highlight reels can include multiple clips from the same test or clips from multiple tests. Customers use highlight reels to show common responses and essential feedback from end users.\nHighlight Reel API returns a highlight reel that can be displayed within an iframe, employing the UserTesting video player as well as additional metadata to let you create previews and unfurl highlight reels in your applications."
+      parameters:
+      - description: '[Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for.'
+        in: path
+        name: highlightReelToken
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Highlightreel'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve a highlight reel with clips
+      tags:
+      - Highlightreel
+components:
+  schemas:
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    HighlightreelClipNode:
+      properties:
+        duration:
+          description: Clip duration
+          type: number
+          example: 18.5
+        id:
+          description: Unique id of clip which belongs to highlight reel. Value not returned due to security constraints
+          type: string
+          example: clip_123
+        securePosterFullUrl:
+          description: Video thumbnail URL. Value not returned due to security constraints
+          type: string
+          example: https://cdn.usertesting.com/posters/clip_123.jpg
+        url:
+          description: URL to access or play the clip resource.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+      type: object
+      example:
+        duration: 18.5
+        id: clip_123
+        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+    Highlightreel:
+      properties:
+        clips:
+          properties:
+            nodes:
+              items:
+                $ref: '#/components/schemas/HighlightreelClipNode'
+              type: array
+              description: Clip items included in the highlight reel.
+              example:
+              - duration: 18.5
+                id: clip_123
+                securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+                url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+            totalCount:
+              description: Number of clips included in the highlight reel
+              type: integer
+              example: 1
+          type: object
+          description: Collection metadata for the clips included in the highlight reel.
+          example:
+            nodes:
+            - duration: 18.5
+              id: clip_123
+              securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+              url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+            totalCount: 1
+        createdAt:
+          description: Timestamp when the highlight reel was created (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T14:32:18Z'
+        duration:
+          description: Total playback duration of all clips in the highlight reel, in seconds.
+          type: number
+          example: 18.5
+        editUrlPath:
+          description: URL for the highlight reel within UserTesting App
+          type: string
+          example: /highlightreels/reel_123/edit
+        id:
+          description: Unique Identifier of this highlight reel within UserTesting systems. Note - This is not UUID
+          type: string
+          example: reel_123
+        shareUrl:
+          description: Shareable URL with parameters required for proper highlight reel playback.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/share
+        title:
+          description: The name of the highlight reel
+          type: string
+          example: Key Checkout Moments
+        token:
+          description: Token associated with the highlight reel
+          type: string
+          example: b4be664ea2d54f56a455
+        updatedAt:
+          description: Timestamp when the highlight reel was last updated (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T15:01:07Z'
+      type: object
+      example:
+        clips:
+          nodes:
+          - duration: 18.5
+            id: clip_123
+            securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+            url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+          totalCount: 1
+        createdAt: '2024-05-01T14:32:18Z'
+        duration: 18.5
+        editUrlPath: /highlightreels/reel_123/edit
+        id: reel_123
+        shareUrl: https://app.usertesting.com/highlightreels/reel_123/share
+        title: Key Checkout Moments
+        token: b4be664ea2d54f56a455
+        updatedAt: '2024-05-01T15:01:07Z'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.

@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip Workspaces API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: Workspaces
+paths:
+  /v1/workspaces/{workspaceUuid}:
+    get:
+      description: 'Fetch all studies (tests) in a workspace identified by UUID. Returns summary information for each study including title, UUID, creation date, and the user who created it. The response returns up to 50 studies per page. Use pagination with cursor for large workspaces.
+
+
+        **Note**: When using this endpoint to retrieve v2 compatible studies, keep in mind that _studies_ are referred to as _tests_ in both the UserTesting Platform and in the v2 API.'
+      parameters:
+      - description: The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces).
+        in: path
+        name: workspaceUuid
+        required: true
+        schema:
+          type: string
+      - description: Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the next 50 results following the indicated study.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the 50 results preceding the indicated study.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WorkspaceStudy'
+                type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: List studies in a workspace
+      tags:
+      - Workspaces
+  /v1/workspaces:
+    get:
+      description: Returns all workspaces that the authenticated user has access to. In UserTesting Platform, workspaces organize teams and control access to resources across projects. Tests, drafts, templates, and highlight reels belong to one or more workspaces. A user must have workspace access to view those resources.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Workspace'
+                type: array
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: List all accessible workspaces
+      tags:
+      - Workspaces
+components:
+  schemas:
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    WorkspaceStudy:
+      properties:
+        cursor:
+          description: Pagination cursor for this study entry.
+          type: string
+          example: MQ
+        orderedAt:
+          description: Timestamp when the study was ordered or created in the workspace (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2023-11-30T11:07:16Z'
+        orderedBy:
+          properties:
+            email:
+              type: string
+              description: Email of the user who ordered or created the study.
+              example: support@usertesting.com
+            name:
+              type: string
+              description: Name of the user who ordered or created the study.
+              example: UT Employee
+          type: object
+          description: User information for the person who ordered or created the study.
+          example:
+            email: support@usertesting.com
+            name: UT Employee
+        productType:
+          type: string
+          description: Describes the product/business category of the study — what kind of research it is. It determines behavior like recording settings, test plan requirements, and audience configuration. Also indicates API endpoint version compatibility. For example:<br/>INSIGHT_CORE – the default for classic studies/tests (v1)<br/>PRODUCT_INSIGHT – product-focused quick test (v1)<br/>MARKET_INSIGHT – market research-focused test (v1)<br/>THINK_OUT_LOUD – screen+audio recorded, no webcam (v2)<br/>LIVE_CONVERSATION – live moderated session (v2)<br/>NON_THINK_OUT_LOUD – unmoderated without think-aloud (v2)<br/>STUDY_VIDEO_UPLOAD – uploaded video study (not API accessible)
+          example: insight_core
+        title:
+          type: string
+          description: Human-readable title of the study.
+          example: ACME Test
+        type:
+          type: string
+          description: 'Describes the technical format / delivery mechanism of the study — how the test is conducted. Also used to indicate API endpoint version compatibility. For example: <br/>WEB – browser-based website test (v1)<br/>APP – mobile application test (v1)<br/>LIVE – live moderated conversation (v1)<br/>PROTOTYPE – clickable prototype test (v1)<br/>EXTERNAL_UPLOAD – externally recorded video uploaded into the platform<br/>STUDYV2 – newer study/test format (v2 & v3)<br/>STUDY_VIDEO_UPLOAD – uploaded video study (not API accessible)'
+          example: web
+        uuid:
+          type: string
+          description: Unique UUID of the study (test).
+          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
+      type: object
+      example:
+        cursor: MQ
+        orderedAt: '2023-11-30T11:07:16Z'
+        orderedBy:
+          email: support@usertesting.com
+          name: UT Employee
+        productType: insight_core
+        title: ACME Test
+        type: web
+        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
+    Workspace:
+      properties:
+        id:
+          description: Unique ID of the workspace.
+          type: string
+          example: '12345'
+        name:
+          description: Name of the workspace.
+          type: string
+          example: Research Team Workspace
+        uuid:
+          description: Unique UUID of the workspace.
+          type: string
+          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
+      type: object
+      example:
+        id: '12345'
+        name: Research Team Workspace
+        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.

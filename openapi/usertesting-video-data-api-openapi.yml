@@ -1,0 +1,767 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip Video Data API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: Video Data
+  description: Access session video data, including transcripts, video download links, clips, and highlight reels.
+paths:
+  /api/v2/sessionResults/{sessionId}/clips/{clipUuid}:
+    get:
+      description: "Returns the details of a clip and a link to download it.\n\nIf the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      operationId: SessionResultsController_getClipDetails
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session that contains the clip.
+        schema:
+          format: uuid
+          type: string
+      - name: clipUuid
+        required: true
+        in: path
+        description: ID of the clip you want to download.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Clip details successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClipDetailsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Clip not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a clip download link
+      tags:
+      - Video Data
+  /api/v2/sessionResults/{sessionId}/clips:
+    get:
+      description: "Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      operationId: SessionResultsController_getClips
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session whose video clips you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Clips successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClipsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Session video or clips not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all clips for a session video
+      tags:
+      - Video Data
+  /api/v2/sessionResults/{sessionId}/transcript:
+    get:
+      description: "Returns the video transcript of a test session in [Web Video Text Tracks (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format) format.\n    \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Best practices:_\n  - If needed, you can copy and paste the string and save it as a text file with the VTT extension.\n  \n  _Use case examples:_\n  - For an example on how to run AI analysis on transcripts with an LLM, go to [Generate Video Transcript Analysis](https://developer.usertesting.com/v2.0/docs/video-transcript-analysis).\n  - For an example of how to add transcripts into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial)."
+      operationId: SessionResultsController_getTranscriptVtt
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the test session that contains the video transcript you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Transcript returned in WebVTT format.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+            Accept-Ranges:
+              description: Indicates that the resource supports range requests.
+              schema:
+                type: string
+                example: bytes
+          content:
+            text/vtt:
+              schema:
+                type: string
+                format: WebVTT
+                example: 'WEBVTT
+
+
+                  00:00:00.000 --> 00:00:02.000
+
+                  Hello, World!
+
+
+                  00:00:02.000 --> 00:00:04.000
+
+                  This is a VTT example'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Transcript not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Retrieve a video transcript
+      tags:
+      - Video Data
+  /api/v2/sessionResults/{sessionId}/videoDownloadUrl:
+    get:
+      description: "Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.\n  \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Use case examples:_\n  - For an example on how to securely download and manage session videos at scale using pre-signed URLs, go to [Process Session Videos at Scale](https://developer.usertesting.com/v2.0/docs/download-and-manage-session-videos-at-scale).\n  - For an example on how to integrate video downloads into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n\n  "
+      operationId: SessionResultsController_getVideoDownloadUrl
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the test session the video you want to retrieve belongs to.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Video download URL successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoDownloadResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Video not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a video download link
+      tags:
+      - Video Data
+  /api/v2/testResults/{testId}/highlightreels:
+    get:
+      description: "Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Notes:_\n  - Use the returned highlight reel ID to request highlight reel download link from the \"GET /api/v2/testResults/{testId}/highlightreels/{reelId}\" endpoint."
+      operationId: TestResultsController_getHighlightReels
+      parameters:
+      - name: testId
+        required: true
+        in: path
+        description: ID of the test whose highlight reels you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Highlight reels successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HighlightReelsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Test or highlight reels not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all highlight reels for a test
+      tags:
+      - Video Data
+  /api/v2/testResults/{testId}/highlightreels/{reelId}:
+    get:
+      description: "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      operationId: TestResultsController_getReelDetails
+      parameters:
+      - name: testId
+        required: true
+        in: path
+        description: ID of the test the highlight reel belongs to.
+        schema:
+          format: uuid
+          type: string
+      - name: reelId
+        required: true
+        in: path
+        description: ID of the highlight reel you want to download.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Highlight reel details successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReelDetailsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Highlight reel not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a highlight reel download link
+      tags:
+      - Video Data
+components:
+  schemas:
+    ReelDetailsResponseDto:
+      type: object
+      properties:
+        reelId:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        status:
+          type: string
+          description: 'Current state of the highlight reel.
+
+            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        reelUrl:
+          type: string
+          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          nullable: true
+          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - reelId
+      - status
+    HighlightReelDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        name:
+          type: string
+          description: Name of the highlight reel.
+          example: Checkout highlights
+        durationMs:
+          type: number
+          description: Highlight reel duration in milliseconds.
+          example: 120000
+        lastUpdatedAtMs:
+          type: number
+          description: Timestamp of the last highlight reel update in milliseconds.
+          example: 1766051123000
+        numClips:
+          type: number
+          description: Number of clips in the highlight reel.
+          example: 4
+        areAllClipsInReel:
+          type: boolean
+          description: Indicates whether all study clips are included in the reel.
+          example: true
+      required:
+      - uuid
+      - name
+      - durationMs
+      - lastUpdatedAtMs
+      - numClips
+      - areAllClipsInReel
+    ClipDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the clip.
+          format: uuid
+          example: a0ff28a2-020b-4944-ab5a-ba035269641e
+        name:
+          type: string
+          description: Name of the clip.
+          example: 'Clip #1'
+        description:
+          type: string
+          description: Description of the clip.
+          example: Maurice's awesome review
+        timeStartMs:
+          type: number
+          description: Clip start time in milliseconds from the session start.
+          example: 3708
+        timeEndMs:
+          type: number
+          description: Clip end time in milliseconds from the session start.
+          example: 33708
+        videoUuid:
+          type: string
+          description: ID of the video session that contains the clip.
+          format: uuid
+          example: 5a1d8707-0cf1-47d4-86f3-7c7b8722921d
+        hasAudio:
+          type: boolean
+          description: Indicates whether the clip has audio.
+          example: true
+        hasCamera:
+          type: boolean
+          description: Indicates whether the clip has camera video.
+          example: false
+        layout:
+          description: Playback layout for the clip.
+          allOf:
+          - $ref: '#/components/schemas/ClipLayoutDto'
+      required:
+      - uuid
+      - name
+      - timeStartMs
+      - timeEndMs
+      - videoUuid
+      - hasAudio
+      - hasCamera
+    ClipVideoRegionsDto:
+      type: object
+      properties:
+        screen:
+          description: Screen video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+        camera:
+          description: Camera video region, when present.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+    HighlightReelsResponseDto:
+      type: object
+      properties:
+        reels:
+          description: Highlight reels available for the study.
+          type: array
+          items:
+            $ref: '#/components/schemas/HighlightReelDto'
+        studyWithClips:
+          type: boolean
+          description: Indicates whether the study has clips available.
+          example: true
+      required:
+      - reels
+      - studyWithClips
+    ClipPointDto:
+      type: object
+      properties:
+        x:
+          type: number
+          description: Horizontal coordinate in pixels.
+          example: 0
+        y:
+          type: number
+          description: Vertical coordinate in pixels.
+          example: 0
+      required:
+      - x
+      - y
+    RegionType:
+      type: string
+      enum:
+      - SCREEN
+      - CAMERA
+      description: Primary stream shown for the clip.
+    ClipVideoRegionDto:
+      type: object
+      properties:
+        topLeftPoint:
+          description: Top-left point of the video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipPointDto'
+        widthPx:
+          type: number
+          description: Video region width in pixels.
+          example: 1920
+        heightPx:
+          type: number
+          description: Video region height in pixels.
+          example: 1080
+      required:
+      - widthPx
+      - heightPx
+    ClipDetailsResponseDto:
+      type: object
+      properties:
+        clipUuid:
+          type: string
+          description: ID of the clip.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+        status:
+          type: string
+          description: 'Current state of the clip.
+
+            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        clipUrl:
+          type: string
+          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          nullable: true
+          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - clipUuid
+      - status
+    ClipsResponseDto:
+      type: object
+      properties:
+        studyUuid:
+          type: string
+          description: ID of the test associated with the clip list.
+          format: uuid
+          example: e320c95c-2741-49bc-9e04-37b77d6fece3
+        clips:
+          description: Clips available for the session video.
+          type: array
+          items:
+            $ref: '#/components/schemas/ClipDto'
+        videoRegions:
+          description: Screen and camera video regions for the session video.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+      required:
+      - studyUuid
+      - clips
+    ClipLayoutDto:
+      type: object
+      properties:
+        mainStream:
+          description: Primary stream shown for the clip.
+          example: SCREEN
+          allOf:
+          - $ref: '#/components/schemas/RegionType'
+        pipPosition:
+          description: Picture-in-picture position.
+          example: BOTTOM_RIGHT
+          allOf:
+          - $ref: '#/components/schemas/PipPositionType'
+        pipState:
+          description: Picture-in-picture state.
+          example: OPENED
+          allOf:
+          - $ref: '#/components/schemas/PipStateType'
+      required:
+      - mainStream
+      - pipPosition
+      - pipState
+    VideoDownloadResponseDto:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          description: Pre-signed URL to download the video file. Valid for one hour.
+          format: url
+          example: https://mock-bucket.s3.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000/session.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+        sessionId:
+          type: string
+          description: ID of the Interaction test session the video corresponds to.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        expiresAt:
+          format: date-time
+          type: string
+          description: Expiration timestamp of the video download URL. UTC time. ISO 8601 format.
+          example: '2025-10-01T12:00:00Z'
+      required:
+      - videoUrl
+      - sessionId
+      - expiresAt
+    PipPositionType:
+      type: string
+      enum:
+      - TOP_LEFT
+      - TOP_RIGHT
+      - BOTTOM_LEFT
+      - BOTTOM_RIGHT
+      description: Picture-in-picture position.
+    PipStateType:
+      type: string
+      enum:
+      - OPENED
+      - CLOSED
+      description: Picture-in-picture state.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.

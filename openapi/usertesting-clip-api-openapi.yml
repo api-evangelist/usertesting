@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1) Clip API
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+security:
+- bearerAuth: []
+tags:
+- name: Clip
+paths:
+  /v1/clip/{clipUuid}:
+    get:
+      description: "Clip API allows you to build rich previews and embed clips containing meaningful insights in your solutions. \n\nThe endpoint returns an embeddable video player link and metadata for a single clip."
+      parameters:
+      - description: '[UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for.'
+        in: path
+        name: clipUuid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clip'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve a video clip
+      tags:
+      - Clip
+components:
+  schemas:
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    Clip:
+      properties:
+        createdAt:
+          description: Timestamp when the clip was created (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T14:32:18Z'
+        duration:
+          description: Length of clip in seconds
+          type: integer
+          example: 27
+        embeddableUrl:
+          description: URL including parameters that will allow the video player to render content properly
+          type: string
+          example: https://app.usertesting.com/player/clip/3339d946-3b60-4f09-8433-a2a7598d5d26?embed=true
+        isImportant:
+          description: Priority assigned to the clip by the creator
+          type: boolean
+          example: false
+        note:
+          description: Note provided by the clip creator
+          type: string
+          example: Participant struggled to find the pricing page.
+        noteTags:
+          description: Array of tags associated with the clip
+          items:
+            type: string
+          type: array
+          example:
+          - pricing
+          - navigation
+        securePoster:
+          description: URL for thumbnail of the video clip
+          type: string
+          example: https://cdn.usertesting.com/posters/3339d946-3b60-4f09-8433-a2a7598d5d26.jpg
+        sentimentTag:
+          description: 'Sentiment that the creator has assigned to the clip. Allowed values: "positive" or "negative"'
+          type: string
+          example: negative
+        study:
+          properties:
+            title:
+              description: Title of the test the clip is associated with
+              type: string
+              example: Checkout Flow Validation
+          type: object
+          description: Limited study metadata for the study that the clip belongs to.
+          example:
+            title: Checkout Flow Validation
+        typeName:
+          description: Type of video asset. For Clips this will always be "Clip"
+          type: string
+          example: Clip
+      type: object
+      example:
+        typeName: Clip
+        createdAt: '2024-05-01T14:32:18Z'
+        duration: 27
+        embeddableUrl: https://app.usertesting.com/player/clip/3339d946-3b60-4f09-8433-a2a7598d5d26?embed=true
+        isImportant: false
+        note: Participant struggled to find the pricing page.
+        noteTags:
+        - pricing
+        - navigation
+        securePoster: https://cdn.usertesting.com/posters/3339d946-3b60-4f09-8433-a2a7598d5d26.jpg
+        sentimentTag: negative
+        study:
+          title: Checkout Flow Validation
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization) for information on how to generate an access token.
