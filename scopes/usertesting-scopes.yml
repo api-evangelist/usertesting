@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://developer.usertesting.com/docs/authorization
+docs: https://developer.usertesting.com/docs/authorization
+description: >-
+  OAuth scopes for the UserTesting APIs. The OpenAPI models only the resulting bearer JWT
+  (http/bearer), so no scopes are derivable from the spec; this file captures the scope
+  surface documented in the Authorization guide and the Okta authorization-server metadata
+  saved in well-known/usertesting-oauth-authorization-server.json. The API-specific scope
+  surface is a single read scope — the platform's authorization server additionally lists
+  standard OIDC scopes that are not used by the Results/Legacy APIs.
+schemes:
+- name: oauth2ClientCredentials
+  source: https://developer.usertesting.com/docs/authorization
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://auth.usertesting.com/oauth2/aus1p3vtd8vtm4Bxv0h8/v1/token
+scopes:
+- scope: studies:read
+  description: >-
+    Read access to test/study results (session summaries and details, transcripts, videos,
+    clips, highlight reels, QXscores) across the workspaces the API user belongs to. The only
+    scope the API docs instruct clients to request.
+  flows: [clientCredentials]
+  sources: [https://developer.usertesting.com/docs/authorization]
+authorization_server_scopes:
+  note: >-
+    scopes_supported advertised by the Okta authorization server (RFC 8414 metadata); standard
+    OIDC scopes, not API data scopes.
+  scopes: [openid, profile, email, address, phone, offline_access, device_sso]

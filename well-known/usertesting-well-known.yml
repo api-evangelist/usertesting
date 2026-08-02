@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface for the UserTesting website, the
+  Results/Legacy API host (api.use2.usertesting.com), and the Okta authorization server
+  (auth.usertesting.com) documented in the developer portal's Authorization guide. Status is the
+  HTTP code observed at fetch time (2026-07-21). The Okta custom authorization server
+  aus1p3vtd8vtm4Bxv0h8 publishes real RFC 8414 and OIDC discovery documents, saved verbatim.
+hosts:
+- host: https://www.usertesting.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://usertesting.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://api.use2.usertesting.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://auth.usertesting.com
+  documents:
+  - path: /oauth2/aus1p3vtd8vtm4Bxv0h8/.well-known/oauth-authorization-server
+    status: 200
+    file: usertesting-oauth-authorization-server.json
+  - path: /oauth2/aus1p3vtd8vtm4Bxv0h8/.well-known/openid-configuration
+    status: 200
+    file: usertesting-openid-configuration.json

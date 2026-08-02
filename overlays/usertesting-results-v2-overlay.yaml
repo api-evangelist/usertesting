@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the UserTesting Results API (v2)
+  version: 1.0.0
+extends: openapi/usertesting-results-v2-openapi.yml
+actions:
+- target: $.info
+  description: Record provenance and catalog identity for the assembled spec.
+  update:
+    x-apievangelist:
+      provider: usertesting
+      generated: '2026-07-21'
+      method: searched
+      source: >-
+        Assembled verbatim from the per-operation OpenAPI definitions published on
+        developer.usertesting.com/reference/*.md (ReadMe); no operations, schemas, or
+        descriptions were altered.
+      apis-json: https://raw.githubusercontent.com/api-evangelist/usertesting/refs/heads/main/apis.yml
+- target: $.info
+  description: Surface the documented throttling contract at the spec level.
+  update:
+    x-rate-limit:
+      limit: 10
+      period: minute
+      headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset]
+- target: $.components.securitySchemes.bearerAuth
+  description: Bind the bearer scheme to the documented OAuth client-credentials token flow.
+  update:
+    x-token-endpoint: https://auth.usertesting.com/oauth2/aus1p3vtd8vtm4Bxv0h8/v1/token
+    x-grant-type: client_credentials
+    x-token-lifetime-seconds: 3600
+    x-scope: studies:read

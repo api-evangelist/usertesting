@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Registry search results for first-party UserTesting client libraries (npm, PyPI, RubyGems
+  probed 2026-07-21; the github.com/usertesting org reviewed). UserTesting publishes NO
+  official API SDKs: the GitHub org is forks and infra tooling (Terraform modules, Rubocop
+  configs), PyPI has no usertesting package, and the only npm hit is a 2018 v0.0.1
+  personal-scoped web-components package published by a usertesting.com employee — not a
+  supported client library. The docs drive integration via raw HTTPS + OAuth instead.
+packages:
+- language: javascript
+  registry: npm
+  name: "@sloan-ut/ut-asset-toolkit"
+  url: https://www.npmjs.com/package/@sloan-ut/ut-asset-toolkit
+  install: npm install @sloan-ut/ut-asset-toolkit
+  official: false
+  notes: >-
+    "UserTesting Asset Toolkit Web Components", v0.0.1 (2018-12-15), maintainer
+    sloan@usertesting.com; employee-scoped experiment, no repository or homepage, not a
+    supported SDK.
+searched:
+- registry: npm
+  query: usertesting
+  first_party_found: false
+- registry: pypi
+  query: usertesting
+  first_party_found: false
+  status: 404 on pypi.org/pypi/usertesting/json
+- registry: rubygems
+  query: usertesting
+  first_party_found: false
+- registry: github.com/usertesting
+  first_party_found: false
+  notes: 100 repos, all forks/infra (Terraform, Chef, Rubocop configs); no API client libraries.

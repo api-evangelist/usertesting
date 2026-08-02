@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  Derived from the schema $refs and id-reference path parameters in
+  openapi/usertesting-results-v2-openapi.yml (SessionSummary*, SessionResultsV3*, Clip*,
+  HighlightReel*, QxScore* DTOs) and openapi/usertesting-legacy-v1-openapi.yml (Workspace,
+  Study, Session, Clip, Highlightreel schemas).
+docs: https://developer.usertesting.com/reference
+notation: >-
+  relationships use has_one / has_many / belongs_to with the referencing field; direction is
+  from the entity that owns the reference. The v1 (classic) and v2 (STUDYV2) object graphs are
+  parallel: v1 keys on workspace/study, v2 keys on test (UUID) and session.
+
+entities:
+- {name: Workspace, id: workspaceUuid, domain: legacy-v1, description: Account workspace containing studies and team members.}
+- {name: Study, id: studyUuid, domain: legacy-v1, description: A classic test (a.k.a. study) with tasks and NPS data.}
+- {name: Session (v1), id: sessionUuid, domain: legacy-v1, description: A completed participant session in a classic study.}
+- {name: Clip (v1), id: clipUuid, domain: legacy-v1, description: A video clip cut from a session, embeddable via the Integrations service.}
+- {name: HighlightReel (v1), id: highlightReelToken, domain: legacy-v1, description: A reel of clips shared by token.}
+- {name: Test, id: testId (UUID), domain: results-v2, description: A STUDYV2-type test (survey, live conversation, interaction, think-out-loud); the root aggregate of the Results API.}
+- {name: Session (v2), id: sessionId, domain: results-v2, description: A completed participant session in a test; carries status and timestamps.}
+- {name: SessionDetails (v3), id: sessionId, domain: results-v2, description: Detailed session view with participant demographics, task-group metadata, and task responses.}
+- {name: Participant, id: null, domain: results-v2, description: Demographic profile embedded in session details (no standalone endpoint).}
+- {name: Transcript, id: null, domain: results-v2, description: WebVTT transcript of a session video.}
+- {name: Video, id: null, domain: results-v2, description: Session video, delivered as a 1-hour pre-signed download URL.}
+- {name: Clip (v2), id: clipUuid, domain: results-v2, description: A clip created from a session video with timing, layout, and video-region metadata.}
+- {name: HighlightReel (v2), id: reelId, domain: results-v2, description: A named reel of test clips with GENERATING/GENERATED status and 15-minute download URL.}
+- {name: QXscore, id: null, domain: results-v2, description: Composite experience-quality score for an interaction test, with component and subcomponent values.}
+
+relationships:
+- {from: Workspace, to: Study, type: has_many, via: workspaceUuid}
+- {from: Study, to: Session (v1), type: has_many, via: studyUuid (completed-sessions)}
+- {from: Session (v1), to: Clip (v1), type: has_many, via: sessionUuid}
+- {from: HighlightReel (v1), to: Clip (v1), type: has_many, via: clip nodes}
+- {from: Test, to: Session (v2), type: has_many, via: testId query on /api/v2/sessionResults}
+- {from: Session (v2), to: SessionDetails (v3), type: has_one, via: sessionId}
+- {from: SessionDetails (v3), to: Participant, type: has_one, via: embedded demographics}
+- {from: Session (v2), to: Transcript, type: has_one, via: sessionId}
+- {from: Session (v2), to: Video, type: has_one, via: sessionId}
+- {from: Session (v2), to: Clip (v2), type: has_many, via: sessionId}
+- {from: Test, to: HighlightReel (v2), type: has_many, via: testId}
+- {from: HighlightReel (v2), to: Clip (v2), type: has_many, via: clipCount/allClips flags}
+- {from: Test, to: QXscore, type: has_one, via: testId (interaction tests only)}

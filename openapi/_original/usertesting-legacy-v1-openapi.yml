@@ -1,0 +1,1201 @@
+openapi: 3.0.0
+info:
+  description: 'API documentation for the legacy UTZ Integrations service (v1).
+
+
+    This API enables partners and external applications to retrieve and embed UserTesting content, including
+    clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed
+    to support rich previews and embedded playback experiences in third-party products.
+
+
+    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized
+    or invalid requests.
+
+
+    **Note**: This is a revised version of the original OpenAPI specification file. The original file
+    can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
+  title: Integrations (v1)
+  version: '1.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: //api.use2.usertesting.com/usertesting/api
+paths:
+  /v1/clip/{clipUuid}:
+    get:
+      description: "Clip API allows you to build rich previews and embed clips containing meaningful insights\
+        \ in your solutions. \n\nThe endpoint returns an embeddable video player link and metadata for\
+        \ a single clip."
+      parameters:
+      - description: '[UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids)
+          you want to obtain information for.'
+        in: path
+        name: clipUuid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Clip'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve a video clip
+  /v1/highlightreel/{highlightReelToken}:
+    get:
+      description: "Highlight Reel API allows you to build rich previews and embed highlight reels in\
+        \ your solutions. \n\nA highlight reel is a curated selection of video clips UserTesting customers\
+        \ have created. Highlight reels can include multiple clips from the same test or clips from multiple\
+        \ tests. Customers use highlight reels to show common responses and essential feedback from end\
+        \ users.\nHighlight Reel API returns a highlight reel that can be displayed within an iframe,\
+        \ employing the UserTesting video player as well as additional metadata to let you create previews\
+        \ and unfurl highlight reels in your applications."
+      parameters:
+      - description: '[Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token)
+          you want to obtain information for.'
+        in: path
+        name: highlightReelToken
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Highlightreel'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve a highlight reel with clips
+  /v1/session/{sessionUuid}:
+    get:
+      description: "Returns session metadata. \n\nA session is an individual participant taking a test\
+        \ (also known as a launched study)."
+      parameters:
+      - description: '[UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids)
+          you want to obtain information for.'
+        in: path
+        name: sessionUuid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve session metadata
+  /v1/studies/{studyUuid}/completed-sessions:
+    get:
+      description: Fetch all completed sessions for a study identified by UUID. Returns comprehensive
+        session data including participant information (name, demographics), screener responses, task
+        answers with transcripts, session state, and completion timestamps. Use pagination with cursor
+        for large result sets.
+      parameters:
+      - description: '[UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids)
+          you want to obtain information for.'
+        in: path
+        name: studyUuid
+        required: true
+        schema:
+          type: string
+      - description: Cursor for paginating through study results. Use the `cursor` value from a previous
+          response to retrieve the next 50 results following the indicated study.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: Cursor for paginating through study results. Use the `cursor` value from a previous
+          response to retrieve the 50 results preceding the indicated study.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletedSessions'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve all sessions in a study
+  /v1/studies/{studyUuid}:
+    get:
+      description: Fetch detailed information for a study (test) identified by UUID. Returns study configuration
+        including title, session count, task definitions, test plan settings, and Net Promoter Score (NPS)
+        data if available. Studies represent the overall test structure that participants complete.
+      parameters:
+      - description: '[UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids)
+          you want to obtain information for.'
+        in: path
+        name: studyUuid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Study'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: Retrieve study metadata and configuration
+  /v1/workspaces/{workspaceUuid}:
+    get:
+      description: 'Fetch all studies (tests) in a workspace identified by UUID. Returns summary information
+        for each study including title, UUID, creation date, and the user who created it. The response
+        returns up to 50 studies per page. Use pagination with cursor for large workspaces.
+
+
+        **Note**: When using this endpoint to retrieve v2 compatible studies, keep in mind that _studies_
+        are referred to as _tests_ in both the UserTesting Platform and in the v2 API.'
+      parameters:
+      - description: The UUID of the workspace you want to obtain information for. You can obtain this
+          UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces).
+        in: path
+        name: workspaceUuid
+        required: true
+        schema:
+          type: string
+      - description: Cursor for paginating through study results. Use the `cursor` value from a previous
+          response to retrieve the next 50 results following the indicated study.
+        in: query
+        name: after
+        required: false
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: Cursor for paginating through study results. Use the `cursor` value from a previous
+          response to retrieve the 50 results preceding the indicated study.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WorkspaceStudy'
+                type: array
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: List studies in a workspace
+  /v1/workspaces:
+    get:
+      description: Returns all workspaces that the authenticated user has access to. In UserTesting Platform,
+        workspaces organize teams and control access to resources across projects. Tests, drafts, templates,
+        and highlight reels belong to one or more workspaces. A user must have workspace access to view
+        those resources.
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Workspace'
+                type: array
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HttpErrorResponse'
+      summary: List all accessible workspaces
+components:
+  schemas:
+    Clip:
+      properties:
+        createdAt:
+          description: Timestamp when the clip was created (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T14:32:18Z'
+        duration:
+          description: Length of clip in seconds
+          type: integer
+          example: 27
+        embeddableUrl:
+          description: URL including parameters that will allow the video player to render content properly
+          type: string
+          example: https://app.usertesting.com/player/clip/3339d946-3b60-4f09-8433-a2a7598d5d26?embed=true
+        isImportant:
+          description: Priority assigned to the clip by the creator
+          type: boolean
+          example: false
+        note:
+          description: Note provided by the clip creator
+          type: string
+          example: Participant struggled to find the pricing page.
+        noteTags:
+          description: Array of tags associated with the clip
+          items:
+            type: string
+          type: array
+          example:
+          - pricing
+          - navigation
+        securePoster:
+          description: URL for thumbnail of the video clip
+          type: string
+          example: https://cdn.usertesting.com/posters/3339d946-3b60-4f09-8433-a2a7598d5d26.jpg
+        sentimentTag:
+          description: 'Sentiment that the creator has assigned to the clip. Allowed values: "positive"
+            or "negative"'
+          type: string
+          example: negative
+        study:
+          properties:
+            title:
+              description: Title of the test the clip is associated with
+              type: string
+              example: Checkout Flow Validation
+          type: object
+          description: Limited study metadata for the study that the clip belongs to.
+          example:
+            title: Checkout Flow Validation
+        typeName:
+          description: Type of video asset. For Clips this will always be "Clip"
+          type: string
+          example: Clip
+      type: object
+      example:
+        typeName: Clip
+        createdAt: '2024-05-01T14:32:18Z'
+        duration: 27
+        embeddableUrl: https://app.usertesting.com/player/clip/3339d946-3b60-4f09-8433-a2a7598d5d26?embed=true
+        isImportant: false
+        note: Participant struggled to find the pricing page.
+        noteTags:
+        - pricing
+        - navigation
+        securePoster: https://cdn.usertesting.com/posters/3339d946-3b60-4f09-8433-a2a7598d5d26.jpg
+        sentimentTag: negative
+        study:
+          title: Checkout Flow Validation
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    Highlightreel:
+      properties:
+        clips:
+          properties:
+            nodes:
+              items:
+                $ref: '#/components/schemas/HighlightreelClipNode'
+              type: array
+              description: Clip items included in the highlight reel.
+              example:
+              - duration: 18.5
+                id: clip_123
+                securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+                url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+            totalCount:
+              description: Number of clips included in the highlight reel
+              type: integer
+              example: 1
+          type: object
+          description: Collection metadata for the clips included in the highlight reel.
+          example:
+            nodes:
+            - duration: 18.5
+              id: clip_123
+              securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+              url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+            totalCount: 1
+        createdAt:
+          description: Timestamp when the highlight reel was created (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T14:32:18Z'
+        duration:
+          description: Total playback duration of all clips in the highlight reel, in seconds.
+          type: number
+          example: 18.5
+        editUrlPath:
+          description: URL for the highlight reel within UserTesting App
+          type: string
+          example: /highlightreels/reel_123/edit
+        id:
+          description: Unique Identifier of this highlight reel within UserTesting systems. Note - This
+            is not UUID
+          type: string
+          example: reel_123
+        shareUrl:
+          description: Shareable URL with parameters required for proper highlight reel playback.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/share
+        title:
+          description: The name of the highlight reel
+          type: string
+          example: Key Checkout Moments
+        token:
+          description: Token associated with the highlight reel
+          type: string
+          example: b4be664ea2d54f56a455
+        updatedAt:
+          description: Timestamp when the highlight reel was last updated (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T15:01:07Z'
+      type: object
+      example:
+        clips:
+          nodes:
+          - duration: 18.5
+            id: clip_123
+            securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+            url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+          totalCount: 1
+        createdAt: '2024-05-01T14:32:18Z'
+        duration: 18.5
+        editUrlPath: /highlightreels/reel_123/edit
+        id: reel_123
+        shareUrl: https://app.usertesting.com/highlightreels/reel_123/share
+        title: Key Checkout Moments
+        token: b4be664ea2d54f56a455
+        updatedAt: '2024-05-01T15:01:07Z'
+    HighlightreelClipNode:
+      properties:
+        duration:
+          description: Clip duration
+          type: number
+          example: 18.5
+        id:
+          description: Unique id of clip which belongs to highlight reel. Value not returned due to security
+            constraints
+          type: string
+          example: clip_123
+        securePosterFullUrl:
+          description: Video thumbnail URL. Value not returned due to security constraints
+          type: string
+          example: https://cdn.usertesting.com/posters/clip_123.jpg
+        url:
+          description: URL to access or play the clip resource.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+      type: object
+      example:
+        duration: 18.5
+        id: clip_123
+        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+    Session:
+      properties:
+        duration:
+          description: Duration of the session in seconds.
+          type: number
+          example: 245.5
+        notes:
+          description: The note which the session creator provided
+          type: string
+          example: Participant hesitated at checkout.
+        securePoster:
+          description: Poster image of the video session
+          type: string
+          example: https://cdn.usertesting.com/posters/session_123.jpg
+        sequenceNumber:
+          description: Sequence number for the session
+          type: integer
+          example: 1
+        sessionId:
+          description: Internal session identifier in UserTesting systems.
+          type: string
+          example: '15280'
+        stateUpdatedAt:
+          description: Timestamp when the session state was last updated (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2024-05-01T15:01:07Z'
+        title:
+          description: Title of session
+          type: string
+          example: Participant 1 Session
+        uid:
+          description: External UUID used to identify this session in API requests.
+          type: string
+          example: 3339d946-3b60-4f09-8433-a2a7598d5d26
+      type: object
+      example:
+        duration: 245.5
+        notes: Participant hesitated at checkout.
+        securePoster: https://cdn.usertesting.com/posters/session_123.jpg
+        sequenceNumber: 1
+        sessionId: '15280'
+        stateUpdatedAt: '2024-05-01T15:01:07Z'
+        title: Participant 1 Session
+        uid: 3339d946-3b60-4f09-8433-a2a7598d5d26
+    CompletedSessions:
+      properties:
+        completedSessionCount:
+          description: Total number of completed sessions returned for the study query.
+          type: integer
+          example: 4
+        sessions:
+          items:
+            properties:
+              answers:
+                items:
+                  properties:
+                    duration:
+                      description: Duration of this answer segment in seconds.
+                      type: integer
+                      example: 51
+                    responses:
+                      description: Captured response values for this answer segment.
+                      items:
+                        type: string
+                      type: array
+                      example:
+                      - Poland
+                      - Singapore
+                    time:
+                      description: Offset in seconds from session start when this answer segment begins.
+                      type: integer
+                      example: 0
+                    transcript:
+                      description: Transcript text or structured transcript data captured for this answer
+                        segment.
+                      oneOf:
+                      - type: string
+                      - type: object
+                      example: I am looking for pricing information before I continue.
+                    type:
+                      description: Answer content type.
+                      type: string
+                      example: multiple_choice
+                    url:
+                      description: URL to the media asset for this answer segment, when available.
+                      type: string
+                      example: https://example.usertesting.com/v/3339d946-3b60-4f09-8433-a2a7598d5d26?start=0
+                  type: object
+                type: array
+                description: Answer records aligned to the study tasks, in task order.
+                example:
+                - time: 0
+                  duration: 51
+                  url: https://example.usertesting.com/v/3339d946-3b60-4f09-8433-a2a7598d5d26?start=0
+                  transcript: I am looking for pricing information before I continue.
+                  type: multiple_choice
+                  responses:
+                  - Poland
+                  - Singapore
+              completedDateTime:
+                description: Timestamp when the participant completed the session (UTC, ISO 8601).
+                format: date-time
+                type: string
+                example: '2023-11-30T11:24:58Z'
+              cursor:
+                description: Pagination cursor associated with this session result.
+                type: string
+                example: MQ
+              formFactorUsed:
+                description: 'Device form factor used by the participant (for example: desktop, mobile,
+                  tablet).'
+                type: string
+                example: Computer
+              participant:
+                properties:
+                  demographics:
+                    properties:
+                      age:
+                        type: integer
+                        description: Self-reported participant age in years.
+                        example: 34
+                      children:
+                        description: Self-reported information about children in the participant's household.
+                        items:
+                          type: string
+                        type: array
+                        example:
+                        - No children
+                      companySize:
+                        type: string
+                        description: Self-reported size of the company the participant works for.
+                        example: 1,001-5,000 employees
+                      country:
+                        type: string
+                        description: Self-reported country of residence.
+                        example: United States
+                      employmentStatus:
+                        type: string
+                        description: Self-reported employment status.
+                        example: Employed full-time (30 or more hours per week)
+                      gender:
+                        type: string
+                        description: Self-reported gender identity.
+                        example: Female
+                      income:
+                        type: string
+                        description: Self-reported household income range.
+                        example: $60,000 - $79,999
+                      industry:
+                        type: string
+                        description: Self-reported industry the participant works in.
+                        example: Financial Services
+                      jobFunction:
+                        type: string
+                        description: Self-reported job role or functional area.
+                        example: Finance
+                      seniority:
+                        type: string
+                        description: Self-reported seniority level in the participant's role.
+                        example: Senior
+                      socialNetworks:
+                        items:
+                          type: string
+                        type: array
+                        description: Social networks the participant reports using.
+                        example:
+                        - LinkedIn
+                        - Facebook
+                      webExpertise:
+                        description: Self-reported level of web proficiency.
+                        type: string
+                        example: Intermediate
+                    type: object
+                    description: Self-reported demographic attributes for the participant.
+                    example:
+                      age: 34
+                      children:
+                      - No children
+                      country: United States
+                      income: $60,000 - $79,999
+                      socialNetworks:
+                      - LinkedIn
+                      - Facebook
+                      gender: Female
+                      webExpertise: Intermediate
+                      companySize: 1,001-5,000 employees
+                      employmentStatus: Employed full-time (30 or more hours per week)
+                      industry: Financial Services
+                      jobFunction: Finance
+                      seniority: Senior
+                  name:
+                    type: string
+                    description: Display name or identifier for the participant; in some responses this
+                      may be an email address.
+                    example: participant@example.com
+                type: object
+                description: Participant identity and demographic information captured for the completed
+                  session.
+                example:
+                  name: participant@example.com
+                  demographics:
+                    age: 34
+                    children:
+                    - No children
+                    country: United States
+                    income: $60,000 - $79,999
+                    socialNetworks:
+                    - LinkedIn
+                    - Facebook
+                    gender: Female
+                    webExpertise: Intermediate
+                    companySize: 1,001-5,000 employees
+                    employmentStatus: Employed full-time (30 or more hours per week)
+                    industry: Financial Services
+                    jobFunction: Finance
+                    seniority: Senior
+              screenerResponses:
+                items:
+                  properties:
+                    question:
+                      description: Screener question text presented to the participant.
+                      type: string
+                      example: What country do you live in?
+                    response:
+                      description: Participant response values for the screener question.
+                      items:
+                        type: string
+                      type: array
+                      example:
+                      - United States
+                  type: object
+                type: array
+                description: Responses the participant gave to pre-study screener questions.
+                example:
+                - question: What country do you live in?
+                  response:
+                  - United States
+              sessionId:
+                description: Internal session identifier in UserTesting systems.
+                type: integer
+                example: 15280
+              sessionUuid:
+                description: External UUID used to identify the session in API requests.
+                type: string
+                example: 3339d946-3b60-4f09-8433-a2a7598d5d26
+              state:
+                description: Lifecycle state of the session.
+                type: string
+                example: completed
+              taskOrderingCondition:
+                description: Variant or condition indicating the task ordering assigned to the participant.
+                type: string
+                example: default
+            type: object
+          type: array
+          description: Completed session records returned for this page of the study results.
+          example:
+          - cursor: MQ
+            sessionId: 15280
+            sessionUuid: 3339d946-3b60-4f09-8433-a2a7598d5d26
+            completedDateTime: '2023-11-30T11:24:58Z'
+            participant:
+              name: participant@example.com
+              demographics:
+                age: 34
+                children:
+                - No children
+                country: United States
+                income: $60,000 - $79,999
+                socialNetworks:
+                - LinkedIn
+                - Facebook
+                gender: Female
+                webExpertise: Intermediate
+                companySize: 1,001-5,000 employees
+                employmentStatus: Employed full-time (30 or more hours per week)
+                industry: Financial Services
+                jobFunction: Finance
+                seniority: Senior
+            state: completed
+            taskOrderingCondition: default
+            formFactorUsed: Computer
+            answers:
+            - time: 0
+              duration: 51
+              url: https://example.usertesting.com/v/3339d946-3b60-4f09-8433-a2a7598d5d26?start=0
+              transcript: I am looking for pricing information before I continue.
+              type: multiple_choice
+              responses:
+              - Poland
+              - Singapore
+            screenerResponses:
+            - question: What country do you live in?
+              response:
+              - United States
+      type: object
+      example:
+        completedSessionCount: 4
+        sessions:
+        - cursor: MQ
+          sessionId: 15280
+          sessionUuid: 3339d946-3b60-4f09-8433-a2a7598d5d26
+          completedDateTime: '2023-11-30T11:24:58Z'
+          participant:
+            name: participant@example.com
+            demographics:
+              age: 34
+              children:
+              - No children
+              country: United States
+              income: $60,000 - $79,999
+              socialNetworks:
+              - LinkedIn
+              - Facebook
+              gender: Female
+              webExpertise: Intermediate
+              companySize: 1,001-5,000 employees
+              employmentStatus: Employed full-time (30 or more hours per week)
+              industry: Financial Services
+              jobFunction: Finance
+              seniority: Senior
+          state: completed
+          taskOrderingCondition: default
+          formFactorUsed: Computer
+          answers:
+          - time: 0
+            duration: 51
+            url: https://example.usertesting.com/v/3339d946-3b60-4f09-8433-a2a7598d5d26?start=0
+            transcript: I am looking for pricing information before I continue.
+            type: multiple_choice
+            responses:
+            - Poland
+            - Singapore
+          screenerResponses:
+          - question: What country do you live in?
+            response:
+            - United States
+    Study:
+      properties:
+        netPromoterScores:
+          items:
+            $ref: '#/components/schemas/StudyNetPromoterScore'
+          type: array
+          description: Net Promoter Score result objects associated with the study.
+          example:
+          - detractorPercentage: 18
+            passivePercentage: 26
+            promoterPercentage: 56
+            score: 38
+        orderedBy:
+          properties:
+            email:
+              description: Email of the user who ordered or created the study.
+              type: string
+              example: support@usertesting.com
+            name:
+              description: Name of the user who ordered or created the study.
+              type: string
+              example: UT Employee
+          type: object
+          description: User information for the person who ordered or created the study.
+          example:
+            email: support@usertesting.com
+            name: UT Employee
+        sessionCount:
+          description: Total number of sessions associated with the study.
+          type: integer
+          example: 50
+        tasks:
+          items:
+            $ref: '#/components/schemas/StudyTaskNode'
+          type: array
+          description: Ordered task definitions that make up the study flow.
+          example:
+          - blurPII: false
+            choices:
+            - Poland
+            - Singapore
+            grouping: INITIAL
+            launchUrl: https://www.microsoft.com/en-us
+            lowerEndpoint: Very difficult
+            multipleAnswers: true
+            position: 1
+            resultType: ''
+            scaleMaximum: 5
+            scaleMinimum: 1
+            taskGroup:
+              id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+              type: MAIN
+            taskType: multiple_choice
+            text: 'ACME offices are located in:'
+            upperEndpoint: Very easy
+        testPlan:
+          properties:
+            shortTest:
+              type: boolean
+              description: Whether the study is configured as a short test.
+              example: false
+          type: object
+          description: Summary of study-level test plan settings.
+          example:
+            shortTest: false
+        title:
+          description: Human-readable study title.
+          type: string
+          example: ACME Test
+      type: object
+      example:
+        netPromoterScores:
+        - detractorPercentage: 18
+          passivePercentage: 26
+          promoterPercentage: 56
+          score: 38
+        orderedBy:
+          email: support@usertesting.com
+          name: UT Employee
+        sessionCount: 50
+        tasks:
+        - blurPII: false
+          choices:
+          - Poland
+          - Singapore
+          grouping: INITIAL
+          launchUrl: https://www.microsoft.com/en-us
+          lowerEndpoint: Very difficult
+          multipleAnswers: true
+          position: 1
+          resultType: ''
+          scaleMaximum: 5
+          scaleMinimum: 1
+          taskGroup:
+            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type: MAIN
+          taskType: multiple_choice
+          text: 'ACME offices are located in:'
+          upperEndpoint: Very easy
+        testPlan:
+          shortTest: false
+        title: ACME Test
+    StudyNetPromoterScore:
+      properties:
+        detractorPercentage:
+          type: integer
+          description: Percentage of respondents classified as detractors for this NPS result.
+          example: 18
+        passivePercentage:
+          type: integer
+          description: Percentage of respondents classified as passives for this NPS result.
+          example: 26
+        promoterPercentage:
+          type: integer
+          description: Percentage of respondents classified as promoters for this NPS result.
+          example: 56
+        score:
+          type: integer
+          description: Net Promoter Score value for the study.
+          example: 38
+      type: object
+      example:
+        detractorPercentage: 18
+        passivePercentage: 26
+        promoterPercentage: 56
+        score: 38
+    StudyTaskNode:
+      properties:
+        blurPII:
+          type: boolean
+          description: Whether the task should be blurred to hide personally identifiable information.
+          example: false
+        choices:
+          items:
+            type: string
+          type: array
+          description: Available answer choices for a multiple-choice style task.
+          example:
+          - Poland
+          - Singapore
+        grouping:
+          description: Group or category used to organize this task within the study flow.
+          type: string
+          example: INITIAL
+        launchUrl:
+          type: string
+          description: URL automatically opened or associated with this task, when applicable.
+          example: https://www.microsoft.com/en-us
+        lowerEndpoint:
+          description: Display label for the minimum endpoint of a scale-based task.
+          type: string
+          example: Very difficult
+        multipleAnswers:
+          type: boolean
+          description: Whether the participant can select multiple answers for the task.
+          example: true
+        position:
+          type: integer
+          description: Position of the task within the study flow.
+          example: 1
+        resultType:
+          description: 'Expected response format for this task (for example: open-ended, rating, multiple-choice).'
+          type: string
+          example: ''
+        scaleMaximum:
+          type: integer
+          description: Maximum numeric value for rating-scale tasks.
+          example: 5
+        scaleMinimum:
+          type: integer
+          description: Minimum numeric value for rating-scale tasks.
+          example: 1
+        taskGroup:
+          properties:
+            id:
+              type: string
+              description: Identifier of the associated task group.
+              example: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type:
+              type: string
+              description: Classification of the task group.
+              example: MAIN
+          type: object
+          description: Group metadata identifying the task's logical grouping within the study.
+          example:
+            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type: MAIN
+        taskType:
+          type: string
+          description: Legacy task type used to define the task, such as blank, multiple_choice, rating_scale,
+            or launch_url.
+          example: multiple_choice
+        text:
+          type: string
+          description: Instruction text or prompt shown to the participant for the task.
+          example: 'ACME offices are located in:'
+        upperEndpoint:
+          description: Display label for the maximum endpoint of a scale-based task.
+          type: string
+          example: Very easy
+      type: object
+      example:
+        blurPII: false
+        choices:
+        - Poland
+        - Singapore
+        grouping: INITIAL
+        launchUrl: https://www.microsoft.com/en-us
+        lowerEndpoint: Very difficult
+        multipleAnswers: true
+        position: 1
+        resultType: ''
+        scaleMaximum: 5
+        scaleMinimum: 1
+        taskGroup:
+          id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+          type: MAIN
+        taskType: multiple_choice
+        text: 'ACME offices are located in:'
+        upperEndpoint: Very easy
+    WorkspaceStudy:
+      properties:
+        cursor:
+          description: Pagination cursor for this study entry.
+          type: string
+          example: MQ
+        orderedAt:
+          description: Timestamp when the study was ordered or created in the workspace (UTC, ISO 8601).
+          format: date-time
+          type: string
+          example: '2023-11-30T11:07:16Z'
+        orderedBy:
+          properties:
+            email:
+              type: string
+              description: Email of the user who ordered or created the study.
+              example: support@usertesting.com
+            name:
+              type: string
+              description: Name of the user who ordered or created the study.
+              example: UT Employee
+          type: object
+          description: User information for the person who ordered or created the study.
+          example:
+            email: support@usertesting.com
+            name: UT Employee
+        productType:
+          type: string
+          description: Describes the product/business category of the study — what kind of research it
+            is. It determines behavior like recording settings, test plan requirements, and audience configuration.
+            Also indicates API endpoint version compatibility. For example:<br/>INSIGHT_CORE – the default
+            for classic studies/tests (v1)<br/>PRODUCT_INSIGHT – product-focused quick test (v1)<br/>MARKET_INSIGHT
+            – market research-focused test (v1)<br/>THINK_OUT_LOUD – screen+audio recorded, no webcam
+            (v2)<br/>LIVE_CONVERSATION – live moderated session (v2)<br/>NON_THINK_OUT_LOUD – unmoderated
+            without think-aloud (v2)<br/>STUDY_VIDEO_UPLOAD – uploaded video study (not API accessible)
+          example: insight_core
+        title:
+          type: string
+          description: Human-readable title of the study.
+          example: ACME Test
+        type:
+          type: string
+          description: 'Describes the technical format / delivery mechanism of the study — how the test
+            is conducted. Also used to indicate API endpoint version compatibility. For example: <br/>WEB
+            – browser-based website test (v1)<br/>APP – mobile application test (v1)<br/>LIVE – live moderated
+            conversation (v1)<br/>PROTOTYPE – clickable prototype test (v1)<br/>EXTERNAL_UPLOAD – externally
+            recorded video uploaded into the platform<br/>STUDYV2 – newer study/test format (v2 & v3)<br/>STUDY_VIDEO_UPLOAD
+            – uploaded video study (not API accessible)'
+          example: web
+        uuid:
+          type: string
+          description: Unique UUID of the study (test).
+          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
+      type: object
+      example:
+        cursor: MQ
+        orderedAt: '2023-11-30T11:07:16Z'
+        orderedBy:
+          email: support@usertesting.com
+          name: UT Employee
+        productType: insight_core
+        title: ACME Test
+        type: web
+        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
+    Workspace:
+      properties:
+        id:
+          description: Unique ID of the workspace.
+          type: string
+          example: '12345'
+        name:
+          description: Name of the workspace.
+          type: string
+          example: Research Team Workspace
+        uuid:
+          description: Unique UUID of the workspace.
+          type: string
+          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
+      type: object
+      example:
+        id: '12345'
+        name: Research Team Workspace
+        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization)
+        for information on how to generate an access token.
+security:
+- bearerAuth: []

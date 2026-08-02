@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developer.usertesting.com/ (portal versioning: Legacy API (v1) vs Results API (v2)),
+  https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1, and
+  https://status.usertesting.com/ — plus deprecated-operation scan of the harvested OpenAPI.
+versioning:
+  scheme: uri-path
+  current: v2 (Results API; includes a v3 session-details endpoint /api/v3/sessionResults/{sessionId})
+  legacy: v1 (Integrations service for classic test types)
+  docs: https://developer.usertesting.com/
+  notes:
+  - >-
+    The developer portal splits the surface by ReadMe doc version: "Legacy API (v1)" serves
+    classic test types (LIVE, EXTERNAL_UPLOAD, PROTOTYPE, APP, WEB); the "Results API (v2)"
+    serves STUDYV2 test types (SURVEY, LIVE_CONVERSATION, NON_THINK_OUT_LOUD, THINK_OUT_LOUD).
+  - Access tokens work interchangeably across v1 and v2 endpoints.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    v1 is explicitly positioned as "Legacy" and scoped to classic test types, but no formal
+    deprecation policy, timeline, or RFC 8594 Sunset/Deprecation header support is published.
+sla: null
+status_page: https://status.usertesting.com/
+status_page_platform: Atlassian Statuspage
+status_feeds:
+- https://status.usertesting.com/history.atom
+- https://status.usertesting.com/history.rss
+deprecated_operations: []
+release_notes: https://www.usertesting.com/resources/product-releases/whats-new

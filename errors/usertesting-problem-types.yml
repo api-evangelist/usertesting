@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/usertesting-results-v2-openapi.yml + openapi/usertesting-legacy-v1-openapi.yml
+format: plain
+description: >-
+  Error catalog derived from the 4xx/5xx responses documented in the published OpenAPI for the
+  Results API (v2) and Legacy endpoints (v1). Neither API uses RFC 9457
+  application/problem+json: v2 documents status codes with descriptions only; v1 returns a
+  simple {errorCode, errorMessage} envelope (HttpErrorResponse schema).
+envelope:
+  v2: none documented (status + description only)
+  v1:
+    schema: HttpErrorResponse
+    fields:
+      errorCode: Machine-readable error code derived from the HTTP status (e.g. BAD_REQUEST)
+      errorMessage: Human-readable error message (e.g. "Not a valid UUID")
+problems:
+- status: 400
+  title: Bad request
+  detail: Validation failure, e.g. "The offset must be between 0-10000 and limit must be between 1-500."
+  apis: [results-v2]
+  source_operation: openapi/usertesting-results-v2-openapi.yml#SessionResultsController_getSessionSummaryResults
+- status: 401
+  title: Missing or invalid access token
+  detail: >-
+    The bearer access token is absent, expired (tokens live 3600 seconds), or invalid.
+    Generate a new token via the OAuth client-credentials flow.
+  apis: [results-v2, legacy-v1]
+  remediation: POST https://auth.usertesting.com/oauth2/aus1p3vtd8vtm4Bxv0h8/v1/token with grant_type=client_credentials
+- status: 404
+  title: Resource not found
+  detail: Test, session, clip, or highlight reel not found (also returned for IDs outside your workspaces).
+  apis: [results-v2, legacy-v1]
+- status: 429
+  title: Too many requests
+  detail: Maximum of 10 requests per minute on the Results API (v2). Honor x-ratelimit-reset before retrying.
+  apis: [results-v2]
+- status: 500
+  title: Internal server error
+  detail: Returned by legacy v1 endpoints with the HttpErrorResponse envelope.
+  apis: [legacy-v1]
+  source_operation: openapi/usertesting-legacy-v1-openapi.yml#/v1/workspaces

@@ -1,8 +1,14 @@
 aid: usertesting
 name: UserTesting
-description: 'UserTesting is a company surfaced as a portfolio company of accel, insight-partners and
-  added to the API Evangelist network as a stub for enrichment. Sector: automation. This profile is a
-  lead awaiting the enrichment pipeline.'
+description: >-
+  UserTesting is a human insight platform for experience research: teams recruit vetted
+  participants, run usability tests, surveys, live conversations, and interaction tests, and
+  analyze session videos, transcripts, and QXscore experience metrics. Its developer surface at
+  developer.usertesting.com exposes the Results API (v2) for programmatic access to session data,
+  videos, transcripts, clips, highlight reels, and QXscores, plus Legacy (v1) endpoints for
+  embedding content from classic tests. Authentication is OAuth 2.0 client credentials issued
+  against its Okta authorization server, and an official MCP server (early access) connects the
+  platform to Claude, ChatGPT, Figma Make, and other AI clients.
 url: https://raw.githubusercontent.com/api-evangelist/usertesting/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,13 +17,179 @@ x-backed-by:
 - insight-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://dka575ofm4ao0.cloudfront.net/pages-favicon_logos/original/880/U-Glyph-with_R_RGB_Blue_2x.png
 tags:
 - Company
-- Automation
-apis: []
+- UX Research
+- Usability Testing
+- Human Insight
+- Customer Experience
+- Surveys
+- Video
+- Transcripts
+- Experience Metrics
+apis:
+- aid: usertesting:usertesting-clip-api
+  name: UserTesting Clip API
+  description: The Clip API from UserTesting — 1 operation(s) for clip.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Clip
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-clip-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-general-session-data-api
+  name: UserTesting General Session Data API
+  description: Retrieve session summaries and detailed session results from a test.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - General Session Data
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-general-session-data-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-highlightreel-api
+  name: UserTesting Highlightreel API
+  description: The Highlightreel API from UserTesting — 1 operation(s) for highlightreel.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Highlightreel
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-highlightreel-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-qxscore-data-api
+  name: UserTesting QXscore Data API
+  description: >-
+    Access Quality of Experience Scores (QXscores) calculated from a test's completed sessions.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - QXscore Data
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-qxscore-data-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-session-api
+  name: UserTesting Session API
+  description: The Session API from UserTesting — 1 operation(s) for session.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Session
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-session-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-studies-api
+  name: UserTesting Studies API
+  description: The Studies API from UserTesting — 2 operation(s) for studies.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Studies
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-studies-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-video-data-api
+  name: UserTesting Video Data API
+  description: >-
+    Access session video data, including transcripts, video download links, clips, and highlight reels.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Video Data
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-video-data-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
+- aid: usertesting:usertesting-workspaces-api
+  name: UserTesting Workspaces API
+  description: The Workspaces API from UserTesting — 2 operation(s) for workspaces.
+  humanURL: https://developer.usertesting.com/
+  baseURL: https://api.use2.usertesting.com
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/usertesting-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://developer.usertesting.com/docs/getting-started
+  - type: APIReference
+    url: https://developer.usertesting.com/reference
+  - type: Documentation
+    url: https://developer.usertesting.com/v1.0/docs/legacy-api-endpoints-v1
+  - type: APIReference
+    url: https://developer.usertesting.com/v1.0/reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,4 +197,77 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://www.usertesting.com
+  url: https://www.usertesting.com
+- type: DeveloperPortal
+  url: https://developer.usertesting.com/
+- type: Documentation
+  url: https://developer.usertesting.com/docs
+- type: APIReference
+  url: https://developer.usertesting.com/reference
+- type: GettingStarted
+  url: https://developer.usertesting.com/docs/getting-started
+- type: Authentication
+  url: authentication/usertesting-authentication.yml
+- type: OAuthScopes
+  url: scopes/usertesting-scopes.yml
+- type: LLMsTxt
+  url: llms/usertesting-llms.txt
+- type: WellKnown
+  url: well-known/usertesting-well-known.yml
+- type: MCPServer
+  url: mcp/usertesting-mcp.yml
+- type: Overlay
+  url: overlays/usertesting-results-v2-overlay.yaml
+- type: Overlay
+  url: overlays/usertesting-legacy-v1-overlay.yaml
+- type: Conformance
+  url: conformance/usertesting-conformance.yml
+- type: ErrorCatalog
+  url: errors/usertesting-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/usertesting-lifecycle.yml
+- type: StatusPage
+  url: https://status.usertesting.com/
+- type: RateLimits
+  url: rate-limits/usertesting-rate-limits.yml
+- type: Conventions
+  url: conventions/usertesting-conventions.yml
+- type: ChangeLog
+  url: changelog/usertesting-changelog.yml
+- type: DataModel
+  url: data-model/usertesting-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/usertesting-packages.yml
+- type: DomainSecurity
+  url: security/usertesting-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/usertesting-vulnerability-disclosure.yml
+- type: Security
+  url: https://hackerone.com/usertesting
+- type: TrustCenter
+  url: security/usertesting-trust-center.yml
+- type: Compliance
+  url: https://trust.usertesting.com/
+- type: Support
+  url: https://support.usertesting.com/hc/en-us
+- type: Community
+  url: https://community.usertesting.com/
+- type: Blog
+  url: https://www.usertesting.com/blog
+- type: GitHubOrganization
+  url: https://github.com/usertesting
+- type: Pricing
+  url: https://www.usertesting.com/plans
+- type: Login
+  url: https://www.usertesting.com/login
+- type: TermsOfService
+  url: https://www.usertesting.com/privacy-center/terms-of-use-enterprise-client
+- type: PrivacyPolicy
+  url: https://www.usertesting.com/privacy-center/privacy-policy
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1

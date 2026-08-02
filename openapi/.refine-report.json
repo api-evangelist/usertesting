@@ -1,0 +1,28 @@
+{
+  "provider": "usertesting",
+  "sources": [
+    "usertesting-clip-api-openapi.yml",
+    "usertesting-general-session-data-api-openapi.yml",
+    "usertesting-highlightreel-api-openapi.yml",
+    "usertesting-qxscore-data-api-openapi.yml",
+    "usertesting-session-api-openapi.yml",
+    "usertesting-studies-api-openapi.yml",
+    "usertesting-video-data-api-openapi.yml",
+    "usertesting-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "usertesting-clip-api-openapi.yml",
+    "usertesting-general-session-data-api-openapi.yml",
+    "usertesting-highlightreel-api-openapi.yml",
+    "usertesting-qxscore-data-api-openapi.yml",
+    "usertesting-session-api-openapi.yml",
+    "usertesting-studies-api-openapi.yml",
+    "usertesting-video-data-api-openapi.yml",
+    "usertesting-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

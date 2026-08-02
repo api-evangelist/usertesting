@@ -1,0 +1,1569 @@
+openapi: 3.0.0
+info:
+  title: Results API
+  description: "With the Results API, you can access the results of your UserTesting account's Surveys,\
+    \ Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.\
+    \ \n      \nEach test can contain multiple sessions. Each session represents an individual participant's\
+    \ interaction with the test.\n\nFrom test results you can obtain QXscores, which provide a reliable\
+    \ benchmark metric for evaluating the quality of an experience.\n\nYou can retrieve session results\
+    \ that include summaries of sessions, detailed session data, transcripts, and videos. \n"
+  version: '2.0'
+  contact:
+    name: UserTesting Support
+    url: https://developer.usertesting.com/
+    email: support@usertesting.com
+servers:
+- url: https://api.use2.usertesting.com
+paths:
+  /api/v2/sessionResults/{sessionId}/clips/{clipUuid}:
+    get:
+      description: "Returns the details of a clip and a link to download it.\n\nIf the clip is still being\
+        \ prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again\
+        \ every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the\
+        \ clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new\
+        \ one.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type\
+        \ and belong to one of the following product types that support session video clips:\n    - \"\
+        LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction\
+        \ test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details."
+      operationId: SessionResultsController_getClipDetails
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session that contains the clip.
+        schema:
+          format: uuid
+          type: string
+      - name: clipUuid
+        required: true
+        in: path
+        description: ID of the clip you want to download.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Clip details successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClipDetailsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Clip not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a clip download link
+      tags:
+      - Video Data
+  /api/v2/sessionResults/{sessionId}/clips:
+    get:
+      description: "Returns the clips created from a session video, including clip timing, media flags,\
+        \ layout, and video region metadata.\n\n  _Compatibility:_\n  - Sessions must be found within\
+        \ tests with the \"STUDYV2\" type and belong to one of the following product types that support\
+        \ session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"\
+        NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  -\
+        \ Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details."
+      operationId: SessionResultsController_getClips
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session whose video clips you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Clips successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClipsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Session video or clips not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all clips for a session video
+      tags:
+      - Video Data
+  /api/v2/sessionResults:
+    get:
+      description: "Returns a paginated list of summaries for each completed session in a test. Each summary\
+        \ includes the session ID, status, and timestamps. \n\n  In the response, sessions are sorted\
+        \ in descending order, i.e., from newest to oldest.\n  \n  _Compatibility:_\n  - All tests with\
+        \ the \"STUDYV2\" type are compatible. These include tests with the following product types:\n\
+        \    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    -\
+        \ \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test) \n\
+        \  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details.\n  \n  _Best practices:_\n  - Always use pagination query parameters (_limit_ and\
+        \ _offset_) along with the appropriate logic to ensure all sessions are retrieved.\n  - Use the\
+        \ response data from _limit_, _offset_, and _totalCount_ in the _meta.pagination_ property to\
+        \ calculate the number of pagination iterations (API requests) needed to collect all sessions\
+        \ in the test.\n  \n  _Use case examples:_\n  - For an example on near real-time polling, go to\
+        \ [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira).\n\
+        \  - For an example on how to add session summaries into an automated research data pipeline,\
+        \ go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n\
+        \  "
+      operationId: SessionResultsController_getSessionSummaryResults
+      parameters:
+      - name: testId
+        required: true
+        in: query
+        description: ID of the test containing the sessions.
+        schema:
+          format: uuid
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of sessions to return in the result set.
+        schema:
+          minimum: 1
+          maximum: 500
+          default: 25
+          example: 25
+          type: number
+      - name: offset
+        required: false
+        in: query
+        description: Number of sessions to skip before starting to collect the result set.
+        schema:
+          minimum: 0
+          maximum: 10000
+          default: 0
+          example: 0
+          type: number
+      responses:
+        '200':
+          description: Session summaries successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionSummaryResultsResponseDto'
+        '400':
+          description: Bad request. The offset must be between 0-10000 and limit must be between 1-500.
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Test not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all sessions in a test
+      tags:
+      - General Session Data
+  /api/v2/sessionResults/{sessionId}/transcript:
+    get:
+      description: "Returns the video transcript of a test session in [Web Video Text Tracks (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format)\
+        \ format.\n    \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\"\
+        \ type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic\
+        \ live conversation)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain\
+        \ a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\
+        \n  _Best practices:_\n  - If needed, you can copy and paste the string and save it as a text\
+        \ file with the VTT extension.\n  \n  _Use case examples:_\n  - For an example on how to run AI\
+        \ analysis on transcripts with an LLM, go to [Generate Video Transcript Analysis](https://developer.usertesting.com/v2.0/docs/video-transcript-analysis).\n\
+        \  - For an example of how to add transcripts into an automated research data pipeline, go to\
+        \ [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial)."
+      operationId: SessionResultsController_getTranscriptVtt
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the test session that contains the video transcript you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Transcript returned in WebVTT format.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+            Accept-Ranges:
+              description: Indicates that the resource supports range requests.
+              schema:
+                type: string
+                example: bytes
+          content:
+            text/vtt:
+              schema:
+                type: string
+                format: WebVTT
+                example: 'WEBVTT
+
+
+                  00:00:00.000 --> 00:00:02.000
+
+                  Hello, World!
+
+
+                  00:00:02.000 --> 00:00:04.000
+
+                  This is a VTT example'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Transcript not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Retrieve a video transcript
+      tags:
+      - Video Data
+  /api/v2/sessionResults/{sessionId}/videoDownloadUrl:
+    get:
+      description: "Returns a pre-signed URL to download a test session video. The URL is valid for one\
+        \ hour; after expiration, request a new URL.\n  \n  _Compatibility:_\n  - Sessions must be found\
+        \ within tests with the \"STUDYV2\" type and belong to one of the following product types:\n \
+        \   - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction\
+        \ test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details.\n\n  _Use case examples:_\n  - For an example on how to securely download and manage\
+        \ session videos at scale using pre-signed URLs, go to [Process Session Videos at Scale](https://developer.usertesting.com/v2.0/docs/download-and-manage-session-videos-at-scale).\n\
+        \  - For an example on how to integrate video downloads into an automated research data pipeline,\
+        \ go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n\
+        \n  "
+      operationId: SessionResultsController_getVideoDownloadUrl
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the test session the video you want to retrieve belongs to.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Video download URL successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoDownloadResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Video not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a video download link
+      tags:
+      - Video Data
+  /api/v3/sessionResults/{sessionId}:
+    get:
+      description: "Returns detailed information about a session, including participant demographics,\
+        \ task-group metadata, and individual task responses.\n\n  _Compatibility:_\n  - All sessions\
+        \ found within tests with the \"STUDYV2\" type are compatible. These include tests from the following\
+        \ product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n\
+        \    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test)\n\
+        \  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details.\n\n  _Use case examples:_\n  - For an example on how to understand and model session-level\
+        \ details and participant demographics, go to [Model Session Details & Demographics](https://developer.usertesting.com/v2.0/docs/understand-and-model-session-details-demographics).\n\
+        \  - For an example on how to add session details into an automated research data pipeline, go\
+        \ to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n \
+        \ - For an example on near real-time polling, go to [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira)."
+      operationId: SessionResultsV3Controller_getSessionResults
+      parameters:
+      - name: sessionId
+        required: true
+        in: path
+        description: ID of the session.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Session details successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResultsV3ResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Session not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Retrieve session details (v3)
+      tags:
+      - General Session Data
+  /api/v2/testResults/{testId}/highlightreels:
+    get:
+      description: "Returns all highlight reels for the test. Each highlight reel includes its ID, name,\
+        \ duration, last updated timestamp, clip count, and whether all test clips are included in the\
+        \ reel.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of\
+        \ the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n\
+        \    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n\
+        \  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details.\n\n  _Notes:_\n  - Use the returned highlight reel ID to request highlight reel\
+        \ download link from the \"GET /api/v2/testResults/{testId}/highlightreels/{reelId}\" endpoint."
+      operationId: TestResultsController_getHighlightReels
+      parameters:
+      - name: testId
+        required: true
+        in: path
+        description: ID of the test whose highlight reels you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Highlight reels successfully retrieved.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HighlightReelsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Test or highlight reels not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Find all highlight reels for a test
+      tags:
+      - Video Data
+  /api/v2/testResults/{testId}/qxScores:
+    get:
+      description: "Calculates the Quality of Experience Score (QXscore) for an [Interaction test](https://help.usertesting.com/hc/en-us/articles/23596817555101-Interaction-tests)\
+        \ based on all completed sessions. The response includes detailed component and subcomponent values\
+        \ that contribute to the overall QXscore.\n    \n   _Compatibility:_\n  - Compatible with interaction\
+        \ tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n  - Go\
+        \ to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details.\n\n  _Note:_\n  - A _QXscore_ is a reliable benchmark metric for evaluating the\
+        \ quality of an experience. This composite score combines behavioral data from navigation tasks\
+        \ with attitudinal data from a standardized questionnaire to effectively balance participants'\
+        \ actions and opinions.  \n  [Learn more about QXscore](https://help.usertesting.com/hc/en-us/articles/22818008129565-QXscore).\n\
+        \ \n  _Use case example:_\n  - For an example on how to create a UX metrics dashboard with QXscore\
+        \ to track experience quality, go to [Build a UX Metrics Dashboard](https://developer.usertesting.com/v2.0/docs/ux-metrics-dashboard).\n"
+      operationId: TestResultsController_getQxScoreResponse
+      parameters:
+      - name: testId
+        required: true
+        in: path
+        description: ID of the Interaction test whose QXscore you want to retrieve.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: QXscore successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QxScoreResponseApi'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Test not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain QXscores for a test
+      tags:
+      - QXscore Data
+  /api/v2/testResults/{testId}/highlightreels/{reelId}:
+    get:
+      description: "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight\
+        \ reel is still being prepared, the response returns a status of `GENERATING` and no link. Call\
+        \ this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl`\
+        \ to download the highlight reel. The link is valid for 15 minutes; after it expires, call the\
+        \ endpoint again to get a new one.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\"\
+        \ type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic\
+        \ live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\"\
+        \ (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid)\
+        \ for details."
+      operationId: TestResultsController_getReelDetails
+      parameters:
+      - name: testId
+        required: true
+        in: path
+        description: ID of the test the highlight reel belongs to.
+        schema:
+          format: uuid
+          type: string
+      - name: reelId
+        required: true
+        in: path
+        description: ID of the highlight reel you want to download.
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          description: Highlight reel details successfully returned.
+          headers:
+            Cache-Control:
+              description: Caching policy for the response.
+              schema:
+                type: string
+                example: private, no-store
+            Pragma:
+              description: HTTP/1.0 backward compatibility for no-cache.
+              schema:
+                type: string
+                example: no-cache
+            Strict-Transport-Security:
+              description: Enforces secure (HTTP over SSL/TLS) connections to the server.
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            Content-Length:
+              description: The length of the response body in bytes.
+              schema:
+                type: integer
+                example: 256
+            Content-Type:
+              description: The MIME type of the returned response.
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            x-ratelimit-limit:
+              description: The maximum number of requests allowed in the current period.
+              schema:
+                type: integer
+                example: 10
+            x-ratelimit-remaining:
+              description: The number of requests remaining in the current period.
+              schema:
+                type: integer
+                example: 7
+            x-ratelimit-reset:
+              description: The time (in seconds) remaining in the current period until the rate limit
+                resets.
+              schema:
+                type: integer
+                example: 60
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReelDetailsResponseDto'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: Highlight reel not found.
+        '429':
+          description: Too many requests. Maximum of 10 requests per minute.
+      summary: Obtain a highlight reel download link
+      tags:
+      - Video Data
+components:
+  schemas:
+    ClipDetailsResponseDto:
+      type: object
+      properties:
+        clipUuid:
+          type: string
+          description: ID of the clip.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+        status:
+          type: string
+          description: 'Current state of the clip.
+
+            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a
+            new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        clipUrl:
+          type: string
+          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status
+            is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          nullable: true
+          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - clipUuid
+      - status
+    RegionType:
+      type: string
+      enum:
+      - SCREEN
+      - CAMERA
+      description: Primary stream shown for the clip.
+    PipPositionType:
+      type: string
+      enum:
+      - TOP_LEFT
+      - TOP_RIGHT
+      - BOTTOM_LEFT
+      - BOTTOM_RIGHT
+      description: Picture-in-picture position.
+    PipStateType:
+      type: string
+      enum:
+      - OPENED
+      - CLOSED
+      description: Picture-in-picture state.
+    ClipLayoutDto:
+      type: object
+      properties:
+        mainStream:
+          description: Primary stream shown for the clip.
+          example: SCREEN
+          allOf:
+          - $ref: '#/components/schemas/RegionType'
+        pipPosition:
+          description: Picture-in-picture position.
+          example: BOTTOM_RIGHT
+          allOf:
+          - $ref: '#/components/schemas/PipPositionType'
+        pipState:
+          description: Picture-in-picture state.
+          example: OPENED
+          allOf:
+          - $ref: '#/components/schemas/PipStateType'
+      required:
+      - mainStream
+      - pipPosition
+      - pipState
+    ClipDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the clip.
+          format: uuid
+          example: a0ff28a2-020b-4944-ab5a-ba035269641e
+        name:
+          type: string
+          description: Name of the clip.
+          example: 'Clip #1'
+        description:
+          type: string
+          description: Description of the clip.
+          example: Maurice's awesome review
+        timeStartMs:
+          type: number
+          description: Clip start time in milliseconds from the session start.
+          example: 3708
+        timeEndMs:
+          type: number
+          description: Clip end time in milliseconds from the session start.
+          example: 33708
+        videoUuid:
+          type: string
+          description: ID of the video session that contains the clip.
+          format: uuid
+          example: 5a1d8707-0cf1-47d4-86f3-7c7b8722921d
+        hasAudio:
+          type: boolean
+          description: Indicates whether the clip has audio.
+          example: true
+        hasCamera:
+          type: boolean
+          description: Indicates whether the clip has camera video.
+          example: false
+        layout:
+          description: Playback layout for the clip.
+          allOf:
+          - $ref: '#/components/schemas/ClipLayoutDto'
+      required:
+      - uuid
+      - name
+      - timeStartMs
+      - timeEndMs
+      - videoUuid
+      - hasAudio
+      - hasCamera
+    ClipPointDto:
+      type: object
+      properties:
+        x:
+          type: number
+          description: Horizontal coordinate in pixels.
+          example: 0
+        y:
+          type: number
+          description: Vertical coordinate in pixels.
+          example: 0
+      required:
+      - x
+      - y
+    ClipVideoRegionDto:
+      type: object
+      properties:
+        topLeftPoint:
+          description: Top-left point of the video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipPointDto'
+        widthPx:
+          type: number
+          description: Video region width in pixels.
+          example: 1920
+        heightPx:
+          type: number
+          description: Video region height in pixels.
+          example: 1080
+      required:
+      - widthPx
+      - heightPx
+    ClipVideoRegionsDto:
+      type: object
+      properties:
+        screen:
+          description: Screen video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+        camera:
+          description: Camera video region, when present.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+    ClipsResponseDto:
+      type: object
+      properties:
+        studyUuid:
+          type: string
+          description: ID of the test associated with the clip list.
+          format: uuid
+          example: e320c95c-2741-49bc-9e04-37b77d6fece3
+        clips:
+          description: Clips available for the session video.
+          type: array
+          items:
+            $ref: '#/components/schemas/ClipDto'
+        videoRegions:
+          description: Screen and camera video regions for the session video.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+      required:
+      - studyUuid
+      - clips
+    SessionSummaryResultItemDto:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: ID of the session.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f5751596ec
+        audienceId:
+          type: string
+          description: Identifier of the audience that the session participant belongs to. Null if session
+            has no assigned audience.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+          nullable: true
+        status:
+          type: string
+          description: Session completion status.
+          example: COMPLETE
+        startTime:
+          type: string
+          description: Timestamp representing when the session started. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:23:52.614Z'
+          format: date-time
+        finishTime:
+          type: string
+          description: Timestamp representing when the session finished. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:25:03.347Z'
+          format: date-time
+          nullable: true
+      required:
+      - sessionId
+      - status
+      - startTime
+    SessionSummaryPaginationDto:
+      type: object
+      properties:
+        limit:
+          type: number
+          description: Maximum number of sessions returned in the result set.
+          example: 25
+        offset:
+          type: number
+          description: Number of sessions skipped before starting to collect the result set.
+          example: 0
+        totalCount:
+          type: number
+          description: Total number of sessions within the test.
+          example: 1
+      required:
+      - limit
+      - offset
+      - totalCount
+    SessionSummaryResultsMetaDto:
+      type: object
+      properties:
+        pagination:
+          description: Pagination metadata for the response.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryPaginationDto'
+      required:
+      - pagination
+    SessionSummaryResultsResponseDto:
+      type: object
+      properties:
+        testId:
+          type: string
+          description: ID of the test queried for session summaries.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        sessions:
+          description: Collection of session summaries.
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionSummaryResultItemDto'
+        meta:
+          description: Response metadata.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryResultsMetaDto'
+      required:
+      - testId
+      - sessions
+      - meta
+    VideoDownloadResponseDto:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          description: Pre-signed URL to download the video file. Valid for one hour.
+          format: url
+          example: https://mock-bucket.s3.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000/session.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+        sessionId:
+          type: string
+          description: ID of the Interaction test session the video corresponds to.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        expiresAt:
+          format: date-time
+          type: string
+          description: Expiration timestamp of the video download URL. UTC time. ISO 8601 format.
+          example: '2025-10-01T12:00:00Z'
+      required:
+      - videoUrl
+      - sessionId
+      - expiresAt
+    DemographicInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the demographic question.
+          example: 3f1b8c2e-9a44-4c3d-b8b7-1a7f4c0a9d21
+          nullable: true
+        code:
+          type: string
+          description: 'Code or key identifying the demographic question category. For example: GENDER,
+            AGE_GROUP, INTERESTS, or INCOME.'
+          example: GENDER
+          nullable: true
+        label:
+          type: string
+          description: Human-readable label for the demographic question.
+          example: What is your gender?
+          nullable: true
+        value:
+          type: string
+          description: Answer(s) selected by the participant. Multiple values are separated by commas.
+          example: Male
+          nullable: true
+        type:
+          type: string
+          description: The question choice type. For example, single or multiple choice.
+          example: DEMOGRAPHIC_QUESTION_TYPE_SINGLE
+          enum:
+          - DEMOGRAPHIC_QUESTION_TYPE_SINGLE
+          - DEMOGRAPHIC_QUESTION_TYPE_MULTIPLE
+          - UNRECOGNIZED
+          nullable: true
+      required:
+      - id
+      - code
+      - label
+      - value
+      - type
+    SessionParticipantDto:
+      type: object
+      properties:
+        participantId:
+          type: string
+          description: ID of the participant.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+          nullable: true
+        demographicsInfo:
+          description: Demographic questions and answers.
+          type: array
+          items:
+            $ref: '#/components/schemas/DemographicInfoDto'
+      required:
+      - participantId
+      - demographicsInfo
+    TaskGroupResponseQxScoreDto:
+      type: object
+      properties:
+        score:
+          type: number
+          description: The participant's QXscore (0-100).
+          example: 85
+      required:
+      - score
+    TaskGroupResponseBalancedComparisonDto:
+      type: object
+      properties:
+        sequence:
+          type: string
+          description: Order in which the participant saw the comparison groups.
+          example: BA
+      required:
+      - sequence
+    TaskGroupItemDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the task group.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        type:
+          type: string
+          description: Type of the task group.
+          enum:
+          - QX_SCORE
+          - BALANCED_COMPARISON
+          - UNRECOGNIZED
+          example: QX_SCORE
+        response:
+          description: "Type-specific response payload. Shape is determined by \"type\": \n  - QX_SCORE\
+            \ → { score }\n  - BALANCED_COMPARISON → { sequence }."
+          oneOf:
+          - $ref: '#/components/schemas/TaskGroupResponseQxScoreDto'
+          - $ref: '#/components/schemas/TaskGroupResponseBalancedComparisonDto'
+          nullable: true
+      required:
+      - uuid
+      - type
+      - response
+    TaskAnswerDto:
+      type: object
+      properties:
+        blank:
+          type: object
+          nullable: true
+          description: Simple placeholder task. Baseline for test creation.
+        ratingScale:
+          type: object
+          nullable: true
+          description: Likert-style rating scales.
+        multipleChoice:
+          type: object
+          nullable: true
+          description: Supports single-select and multi-select options. Includes multiSelect, randomizedOptions,
+            and maxLimit metadata when available.
+        image:
+          type: object
+          nullable: true
+          description: Displays an image in the study. Common in survey-style workflows.
+        nps:
+          type: object
+          nullable: true
+          description: Captures Net Promoter Score (0-10).
+        url:
+          type: object
+          nullable: true
+          description: Opens an external URL.
+        rankOrder:
+          type: object
+          nullable: true
+          description: 'Users rank options (for example: Chocolate, Strawberry, Vanilla, Mint Chocolate).'
+        written:
+          type: object
+          nullable: true
+          description: Captures spoken responses (think-aloud).
+        figma:
+          type: object
+          nullable: true
+          description: Embeds interactive Figma prototypes. Metadata includes prototypeUrl, figmaPrototypeTitle,
+            and figmaPrototypeDisplaySetting.
+        matrix:
+          type: object
+          nullable: true
+          description: Grid-style question for rating multiple items.
+    TaskResponseDataDto:
+      type: object
+      properties:
+        startTimeMs:
+          type: number
+          description: Task start time (ms since session start).
+          example: 15000
+        endTimeMs:
+          type: number
+          description: Task end time (ms since session start).
+          example: 20000
+        skipped:
+          type: boolean
+          description: Whether the participant skipped the task.
+          example: false
+        answer:
+          description: Task-type-specific answer payload.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/TaskAnswerDto'
+      required:
+      - startTimeMs
+      - endTimeMs
+      - skipped
+      - answer
+    TaskItemDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the task.
+          format: uuid
+          example: 12debc51-0948-4d2e-9abe-9844ddd5c5ff
+        text:
+          type: string
+          description: Task prompt text.
+          example: Rate Website A
+        type:
+          type: string
+          description: "Type of the task.\n  \n  - BLANK: Simple placeholder task. Baseline for test creation.\n\
+            \  - RATING_SCALE: Likert-style rating scales.\n  - MULTIPLE_CHOICE: Supports single-select\
+            \ and multi-select options. Includes multiSelect, randomizedOptions, and maxLimit metadata\
+            \ when available.\n  - IMAGE: Displays an image in the study. Common in survey-style workflows.\n\
+            \  - NPS: Captures Net Promoter Score (0-10).\n  - URL: Opens an external URL.\n  - RANK_ORDER:\
+            \ Users rank options (for example: Chocolate, Strawberry, Vanilla, Mint Chocolate).\n  - WRITTEN:\
+            \ Captures spoken responses (think-aloud).\n  - FIGMA: Embeds interactive Figma prototypes.\
+            \ Metadata includes prototypeUrl, figmaPrototypeTitle, and figmaPrototypeDisplaySetting.\n\
+            \  - MATRIX: Grid-style question for rating multiple items."
+          enum:
+          - BLANK
+          - RATING_SCALE
+          - MULTIPLE_CHOICE
+          - IMAGE
+          - NPS
+          - URL
+          - RANK_ORDER
+          - WRITTEN
+          - FIGMA
+          - MATRIX
+          - UNRECOGNIZED
+          example: RATING_SCALE
+        response:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/TaskResponseDataDto'
+      required:
+      - uuid
+      - text
+      - type
+      - response
+    SessionResultsV3ResponseDto:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: ID of the session.
+          format: uuid
+          example: f3c00502-256d-4693-b1b3-7dbd7eb64ca9
+          nullable: true
+        audienceId:
+          type: string
+          description: ID of the audience.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+          nullable: true
+        testPlanId:
+          type: string
+          description: ID of the test plan.
+          format: uuid
+          example: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+          nullable: true
+        sessionParticipant:
+          description: Participant ID and their demographic information.
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SessionParticipantDto'
+        taskGroups:
+          description: List of task groups and their responses. May be empty if the session has no task
+            groups.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskGroupItemDto'
+        tasks:
+          description: List of individual tasks and their responses. May be empty if the session has no
+            tasks.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskItemDto'
+      required:
+      - sessionId
+      - audienceId
+      - testPlanId
+      - sessionParticipant
+      - taskGroups
+      - tasks
+    HighlightReelDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        name:
+          type: string
+          description: Name of the highlight reel.
+          example: Checkout highlights
+        durationMs:
+          type: number
+          description: Highlight reel duration in milliseconds.
+          example: 120000
+        lastUpdatedAtMs:
+          type: number
+          description: Timestamp of the last highlight reel update in milliseconds.
+          example: 1766051123000
+        numClips:
+          type: number
+          description: Number of clips in the highlight reel.
+          example: 4
+        areAllClipsInReel:
+          type: boolean
+          description: Indicates whether all study clips are included in the reel.
+          example: true
+      required:
+      - uuid
+      - name
+      - durationMs
+      - lastUpdatedAtMs
+      - numClips
+      - areAllClipsInReel
+    HighlightReelsResponseDto:
+      type: object
+      properties:
+        reels:
+          description: Highlight reels available for the study.
+          type: array
+          items:
+            $ref: '#/components/schemas/HighlightReelDto'
+        studyWithClips:
+          type: boolean
+          description: Indicates whether the study has clips available.
+          example: true
+      required:
+      - reels
+      - studyWithClips
+    QxScoreComponentsDto:
+      type: object
+      properties:
+        behavioral:
+          type: number
+          description: The average percentage obtained from sessions (participants) of the QXscore's behavioral
+            component.
+          minimum: 0
+          maximum: 100
+          nullable: true
+          example: null
+        attitudinal:
+          type: number
+          description: The average percentage obtained from sessions (participants) of the QXscore's attitudinal
+            component.
+          minimum: 0
+          maximum: 100
+          example: 50
+      required:
+      - behavioral
+      - attitudinal
+    QxScoreValuesDto:
+      type: object
+      properties:
+        behavioral:
+          description: Array that represents the navigational task scores used to calculate the behavioral
+            component.
+          nullable: true
+          example: null
+          type: array
+          items:
+            type: number
+        usability:
+          type: number
+          description: Represents the usability score used to calculate the attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+        trust:
+          type: number
+          description: Represents the trust score used to calculate the attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+        appearance:
+          type: number
+          description: Represents the appearance score used to calculate the attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+        loyalty:
+          type: number
+          description: Represents the loyalty score used to calculate the attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+      required:
+      - behavioral
+      - usability
+      - trust
+      - appearance
+      - loyalty
+    QxScoreItemDto:
+      type: object
+      properties:
+        taskGroupId:
+          type: string
+          description: UUID of a QX task group within the test that contains a set of navigational tasks
+            and questions used to measure to the QXscore.
+          example: b1e2c3d4-5678-1234-9abc-def012345678
+        label:
+          type: string
+          description: Label for the QX task group.
+          example: QXscore 1
+        qxScore:
+          type: number
+          description: The aggregate score computed from all sessions (participants) that completed the
+            QX task group within the test.
+          minimum: 0
+          maximum: 100
+          nullable: true
+          example: null
+        components:
+          description: The behavioral and attitudinal QXscore components used to calculate the overall
+            QXscore.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreComponentsDto'
+        values:
+          description: Detailed QXscore subcomponent values obtained from session (participant) averages
+            used to calculate the behavioral and attitudinal components.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreValuesDto'
+      required:
+      - taskGroupId
+      - label
+      - qxScore
+      - components
+      - values
+    QxScoreMetaDto:
+      type: object
+      properties:
+        totalQxTasks:
+          type: number
+          description: Total number of QX task groups.
+          example: 1
+        completes:
+          type: number
+          description: Number of completed sessions.
+          example: 2
+      required:
+      - totalQxTasks
+      - completes
+    QxScoreResponseApi:
+      type: object
+      properties:
+        testId:
+          type: string
+          description: UUID of the test.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        qxScores:
+          description: List of QXscore results for each QX task group within the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/QxScoreItemDto'
+        meta:
+          description: Metadata about the QXscore calculation.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreMetaDto'
+      required:
+      - testId
+      - qxScores
+      - meta
+    ReelDetailsResponseDto:
+      type: object
+      properties:
+        reelId:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        status:
+          type: string
+          description: 'Current state of the highlight reel.
+
+            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again
+            to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        reelUrl:
+          type: string
+          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when
+            the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          nullable: true
+          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - reelId
+      - status
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Go to [Authorization](https://developer.usertesting.com/v1.0/docs/authentication-authorization)
+        for information on how to generate an access token.
+security:
+- bearerAuth: []
+tags:
+- name: Video Data
+  description: Access session video data, including transcripts, video download links, clips, and highlight
+    reels.
+- name: General Session Data
+  description: Retrieve session summaries and detailed session results from a test.
+- name: QXscore Data
+  description: Access Quality of Experience Scores (QXscores) calculated from a test's completed sessions.

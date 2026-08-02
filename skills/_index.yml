@@ -1,0 +1,20 @@
+generated: '2026-07-21'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the UserTesting Results API (v2) OpenAPI assembled from
+  developer.usertesting.com. Every operationId is verified verbatim in
+  ../openapi/usertesting-results-v2-openapi.yml; cross-cutting rules cite ../conventions/,
+  ../errors/, ../rate-limits/ and ../authentication/.
+skills:
+- file: usertesting-pull-test-session-results.md
+  name: Pull all session results for a test
+  api: openapi/usertesting-results-v2-openapi.yml
+  operations: [SessionResultsController_getSessionSummaryResults, SessionResultsV3Controller_getSessionResults]
+- file: usertesting-download-session-media.md
+  name: Download session videos, transcripts, and clips
+  api: openapi/usertesting-results-v2-openapi.yml
+  operations: [SessionResultsController_getTranscriptVtt, SessionResultsController_getVideoDownloadUrl, SessionResultsController_getClips, SessionResultsController_getClipDetails]
+- file: usertesting-qxscore-and-highlight-reels.md
+  name: Track QXscore and export highlight reels
+  api: openapi/usertesting-results-v2-openapi.yml
+  operations: [TestResultsController_getQxScoreResponse, TestResultsController_getHighlightReels, TestResultsController_getReelDetails]

@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.usertesting.com/resources/product-releases/whats-new
+docs: https://www.usertesting.com/resources/product-releases/whats-new
+scope: >-
+  UserTesting publishes dated monthly product releases for the platform (What's New + Latest
+  release + Previous releases). The developer portal (ReadMe) exposes no separate dated API
+  changelog; API-affecting changes (e.g. the MCP server) surface through these product
+  releases.
+versioning:
+  scheme: monthly product releases (e.g. "July 2026")
+  current: July 2026
+  detail: lifecycle/usertesting-lifecycle.yml
+entries:
+- version: July 2026
+  url: https://www.usertesting.com/resources/product-releases/july-2026
+  latest: true
+  breaking: false
+  highlights:
+  - 'MCP Server (early access): connect UserTesting to Claude, ChatGPT, Figma Make, and other
+    MCP clients to recruit participants, launch studies, and bring customer context into AI
+    workflows'
+  - 'User Interviews recruiting: access User Interviews participants directly in UserTesting,
+    including B2B and niche audiences, with flexible incentives and verified targeting'
+  - 'Figma plugin: AI-powered prototype feedback without leaving Figma; multi-step journeys
+    across up to four flows plus comprehension and findability testing'
+  - 'New test capabilities: split testing to compare design directions, nav task continuity
+    for multi-step flows, and deeper card sort insights'
+  - 'Saved participants: save trusted participants and invite them into future studies'

@@ -1,0 +1,77 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developer.usertesting.com/docs/getting-started and
+  https://developer.usertesting.com/docs/authorization plus the OpenAPI assembled in
+  openapi/usertesting-results-v2-openapi.yml — cross-cutting request/response semantics of the
+  UserTesting Results API (v2) and Legacy endpoints (v1).
+description: >-
+  How the UserTesting APIs behave across operations: OAuth 2.0 client-credentials
+  authentication with hour-long bearer JWTs, offset/limit pagination with a meta.pagination
+  envelope, path-based versioning (v1 legacy, v2/v3 current), simple error envelopes, and
+  x-ratelimit-* rate-limit signaling. The public surface is read-only (GET), so there is no
+  idempotency-key contract; retries of any request are safe by design.
+
+base_url: https://api.use2.usertesting.com
+api_style: REST over HTTPS, JSON responses (plus WebVTT text for transcripts)
+
+authentication:
+  scheme: OAuth 2.0 client credentials -> Bearer JWT access token
+  token_endpoint: https://auth.usertesting.com/oauth2/aus1p3vtd8vtm4Bxv0h8/v1/token
+  token_lifetime_seconds: 3600
+  scope: studies:read
+  credentials_issuance: client_id/client_secret issued by support@usertesting.com per registered API user
+  docs: https://developer.usertesting.com/docs/authorization
+  detail: authentication/usertesting-authentication.yml
+
+idempotency:
+  supported: false
+  note: >-
+    All published v1/v2/v3 operations are GET (read-only) and therefore inherently idempotent;
+    no Idempotency-Key header or replay contract is documented.
+
+pagination:
+  style: offset-limit
+  request_params: [limit, offset]
+  limits: {limit: '1-500 (default 25)', offset: '0-10000 (default 0)'}
+  response_fields: [meta.pagination.limit, meta.pagination.offset, meta.pagination.totalCount]
+  ordering: sessions are returned newest to oldest
+  docs: https://developer.usertesting.com/reference/sessionresultscontroller_getsessionsummaryresults
+
+field_expansion:
+  supported: false
+
+metadata:
+  supported: false
+
+request_tracing:
+  header: null
+  note: no request-id/trace header is documented in the reference
+
+versioning:
+  scheme: uri-path (/api/v2, /api/v3 on the Results API; /v1 on the legacy Integrations service)
+  current: v2 (with a v3 session-details endpoint); v1 is legacy for classic test types
+  detail: lifecycle/usertesting-lifecycle.yml
+
+error_envelope:
+  v2: >-
+    4xx responses are documented with status + description only (401 "Missing or invalid
+    access token", 404 "Test not found", 400 validation, 429 throttling); no JSON problem body
+    is published in the spec.
+  v1: '{errorCode, errorMessage} (HttpErrorResponse schema), e.g. {"errorCode": "BAD_REQUEST", "errorMessage": "Not a valid UUID"}'
+  detail: errors/usertesting-problem-types.yml
+
+rate_limiting:
+  signal: x-ratelimit-limit / x-ratelimit-remaining / x-ratelimit-reset response headers + 429
+  documented_limit: 10 requests per minute (Results API v2)
+  detail: rate-limits/usertesting-rate-limits.yml
+
+download_urls:
+  pattern: >-
+    Video, clip, and highlight-reel media are returned as temporary pre-signed URLs: video
+    download URLs are valid for 1 hour; clip and reel URLs are valid 15 minutes and are only
+    returned once asset status transitions GENERATING -> GENERATED (poll every few seconds).
+
+transport_security:
+  hsts: 'Strict-Transport-Security: max-age=31536000; includeSubDomains documented on 200 responses'
+  caching: 'Cache-Control: private, no-store documented on 200 responses'

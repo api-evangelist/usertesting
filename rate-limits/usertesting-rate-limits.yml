@@ -1,0 +1,33 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: UserTesting
+providerId: usertesting
+generated: '2026-07-21'
+method: derived
+created: '2026-07-21'
+modified: '2026-07-21'
+tags:
+- Rate Limiting
+- UX Research
+description: >-
+  Rate limits documented in the Results API (v2) OpenAPI published on
+  developer.usertesting.com. Every operation documents a 429 response of "Too many requests.
+  Maximum of 10 requests per minute." and 200 responses declare x-ratelimit-limit,
+  x-ratelimit-remaining, and x-ratelimit-reset response headers.
+sources:
+- openapi/usertesting-results-v2-openapi.yml
+- https://developer.usertesting.com/reference
+headers:
+  limit: x-ratelimit-limit
+  remaining: x-ratelimit-remaining
+  reset: x-ratelimit-reset
+responseCodes:
+  throttled: 429
+limits:
+- name: Results API (v2) requests
+  scope: client
+  metric: requests_per_minute
+  limit: 10
+  timeFrame: minute
+  source: 429 response description on every v2/v3 operation
