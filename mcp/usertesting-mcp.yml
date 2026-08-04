@@ -1,6 +1,7 @@
 generated: '2026-07-21'
 method: searched
-status: early-access
+status: gated
+status_raw: early-access
 source: https://www.usertesting.com/platform/mcp-server
 description: >-
   UserTesting ships an official MCP server, currently in limited early access. Per the product
