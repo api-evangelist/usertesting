@@ -29,7 +29,7 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-21'
 image: https://dka575ofm4ao0.cloudfront.net/pages-favicon_logos/original/880/U-Glyph-with_R_RGB_Blue_2x.png
