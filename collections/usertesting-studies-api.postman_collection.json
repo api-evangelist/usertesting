@@ -1,0 +1,725 @@
+{
+  "item": [
+    {
+      "id": "bfd04beb-0bb1-4b86-a1a1-15cb79e3fdcb",
+      "name": "Studies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fc384fac-c5da-4e51-80db-00856f257413",
+          "name": "Retrieve all sessions in a study",
+          "request": {
+            "name": "Retrieve all sessions in a study",
+            "description": {
+              "content": "Fetch all completed sessions for a study identified by UUID. Returns comprehensive session data including participant information (name, demographics), screener responses, task answers with transcripts, session state, and completion timestamps. Use pagination with cursor for large result sets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "studies",
+                ":studyUuid",
+                "completed-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the next 50 results following the indicated study."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the 50 results preceding the indicated study."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "studyUuid",
+                  "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff76d95d-110f-4485-8930-408b5e6288d3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid",
+                    "completed-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"completedSessionCount\": 4,\n  \"sessions\": [\n    {\n      \"cursor\": \"MQ\",\n      \"sessionId\": 15280,\n      \"sessionUuid\": \"3339d946-3b60-4f09-8433-a2a7598d5d26\",\n      \"completedDateTime\": \"2023-11-30T11:24:58Z\",\n      \"participant\": {\n        \"name\": \"participant@example.com\",\n        \"demographics\": {\n          \"age\": 34,\n          \"children\": [\n            \"No children\"\n          ],\n          \"country\": \"United States\",\n          \"income\": \"$60,000 - $79,999\",\n          \"socialNetworks\": [\n            \"LinkedIn\",\n            \"Facebook\"\n          ],\n          \"gender\": \"Female\",\n          \"webExpertise\": \"Intermediate\",\n          \"companySize\": \"1,001-5,000 employees\",\n          \"employmentStatus\": \"Employed full-time (30 or more hours per week)\",\n          \"industry\": \"Financial Services\",\n          \"jobFunction\": \"Finance\",\n          \"seniority\": \"Senior\"\n        }\n      },\n      \"state\": \"completed\",\n      \"taskOrderingCondition\": \"default\",\n      \"formFactorUsed\": \"Computer\",\n      \"answers\": [\n        {\n          \"time\": 0,\n          \"duration\": 51,\n          \"url\": \"https://example.usertesting.com/v/3339d946-3b60-4f09-8433-a2a7598d5d26?start=0\",\n          \"transcript\": \"I am looking for pricing information before I continue.\",\n          \"type\": \"multiple_choice\",\n          \"responses\": [\n            \"Poland\",\n            \"Singapore\"\n          ]\n        }\n      ],\n      \"screenerResponses\": [\n        {\n          \"question\": \"What country do you live in?\",\n          \"response\": [\n            \"United States\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c1378df-494d-4db0-9dee-97e156540214",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid",
+                    "completed-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cf2aa33-538c-46e4-b3ce-d96a50878336",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid",
+                    "completed-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6047a1fd-d328-4a1a-aad0-22c7fb85096d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid",
+                    "completed-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42c88341-07b5-41f0-9bf5-0dc5bfa8a286",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid",
+                    "completed-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b97796c2-6c42-4dbf-975e-609e8ee0dd3d",
+          "name": "Retrieve study metadata and configuration",
+          "request": {
+            "name": "Retrieve study metadata and configuration",
+            "description": {
+              "content": "Fetch detailed information for a study (test) identified by UUID. Returns study configuration including title, session count, task definitions, test plan settings, and Net Promoter Score (NPS) data if available. Studies represent the overall test structure that participants complete.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "studies",
+                ":studyUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "studyUuid",
+                  "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16cd0747-27de-4c29-8b89-a8dad188bc43",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"netPromoterScores\": [\n    {\n      \"detractorPercentage\": 18,\n      \"passivePercentage\": 26,\n      \"promoterPercentage\": 56,\n      \"score\": 38\n    }\n  ],\n  \"orderedBy\": {\n    \"email\": \"support@usertesting.com\",\n    \"name\": \"UT Employee\"\n  },\n  \"sessionCount\": 50,\n  \"tasks\": [\n    {\n      \"blurPII\": false,\n      \"choices\": [\n        \"Poland\",\n        \"Singapore\"\n      ],\n      \"grouping\": \"INITIAL\",\n      \"launchUrl\": \"https://www.microsoft.com/en-us\",\n      \"lowerEndpoint\": \"Very difficult\",\n      \"multipleAnswers\": true,\n      \"position\": 1,\n      \"resultType\": \"\",\n      \"scaleMaximum\": 5,\n      \"scaleMinimum\": 1,\n      \"taskGroup\": {\n        \"type\": \"MAIN\"\n      },\n      \"taskType\": \"multiple_choice\",\n      \"text\": \"ACME offices are located in:\",\n      \"upperEndpoint\": \"Very easy\"\n    }\n  ],\n  \"testPlan\": {\n    \"shortTest\": false\n  },\n  \"title\": \"ACME Test\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f121a149-af74-4040-a23b-8fadf3c45920",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e8677d0-40a0-45c9-8a6d-7ce44e2cb877",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c96391d0-ad0d-4360-bb8a-e48a2c3266ff",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86171048-2ab1-4322-9763-182f395a3380",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "studies",
+                    ":studyUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "studyUuid",
+                      "description": "(Required) [UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.use2.usertesting.com/usertesting/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "960a45b8-a6dd-4c36-8c4c-b3fb69bcd1d8",
+    "name": "Integrations (v1) Clip Studies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+      "type": "text/plain"
+    }
+  }
+}

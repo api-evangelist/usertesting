@@ -3,14 +3,12 @@ method: searched
 status: gated
 status_raw: early-access
 source: https://www.usertesting.com/platform/mcp-server
-description: >-
-  UserTesting ships an official MCP server, currently in limited early access. Per the product
-  page, it connects UserTesting to Claude, ChatGPT, Figma Make, and other MCP clients so teams
-  can recruit participants, create studies, and launch tests from inside the AI workflow.
-  Participant recruiting is powered through UserTesting and User Interviews. No public endpoint
-  URL or tool list is published yet; access is requested through the early-access form. The
-  capabilities below are captured verbatim from the product page, not a published tool
-  manifest.
+description: UserTesting ships an official MCP server, currently in limited early access. Per the product
+  page, it connects UserTesting to Claude, ChatGPT, Figma Make, and other MCP clients so teams can recruit
+  participants, create studies, and launch tests from inside the AI workflow. Participant recruiting is
+  powered through UserTesting and User Interviews. No public endpoint URL or tool list is published yet;
+  access is requested through the early-access form. The capabilities below are captured verbatim from
+  the product page, not a published tool manifest.
 server:
   name: usertesting
   transport: null
@@ -26,8 +24,15 @@ capabilities:
 - create studies
 - launch tests
 notes:
-- Announced as a "Popular features" item in the main site navigation and in the July 2026
-  product release ("Human insight, wherever you work").
-- The Results API (v2) OpenAPI in openapi/usertesting-results-v2-openapi.yml covers the
-  results/read surface an MCP integration would poll; the early-access MCP server adds
-  study-creation and recruiting actions not present in the public REST reference.
+- Announced as a "Popular features" item in the main site navigation and in the July 2026 product release
+  ("Human insight, wherever you work").
+- The Results API (v2) OpenAPI in openapi/usertesting-results-v2-openapi.yml covers the results/read surface
+  an MCP integration would poll; the early-access MCP server adds study-creation and recruiting actions
+  not present in the public REST reference.
+deployment:
+  mode: remote
+  endpoint: https://www.usertesting.com/mcp-server-form
+  verified: probed
+  probe: not-mcp
+  checked: '2026-08-12'
+  source: catalog MCP census

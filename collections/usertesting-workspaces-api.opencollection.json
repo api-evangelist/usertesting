@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip Workspaces API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List studies in a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/workspaces/:workspaceUuid",
+            "params": [
+              {
+                "name": "workspaceUuid",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the next 50 results following the indicated study."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the 50 results preceding the indicated study."
+              }
+            ]
+          },
+          "docs": "Fetch all studies (tests) in a workspace identified by UUID. Returns summary information for each study including title, UUID, creation date, and the user who created it. The response returns up to 50 studies per page. Use pagination with cursor for large workspaces.\n\n**Note**: When using this endpoint to retrieve v2 compatible studies, keep in mind that _studies_ are referred to as _tests_ in both the UserTesting Platform and in the v2 API."
+        },
+        {
+          "info": {
+            "name": "List all accessible workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/workspaces"
+          },
+          "docs": "Returns all workspaces that the authenticated user has access to. In UserTesting Platform, workspaces organize teams and control access to resources across projects. Tests, drafts, templates, and highlight reels belong to one or more workspaces. A user must have workspace access to view those resources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

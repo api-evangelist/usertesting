@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip General Session Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "General Session Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find all sessions in a test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/sessionResults",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the test containing the sessions."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of sessions to return in the result set."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of sessions to skip before starting to collect the result set."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of summaries for each completed session in a test. Each summary includes the session ID, status, and timestamps. \n\n  In the response, sessions are sorted in descending order, i.e., from newest to oldest.\n  \n  _Compatibility:_\n  - All tests with the \"STUDYV2\" type are compatible. These include tests with the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_"
+        },
+        {
+          "info": {
+            "name": "Retrieve session details (v3)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v3/sessionResults/:sessionId",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a session, including participant demographics, task-group metadata, and individual task responses.\n\n  _Compatibility:_\n  - All sessions found within tests with the \"STUDYV2\" type are compatible. These include tests from the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test)\n  - Go to [How to Obtain a Test ID (UUID)]("
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

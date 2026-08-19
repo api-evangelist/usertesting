@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip QXscore Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "QXscore Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain QXscores for a test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/testResults/:testId/qxScores",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the Interaction test whose QXscore you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Calculates the Quality of Experience Score (QXscore) for an [Interaction test](https://help.usertesting.com/hc/en-us/articles/23596817555101-Interaction-tests) based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.\n    \n   _Compatibility:_\n  - Compatible with interaction tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.us"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

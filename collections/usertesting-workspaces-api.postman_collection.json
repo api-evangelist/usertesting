@@ -1,0 +1,621 @@
+{
+  "item": [
+    {
+      "id": "0767ab57-3951-4567-b90b-8ba90a34812c",
+      "name": "Workspaces",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8ab9cb11-1d41-4393-b37e-bfda3c5ca27d",
+          "name": "List studies in a workspace",
+          "request": {
+            "name": "List studies in a workspace",
+            "description": {
+              "content": "Fetch all studies (tests) in a workspace identified by UUID. Returns summary information for each study including title, UUID, creation date, and the user who created it. The response returns up to 50 studies per page. Use pagination with cursor for large workspaces.\n\n**Note**: When using this endpoint to retrieve v2 compatible studies, keep in mind that _studies_ are referred to as _tests_ in both the UserTesting Platform and in the v2 API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workspaces",
+                ":workspaceUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the next 50 results following the indicated study."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the 50 results preceding the indicated study."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceUuid",
+                  "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02f1131c-4d94-4cd4-b33f-bcf3c20d5fbe",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces",
+                    ":workspaceUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceUuid",
+                      "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"cursor\": \"MQ\",\n    \"orderedAt\": \"2023-11-30T11:07:16Z\",\n    \"orderedBy\": {\n      \"email\": \"support@usertesting.com\",\n      \"name\": \"UT Employee\"\n    },\n    \"productType\": \"insight_core\",\n    \"title\": \"ACME Test\",\n    \"type\": \"web\",\n    \"uuid\": \"ef333003-697b-4add-b19a-8e8e37f8d8b8\"\n  },\n  {\n    \"cursor\": \"MQ\",\n    \"orderedAt\": \"2023-11-30T11:07:16Z\",\n    \"orderedBy\": {\n      \"email\": \"support@usertesting.com\",\n      \"name\": \"UT Employee\"\n    },\n    \"productType\": \"insight_core\",\n    \"title\": \"ACME Test\",\n    \"type\": \"web\",\n    \"uuid\": \"ef333003-697b-4add-b19a-8e8e37f8d8b8\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7b7cd02-ea51-4b5b-b181-96292bbe4b03",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces",
+                    ":workspaceUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceUuid",
+                      "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fd80ddb-c8a9-47c1-8c0c-d007e23c0572",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces",
+                    ":workspaceUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceUuid",
+                      "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4a14704-be90-4564-86d9-db7688d05f9c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces",
+                    ":workspaceUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceUuid",
+                      "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14224daf-4e35-4b23-93a4-658da30acd0e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces",
+                    ":workspaceUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceUuid",
+                      "description": "(Required) The UUID of the workspace you want to obtain information for. You can obtain this UUID by querying the [Get Workspaces endpoint](https://developer.usertesting.com/v1.0_test/reference/get_v1-workspaces)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f140cfaf-153b-4f76-931b-580b7a9e984d",
+          "name": "List all accessible workspaces",
+          "request": {
+            "name": "List all accessible workspaces",
+            "description": {
+              "content": "Returns all workspaces that the authenticated user has access to. In UserTesting Platform, workspaces organize teams and control access to resources across projects. Tests, drafts, templates, and highlight reels belong to one or more workspaces. A user must have workspace access to view those resources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workspaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54f4cac3-5b4a-4105-b11e-71ccc77de40e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"Research Team Workspace\",\n    \"uuid\": \"ef333003-697b-4add-b19a-8e8e37f8d8b8\"\n  },\n  {\n    \"name\": \"Research Team Workspace\",\n    \"uuid\": \"ef333003-697b-4add-b19a-8e8e37f8d8b8\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3497a3d5-c213-49c0-a2ca-40a22d798a83",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c486688b-418f-4931-bab8-7dfe7c9c65ba",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96186bad-5c2d-4fe9-bbac-aa9c51e2bf01",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.use2.usertesting.com/usertesting/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9bc611f9-d1d8-4f61-8b1a-cf3d1c6165b7",
+    "name": "Integrations (v1) Clip Workspaces API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+      "type": "text/plain"
+    }
+  }
+}

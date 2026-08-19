@@ -1,0 +1,351 @@
+{
+  "item": [
+    {
+      "id": "f89dcc34-ef98-47c7-88d8-047526e8c6eb",
+      "name": "Clip",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5f4c1aec-f498-4813-af47-13447de921d1",
+          "name": "Retrieve a video clip",
+          "request": {
+            "name": "Retrieve a video clip",
+            "description": {
+              "content": "Clip API allows you to build rich previews and embed clips containing meaningful insights in your solutions. \n\nThe endpoint returns an embeddable video player link and metadata for a single clip.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "clip",
+                ":clipUuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clipUuid",
+                  "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "435039ea-fa61-4c5a-89e9-87d3a2238c33",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "clip",
+                    ":clipUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clipUuid",
+                      "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"typeName\": \"Clip\",\n  \"createdAt\": \"2024-05-01T14:32:18Z\",\n  \"duration\": 27,\n  \"embeddableUrl\": \"https://app.usertesting.com/player/clip/3339d946-3b60-4f09-8433-a2a7598d5d26?embed=true\",\n  \"isImportant\": false,\n  \"note\": \"Participant struggled to find the pricing page.\",\n  \"noteTags\": [\n    \"pricing\",\n    \"navigation\"\n  ],\n  \"securePoster\": \"https://cdn.usertesting.com/posters/3339d946-3b60-4f09-8433-a2a7598d5d26.jpg\",\n  \"sentimentTag\": \"negative\",\n  \"study\": {\n    \"title\": \"Checkout Flow Validation\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b20b37ae-b439-405e-9281-d7a1c9de9b48",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "clip",
+                    ":clipUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clipUuid",
+                      "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9e9cdab-7c91-4107-9896-9635bce9a275",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "clip",
+                    ":clipUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clipUuid",
+                      "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc2a2590-ef8a-479b-8430-dfe08ca21c85",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "clip",
+                    ":clipUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clipUuid",
+                      "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c29f3fb6-44be-4228-8a11-10f777c15b4e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "clip",
+                    ":clipUuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clipUuid",
+                      "description": "(Required) [UUID of the clip](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#clip-uuids) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.use2.usertesting.com/usertesting/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3a458eff-aca0-44da-a63d-bcbeef2db87c",
+    "name": "Integrations (v1) Clip API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+      "type": "text/plain"
+    }
+  }
+}

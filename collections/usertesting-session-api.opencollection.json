@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip Session API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve session metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/session/:sessionUuid",
+            "params": [
+              {
+                "name": "sessionUuid",
+                "value": "",
+                "type": "path",
+                "description": "[UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
+              }
+            ]
+          },
+          "docs": "Returns session metadata. \n\nA session is an individual participant taking a test (also known as a launched study)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

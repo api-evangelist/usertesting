@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip Studies API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Studies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all sessions in a study",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/studies/:studyUuid/completed-sessions",
+            "params": [
+              {
+                "name": "studyUuid",
+                "value": "",
+                "type": "path",
+                "description": "[UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the next 50 results following the indicated study."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for paginating through study results. Use the `cursor` value from a previous response to retrieve the 50 results preceding the indicated study."
+              }
+            ]
+          },
+          "docs": "Fetch all completed sessions for a study identified by UUID. Returns comprehensive session data including participant information (name, demographics), screener responses, task answers with transcripts, session state, and completion timestamps. Use pagination with cursor for large result sets."
+        },
+        {
+          "info": {
+            "name": "Retrieve study metadata and configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/studies/:studyUuid",
+            "params": [
+              {
+                "name": "studyUuid",
+                "value": "",
+                "type": "path",
+                "description": "[UUID of the study](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#study-uuids) you want to obtain information for."
+              }
+            ]
+          },
+          "docs": "Fetch detailed information for a study (test) identified by UUID. Returns study configuration including title, session count, task definitions, test plan settings, and Net Promoter Score (NPS) data if available. Studies represent the overall test structure that participants complete."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

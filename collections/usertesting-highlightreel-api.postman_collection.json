@@ -1,0 +1,298 @@
+{
+  "item": [
+    {
+      "id": "8cb025c6-8605-46d6-a762-ddc8b1873dfb",
+      "name": "Highlightreel",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6d951d03-71d0-4be5-b367-cb0c487166f4",
+          "name": "Retrieve a highlight reel with clips",
+          "request": {
+            "name": "Retrieve a highlight reel with clips",
+            "description": {
+              "content": "Highlight Reel API allows you to build rich previews and embed highlight reels in your solutions. \n\nA highlight reel is a curated selection of video clips UserTesting customers have created. Highlight reels can include multiple clips from the same test or clips from multiple tests. Customers use highlight reels to show common responses and essential feedback from end users.\nHighlight Reel API returns a highlight reel that can be displayed within an iframe, employing the UserTesting video player as well as additional metadata to let you create previews and unfurl highlight reels in your applications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "highlightreel",
+                ":highlightReelToken"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "highlightReelToken",
+                  "description": "(Required) [Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "255a6866-b963-48c5-905c-e80d8b195152",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "highlightreel",
+                    ":highlightReelToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "highlightReelToken",
+                      "description": "(Required) [Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clips\": {\n    \"nodes\": [\n      {\n        \"duration\": 18.5,\n        \"securePosterFullUrl\": \"https://cdn.usertesting.com/posters/clip_123.jpg\",\n        \"url\": \"https://app.usertesting.com/highlightreels/reel_123/clips/clip_123\"\n      }\n    ],\n    \"totalCount\": 1\n  },\n  \"createdAt\": \"2024-05-01T14:32:18Z\",\n  \"duration\": 18.5,\n  \"editUrlPath\": \"/highlightreels/reel_123/edit\",\n  \"shareUrl\": \"https://app.usertesting.com/highlightreels/reel_123/share\",\n  \"title\": \"Key Checkout Moments\",\n  \"token\": \"b4be664ea2d54f56a455\",\n  \"updatedAt\": \"2024-05-01T15:01:07Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc2efb5d-6ca7-44ed-9aff-85ef3adaecab",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "highlightreel",
+                    ":highlightReelToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "highlightReelToken",
+                      "description": "(Required) [Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87401f4b-d7dd-4dbb-b2bb-c3bb4580cd54",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "highlightreel",
+                    ":highlightReelToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "highlightReelToken",
+                      "description": "(Required) [Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d503c14-2a77-46c1-9143-962f1c908f4e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "highlightreel",
+                    ":highlightReelToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "highlightReelToken",
+                      "description": "(Required) [Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.use2.usertesting.com/usertesting/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "10d22aea-7a8c-4f2b-8e09-162bbc28a7af",
+    "name": "Integrations (v1) Clip Highlightreel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+      "type": "text/plain"
+    }
+  }
+}

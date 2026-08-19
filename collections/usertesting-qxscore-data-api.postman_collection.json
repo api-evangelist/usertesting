@@ -1,0 +1,338 @@
+{
+  "item": [
+    {
+      "id": "1f571cea-8f17-43b5-8f95-61c3960e1314",
+      "name": "QXscore Data",
+      "description": {
+        "content": "Access Quality of Experience Scores (QXscores) calculated from a test's completed sessions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1cfb513-8783-468e-9961-70e0d38bbcd7",
+          "name": "Obtain QXscores for a test",
+          "request": {
+            "name": "Obtain QXscores for a test",
+            "description": {
+              "content": "Calculates the Quality of Experience Score (QXscore) for an [Interaction test](https://help.usertesting.com/hc/en-us/articles/23596817555101-Interaction-tests) based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.\n    \n   _Compatibility:_\n  - Compatible with interaction tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Note:_\n  - A _QXscore_ is a reliable benchmark metric for evaluating the quality of an experience. This composite score combines behavioral data from navigation tasks with attitudinal data from a standardized questionnaire to effectively balance participants' actions and opinions.  \n  [Learn more about QXscore](https://help.usertesting.com/hc/en-us/articles/22818008129565-QXscore).\n \n  _Use case example:_\n  - For an example on how to create a UX metrics dashboard with QXscore to track experience quality, go to [Build a UX Metrics Dashboard](https://developer.usertesting.com/v2.0/docs/ux-metrics-dashboard).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "testResults",
+                ":testId",
+                "qxScores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "testId",
+                  "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "58bef1c7-5366-43e1-b7b9-43951b58207b",
+              "name": "QXscore successfully returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "testResults",
+                    ":testId",
+                    "qxScores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "testId",
+                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Caching policy for the response.",
+                  "key": "Cache-Control",
+                  "value": "private, no-store"
+                },
+                {
+                  "disabled": false,
+                  "description": "HTTP/1.0 backward compatibility for no-cache.",
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "disabled": false,
+                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "disabled": false,
+                  "description": "The length of the response body in bytes.",
+                  "key": "Content-Length",
+                  "value": "256"
+                },
+                {
+                  "disabled": false,
+                  "description": "The maximum number of requests allowed in the current period.",
+                  "key": "x-ratelimit-limit",
+                  "value": "10"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current period.",
+                  "key": "x-ratelimit-remaining",
+                  "value": "7"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                  "key": "x-ratelimit-reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"testId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"qxScores\": [\n    {\n      \"taskGroupId\": \"b1e2c3d4-5678-1234-9abc-def012345678\",\n      \"label\": \"QXscore 1\",\n      \"qxScore\": null,\n      \"components\": {\n        \"behavioral\": null,\n        \"attitudinal\": 50\n      },\n      \"values\": {\n        \"behavioral\": null,\n        \"usability\": 50,\n        \"trust\": 50,\n        \"appearance\": 50,\n        \"loyalty\": 50\n      }\n    },\n    {\n      \"taskGroupId\": \"b1e2c3d4-5678-1234-9abc-def012345678\",\n      \"label\": \"QXscore 1\",\n      \"qxScore\": null,\n      \"components\": {\n        \"behavioral\": null,\n        \"attitudinal\": 50\n      },\n      \"values\": {\n        \"behavioral\": null,\n        \"usability\": 50,\n        \"trust\": 50,\n        \"appearance\": 50,\n        \"loyalty\": 50\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalQxTasks\": 1,\n    \"completes\": 2\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e12d0ce-975e-422a-b536-38f450b57706",
+              "name": "Missing or invalid access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "testResults",
+                    ":testId",
+                    "qxScores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "testId",
+                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdefe2f2-0d7f-4b50-a148-673e455aaf5d",
+              "name": "Test not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "testResults",
+                    ":testId",
+                    "qxScores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "testId",
+                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9a8f297f-7178-4fe5-9a33-139f02393f69",
+              "name": "Too many requests. Maximum of 10 requests per minute.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "testResults",
+                    ":testId",
+                    "qxScores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "testId",
+                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "//api.use2.usertesting.com/usertesting/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e66e4e2e-72a5-4421-adff-0b39752a0ed3",
+    "name": "Integrations (v1) Clip QXscore Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip Highlightreel API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Highlightreel",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a highlight reel with clips",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/v1/highlightreel/:highlightReelToken",
+            "params": [
+              {
+                "name": "highlightReelToken",
+                "value": "",
+                "type": "path",
+                "description": "[Token of the highlight reel](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#highlight-reel-token) you want to obtain information for."
+              }
+            ]
+          },
+          "docs": "Highlight Reel API allows you to build rich previews and embed highlight reels in your solutions. \n\nA highlight reel is a curated selection of video clips UserTesting customers have created. Highlight reels can include multiple clips from the same test or clips from multiple tests. Customers use highlight reels to show common responses and essential feedback from end users.\nHighlight Reel API returns a highlight reel that can be displayed within an iframe, employing the UserTesting video player "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

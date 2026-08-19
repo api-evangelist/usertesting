@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Integrations (v1) Clip Video Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Video Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain a clip download link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session that contains the clip."
+              },
+              {
+                "name": "clipUuid",
+                "value": "",
+                "type": "path",
+                "description": "ID of the clip you want to download."
+              }
+            ]
+          },
+          "docs": "Returns the details of a clip and a link to download it.\n\nIf the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product"
+        },
+        {
+          "info": {
+            "name": "Find all clips for a session video",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/sessionResults/:sessionId/clips",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session whose video clips you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.use"
+        },
+        {
+          "info": {
+            "name": "Retrieve a video transcript",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/sessionResults/:sessionId/transcript",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the test session that contains the video transcript you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the video transcript of a test session in [Web Video Text Tracks (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format) format.\n    \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/"
+        },
+        {
+          "info": {
+            "name": "Obtain a video download link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+            "params": [
+              {
+                "name": "sessionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the test session the video you want to retrieve belongs to."
+              }
+            ]
+          },
+          "docs": "Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.\n  \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-t"
+        },
+        {
+          "info": {
+            "name": "Find all highlight reels for a test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/testResults/:testId/highlightreels",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the test whose highlight reels you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://devel"
+        },
+        {
+          "info": {
+            "name": "Obtain a highlight reel download link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "//api.use2.usertesting.com/usertesting/api/api/v2/testResults/:testId/highlightreels/:reelId",
+            "params": [
+              {
+                "name": "testId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the test the highlight reel belongs to."
+              },
+              {
+                "name": "reelId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the highlight reel you want to download."
+              }
+            ]
+          },
+          "docs": "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following p"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
