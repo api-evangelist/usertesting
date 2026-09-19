@@ -135,6 +135,8 @@ apis:
   humanURL: https://developer.usertesting.com/
   baseURL: https://api.use2.usertesting.com
   tags:
+  - Sessions
+  tags_raw:
   - Session
   properties:
   - type: OpenAPI
@@ -190,6 +192,8 @@ apis:
   humanURL: https://developer.usertesting.com/
   baseURL: https://api.use2.usertesting.com
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
