@@ -1,23 +1,14 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: 'API documentation for the legacy UTZ Integrations service (v1).
-
-
-    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
-
-
-    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
-
-
-    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
-  title: Integrations (v1) Clip QXscore Data API
-  version: '1.0'
+  title: Results QXscore Data API
+  description: With the Results API, you can access the results of your UserTesting account's Surveys, Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.
+  version: '2.0'
   contact:
     name: UserTesting Support
     url: https://developer.usertesting.com/
     email: support@usertesting.com
 servers:
-- url: //api.use2.usertesting.com/usertesting/api
+- url: https://api.use2.usertesting.com
 security:
 - bearerAuth: []
 tags:
@@ -26,7 +17,26 @@ tags:
 paths:
   /api/v2/testResults/{testId}/qxScores:
     get:
-      description: "Calculates the Quality of Experience Score (QXscore) for an [Interaction test](https://help.usertesting.com/hc/en-us/articles/23596817555101-Interaction-tests) based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.\n    \n   _Compatibility:_\n  - Compatible with interaction tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Note:_\n  - A _QXscore_ is a reliable benchmark metric for evaluating the quality of an experience. This composite score combines behavioral data from navigation tasks with attitudinal data from a standardized questionnaire to effectively balance participants' actions and opinions.  \n  [Learn more about QXscore](https://help.usertesting.com/hc/en-us/articles/22818008129565-QXscore).\n \n  _Use case example:_\n  - For an example on how to create a UX metrics dashboard with QXscore to track experience quality, go to [Build a UX Metrics Dashboard](https://developer.usertesting.com/v2.0/docs/ux-metrics-dashboard).\n"
+      description: 'Calculates the Quality of Experience Score (QXscore) for an Interaction test based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.
+
+
+        _Compatibility:_
+
+        - Compatible with interaction tests, i.e., tests with the "STUDYV2" type and "NON_THINK_OUT_LOUD" product type.
+
+        - Go to How to Obtain a Test ID (UUID) for details.
+
+
+        _Note:_
+
+        - A _QXscore_ is a reliable benchmark metric for evaluating the quality of an experience. This composite score combines behavioral data from navigation tasks with attitudinal data from a standardized questionnaire to effectively balance participants'' actions and opinions.
+
+        Learn more about QXscore.
+
+
+        _Use case example:_
+
+        - For an example on how to create a UX metrics dashboard with QXscore to track experience quality, go to Build a UX Metrics Dashboard.'
       operationId: TestResultsController_getQxScoreResponse
       parameters:
       - name: testId
@@ -95,38 +105,6 @@ paths:
       - QXscore Data
 components:
   schemas:
-    QxScoreItemDto:
-      type: object
-      properties:
-        taskGroupId:
-          type: string
-          description: UUID of a QX task group within the test that contains a set of navigational tasks and questions used to measure to the QXscore.
-          example: b1e2c3d4-5678-1234-9abc-def012345678
-        label:
-          type: string
-          description: Label for the QX task group.
-          example: QXscore 1
-        qxScore:
-          type: number
-          description: The aggregate score computed from all sessions (participants) that completed the QX task group within the test.
-          minimum: 0
-          maximum: 100
-          nullable: true
-          example: null
-        components:
-          description: The behavioral and attitudinal QXscore components used to calculate the overall QXscore.
-          allOf:
-          - $ref: '#/components/schemas/QxScoreComponentsDto'
-        values:
-          description: Detailed QXscore subcomponent values obtained from session (participant) averages used to calculate the behavioral and attitudinal components.
-          allOf:
-          - $ref: '#/components/schemas/QxScoreValuesDto'
-      required:
-      - taskGroupId
-      - label
-      - qxScore
-      - components
-      - values
     QxScoreMetaDto:
       type: object
       properties:
@@ -141,6 +119,26 @@ components:
       required:
       - totalQxTasks
       - completes
+    QxScoreComponentsDto:
+      type: object
+      properties:
+        behavioral:
+          type:
+          - number
+          - 'null'
+          description: The average percentage obtained from sessions (participants) of the QXscore's behavioral component.
+          minimum: 0
+          maximum: 100
+          example: null
+        attitudinal:
+          type: number
+          description: The average percentage obtained from sessions (participants) of the QXscore's attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+      required:
+      - behavioral
+      - attitudinal
     QxScoreResponseApi:
       type: object
       properties:
@@ -161,33 +159,48 @@ components:
       - testId
       - qxScores
       - meta
-    QxScoreComponentsDto:
+    QxScoreItemDto:
       type: object
       properties:
-        behavioral:
-          type: number
-          description: The average percentage obtained from sessions (participants) of the QXscore's behavioral component.
+        taskGroupId:
+          type: string
+          description: UUID of a QX task group within the test that contains a set of navigational tasks and questions used to measure to the QXscore.
+          example: b1e2c3d4-5678-1234-9abc-def012345678
+        label:
+          type: string
+          description: Label for the QX task group.
+          example: QXscore 1
+        qxScore:
+          type:
+          - number
+          - 'null'
+          description: The aggregate score computed from all sessions (participants) that completed the QX task group within the test.
           minimum: 0
           maximum: 100
-          nullable: true
           example: null
-        attitudinal:
-          type: number
-          description: The average percentage obtained from sessions (participants) of the QXscore's attitudinal component.
-          minimum: 0
-          maximum: 100
-          example: 50
+        components:
+          description: The behavioral and attitudinal QXscore components used to calculate the overall QXscore.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreComponentsDto'
+        values:
+          description: Detailed QXscore subcomponent values obtained from session (participant) averages used to calculate the behavioral and attitudinal components.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreValuesDto'
       required:
-      - behavioral
-      - attitudinal
+      - taskGroupId
+      - label
+      - qxScore
+      - components
+      - values
     QxScoreValuesDto:
       type: object
       properties:
         behavioral:
           description: Array that represents the navigational task scores used to calculate the behavioral component.
-          nullable: true
           example: null
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: number
         usability:

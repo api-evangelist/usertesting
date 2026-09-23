@@ -1,28 +1,48 @@
 {
   "provider": "usertesting",
   "sources": [
-    "usertesting-clip-api-openapi.yml",
-    "usertesting-general-session-data-api-openapi.yml",
-    "usertesting-highlightreel-api-openapi.yml",
-    "usertesting-qxscore-data-api-openapi.yml",
-    "usertesting-session-api-openapi.yml",
-    "usertesting-studies-api-openapi.yml",
-    "usertesting-video-data-api-openapi.yml",
-    "usertesting-workspaces-api-openapi.yml"
+    "_original/usertesting-legacy-v1-openapi.yml",
+    "_original/usertesting-results-v2-openapi.yml"
   ],
   "outputs": [
     "usertesting-clip-api-openapi.yml",
-    "usertesting-general-session-data-api-openapi.yml",
     "usertesting-highlightreel-api-openapi.yml",
-    "usertesting-qxscore-data-api-openapi.yml",
     "usertesting-session-api-openapi.yml",
     "usertesting-studies-api-openapi.yml",
-    "usertesting-video-data-api-openapi.yml",
-    "usertesting-workspaces-api-openapi.yml"
+    "usertesting-workspaces-api-openapi.yml",
+    "usertesting-general-session-data-api-openapi.yml",
+    "usertesting-qxscore-data-api-openapi.yml",
+    "usertesting-video-data-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "usertesting-legacy-v1-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/clip/{clipUuid} -> Clip",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/highlightreel/{highlightReelToken} -> Highlightreel",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/session/{sessionUuid} -> Session",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/studies/{studyUuid}/completed-sessions -> Studies",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/studies/{studyUuid} -> Studies",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/workspaces/{workspaceUuid} -> Workspaces",
+    "usertesting-legacy-v1-openapi.yml: tagged paths GET /v1/workspaces -> Workspaces",
+    "usertesting-legacy-v1-openapi.yml: declared missing tag: Clip",
+    "usertesting-legacy-v1-openapi.yml: declared missing tag: Highlightreel",
+    "usertesting-legacy-v1-openapi.yml: declared missing tag: Session",
+    "usertesting-legacy-v1-openapi.yml: declared missing tag: Studies",
+    "usertesting-legacy-v1-openapi.yml: declared missing tag: Workspaces",
+    "usertesting-results-v2-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "usertesting-clip-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-general-session-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-highlightreel-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-qxscore-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-session-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-studies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-video-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "usertesting-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

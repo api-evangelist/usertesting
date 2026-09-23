@@ -1,23 +1,14 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  description: 'API documentation for the legacy UTZ Integrations service (v1).
-
-
-    This API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.
-
-
-    Endpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.
-
-
-    **Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).'
-  title: Integrations (v1) Clip Video Data API
-  version: '1.0'
+  title: Results Video Data API
+  description: With the Results API, you can access the results of your UserTesting account's Surveys, Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.
+  version: '2.0'
   contact:
     name: UserTesting Support
     url: https://developer.usertesting.com/
     email: support@usertesting.com
 servers:
-- url: //api.use2.usertesting.com/usertesting/api
+- url: https://api.use2.usertesting.com
 security:
 - bearerAuth: []
 tags:
@@ -26,7 +17,23 @@ tags:
 paths:
   /api/v2/sessionResults/{sessionId}/clips/{clipUuid}:
     get:
-      description: "Returns the details of a clip and a link to download it.\n\nIf the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      description: 'Returns the details of a clip and a link to download it.
+
+
+        If the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.
+
+
+        _Compatibility:_
+
+        - Sessions must be found within tests with the "STUDYV2" type and belong to one of the following product types that support session video clips:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "NON_THINK_OUT_LOUD" (interaction test)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.'
       operationId: SessionResultsController_getClipDetails
       parameters:
       - name: sessionId
@@ -102,7 +109,20 @@ paths:
       - Video Data
   /api/v2/sessionResults/{sessionId}/clips:
     get:
-      description: "Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      description: 'Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.
+
+
+        _Compatibility:_
+
+        - Sessions must be found within tests with the "STUDYV2" type and belong to one of the following product types that support session video clips:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "NON_THINK_OUT_LOUD" (interaction test)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.'
       operationId: SessionResultsController_getClips
       parameters:
       - name: sessionId
@@ -171,7 +191,30 @@ paths:
       - Video Data
   /api/v2/sessionResults/{sessionId}/transcript:
     get:
-      description: "Returns the video transcript of a test session in [Web Video Text Tracks (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format) format.\n    \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Best practices:_\n  - If needed, you can copy and paste the string and save it as a text file with the VTT extension.\n  \n  _Use case examples:_\n  - For an example on how to run AI analysis on transcripts with an LLM, go to [Generate Video Transcript Analysis](https://developer.usertesting.com/v2.0/docs/video-transcript-analysis).\n  - For an example of how to add transcripts into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial)."
+      description: 'Returns the video transcript of a test session in Web Video Text Tracks (WebVTT) format.
+
+
+        _Compatibility:_
+
+        - Sessions must be found within tests with the "STUDYV2" type and belong to one of the following product types:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.
+
+
+        _Best practices:_
+
+        - If needed, you can copy and paste the string and save it as a text file with the VTT extension.
+
+
+        _Use case examples:_
+
+        - For an example on how to run AI analysis on transcripts with an LLM, go to Generate Video Transcript Analysis.
+
+        - For an example of how to add transcripts into an automated research data pipeline, go to Create an Automated Pipeline.'
       operationId: SessionResultsController_getTranscriptVtt
       parameters:
       - name: sessionId
@@ -257,7 +300,27 @@ paths:
       - Video Data
   /api/v2/sessionResults/{sessionId}/videoDownloadUrl:
     get:
-      description: "Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.\n  \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Use case examples:_\n  - For an example on how to securely download and manage session videos at scale using pre-signed URLs, go to [Process Session Videos at Scale](https://developer.usertesting.com/v2.0/docs/download-and-manage-session-videos-at-scale).\n  - For an example on how to integrate video downloads into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n\n  "
+      description: 'Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.
+
+
+        _Compatibility:_
+
+        - Sessions must be found within tests with the "STUDYV2" type and belong to one of the following product types:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "NON_THINK_OUT_LOUD" (interaction test)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.
+
+
+        _Use case examples:_
+
+        - For an example on how to securely download and manage session videos at scale using pre-signed URLs, go to Process Session Videos at Scale.
+
+        - For an example on how to integrate video downloads into an automated research data pipeline, go to Create an Automated Pipeline.'
       operationId: SessionResultsController_getVideoDownloadUrl
       parameters:
       - name: sessionId
@@ -326,7 +389,25 @@ paths:
       - Video Data
   /api/v2/testResults/{testId}/highlightreels:
     get:
-      description: "Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Notes:_\n  - Use the returned highlight reel ID to request highlight reel download link from the \"GET /api/v2/testResults/{testId}/highlightreels/{reelId}\" endpoint."
+      description: 'Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.
+
+
+        _Compatibility:_
+
+        - Tests must be of the "STUDYV2" type and belong to one of the following product types:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "NON_THINK_OUT_LOUD" (interaction test)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.
+
+
+        _Notes:_
+
+        - Use the returned highlight reel ID to request highlight reel download link from the "GET /api/v2/testResults/{testId}/highlightreels/{reelId}" endpoint.'
       operationId: TestResultsController_getHighlightReels
       parameters:
       - name: testId
@@ -395,7 +476,23 @@ paths:
       - Video Data
   /api/v2/testResults/{testId}/highlightreels/{reelId}:
     get:
-      description: "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details."
+      description: 'Returns the details of a highlight reel and a link to download it.
+
+
+        If the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.
+
+
+        _Compatibility:_
+
+        - Tests must be of the "STUDYV2" type and belong to one of the following product types:
+
+        - "LIVE_CONVERSATION" (non-classic live conversation)
+
+        - "NON_THINK_OUT_LOUD" (interaction test)
+
+        - "THINK_OUT_LOUD" (think-out-loud test).
+
+        - Go to How to Obtain a Test ID (UUID) for details.'
       operationId: TestResultsController_getReelDetails
       parameters:
       - name: testId
@@ -471,72 +568,74 @@ paths:
       - Video Data
 components:
   schemas:
-    ReelDetailsResponseDto:
+    ClipDetailsResponseDto:
       type: object
       properties:
-        reelId:
+        clipUuid:
           type: string
-          description: ID of the highlight reel.
+          description: ID of the clip.
           format: uuid
-          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+          example: 41f72104-5f84-44fa-a16a-03f575159611
         status:
           type: string
-          description: 'Current state of the highlight reel.
+          description: 'Current state of the clip.
 
-            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
 
-            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
 
-            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
+            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a new attempt.'
           enum:
           - GENERATING
           - GENERATED
           - ERROR
           example: GENERATED
-        reelUrl:
-          type: string
-          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+        clipUrl:
+          type:
+          - string
+          - 'null'
+          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
           format: url
-          nullable: true
-          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
       required:
-      - reelId
+      - clipUuid
       - status
-    HighlightReelDto:
+    ClipPointDto:
       type: object
       properties:
-        uuid:
-          type: string
-          description: ID of the highlight reel.
-          format: uuid
-          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
-        name:
-          type: string
-          description: Name of the highlight reel.
-          example: Checkout highlights
-        durationMs:
+        x:
           type: number
-          description: Highlight reel duration in milliseconds.
-          example: 120000
-        lastUpdatedAtMs:
+          description: Horizontal coordinate in pixels.
+          example: 0
+        y:
           type: number
-          description: Timestamp of the last highlight reel update in milliseconds.
-          example: 1766051123000
-        numClips:
-          type: number
-          description: Number of clips in the highlight reel.
-          example: 4
-        areAllClipsInReel:
-          type: boolean
-          description: Indicates whether all study clips are included in the reel.
-          example: true
+          description: Vertical coordinate in pixels.
+          example: 0
       required:
-      - uuid
-      - name
-      - durationMs
-      - lastUpdatedAtMs
-      - numClips
-      - areAllClipsInReel
+      - x
+      - y
+    ClipLayoutDto:
+      type: object
+      properties:
+        mainStream:
+          description: Primary stream shown for the clip.
+          example: SCREEN
+          allOf:
+          - $ref: '#/components/schemas/RegionType'
+        pipPosition:
+          description: Picture-in-picture position.
+          example: BOTTOM_RIGHT
+          allOf:
+          - $ref: '#/components/schemas/PipPositionType'
+        pipState:
+          description: Picture-in-picture state.
+          example: OPENED
+          allOf:
+          - $ref: '#/components/schemas/PipStateType'
+      required:
+      - mainStream
+      - pipPosition
+      - pipState
     ClipDto:
       type: object
       properties:
@@ -586,6 +685,12 @@ components:
       - videoUuid
       - hasAudio
       - hasCamera
+    RegionType:
+      type: string
+      enum:
+      - SCREEN
+      - CAMERA
+      description: Primary stream shown for the clip.
     ClipVideoRegionsDto:
       type: object
       properties:
@@ -597,41 +702,6 @@ components:
           description: Camera video region, when present.
           allOf:
           - $ref: '#/components/schemas/ClipVideoRegionDto'
-    HighlightReelsResponseDto:
-      type: object
-      properties:
-        reels:
-          description: Highlight reels available for the study.
-          type: array
-          items:
-            $ref: '#/components/schemas/HighlightReelDto'
-        studyWithClips:
-          type: boolean
-          description: Indicates whether the study has clips available.
-          example: true
-      required:
-      - reels
-      - studyWithClips
-    ClipPointDto:
-      type: object
-      properties:
-        x:
-          type: number
-          description: Horizontal coordinate in pixels.
-          example: 0
-        y:
-          type: number
-          description: Vertical coordinate in pixels.
-          example: 0
-      required:
-      - x
-      - y
-    RegionType:
-      type: string
-      enum:
-      - SCREEN
-      - CAMERA
-      description: Primary stream shown for the clip.
     ClipVideoRegionDto:
       type: object
       properties:
@@ -650,79 +720,12 @@ components:
       required:
       - widthPx
       - heightPx
-    ClipDetailsResponseDto:
-      type: object
-      properties:
-        clipUuid:
-          type: string
-          description: ID of the clip.
-          format: uuid
-          example: 41f72104-5f84-44fa-a16a-03f575159611
-        status:
-          type: string
-          description: 'Current state of the clip.
-
-            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
-
-            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
-
-            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a new attempt.'
-          enum:
-          - GENERATING
-          - GENERATED
-          - ERROR
-          example: GENERATED
-        clipUrl:
-          type: string
-          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
-          format: url
-          nullable: true
-          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
-      required:
-      - clipUuid
-      - status
-    ClipsResponseDto:
-      type: object
-      properties:
-        studyUuid:
-          type: string
-          description: ID of the test associated with the clip list.
-          format: uuid
-          example: e320c95c-2741-49bc-9e04-37b77d6fece3
-        clips:
-          description: Clips available for the session video.
-          type: array
-          items:
-            $ref: '#/components/schemas/ClipDto'
-        videoRegions:
-          description: Screen and camera video regions for the session video.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionsDto'
-      required:
-      - studyUuid
-      - clips
-    ClipLayoutDto:
-      type: object
-      properties:
-        mainStream:
-          description: Primary stream shown for the clip.
-          example: SCREEN
-          allOf:
-          - $ref: '#/components/schemas/RegionType'
-        pipPosition:
-          description: Picture-in-picture position.
-          example: BOTTOM_RIGHT
-          allOf:
-          - $ref: '#/components/schemas/PipPositionType'
-        pipState:
-          description: Picture-in-picture state.
-          example: OPENED
-          allOf:
-          - $ref: '#/components/schemas/PipStateType'
-      required:
-      - mainStream
-      - pipPosition
-      - pipState
+    PipStateType:
+      type: string
+      enum:
+      - OPENED
+      - CLOSED
+      description: Picture-in-picture state.
     VideoDownloadResponseDto:
       type: object
       properties:
@@ -745,6 +748,38 @@ components:
       - videoUrl
       - sessionId
       - expiresAt
+    ReelDetailsResponseDto:
+      type: object
+      properties:
+        reelId:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        status:
+          type: string
+          description: 'Current state of the highlight reel.
+
+            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        reelUrl:
+          type:
+          - string
+          - 'null'
+          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - reelId
+      - status
     PipPositionType:
       type: string
       enum:
@@ -753,12 +788,76 @@ components:
       - BOTTOM_LEFT
       - BOTTOM_RIGHT
       description: Picture-in-picture position.
-    PipStateType:
-      type: string
-      enum:
-      - OPENED
-      - CLOSED
-      description: Picture-in-picture state.
+    HighlightReelsResponseDto:
+      type: object
+      properties:
+        reels:
+          description: Highlight reels available for the study.
+          type: array
+          items:
+            $ref: '#/components/schemas/HighlightReelDto'
+        studyWithClips:
+          type: boolean
+          description: Indicates whether the study has clips available.
+          example: true
+      required:
+      - reels
+      - studyWithClips
+    ClipsResponseDto:
+      type: object
+      properties:
+        studyUuid:
+          type: string
+          description: ID of the test associated with the clip list.
+          format: uuid
+          example: e320c95c-2741-49bc-9e04-37b77d6fece3
+        clips:
+          description: Clips available for the session video.
+          type: array
+          items:
+            $ref: '#/components/schemas/ClipDto'
+        videoRegions:
+          description: Screen and camera video regions for the session video.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+      required:
+      - studyUuid
+      - clips
+    HighlightReelDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        name:
+          type: string
+          description: Name of the highlight reel.
+          example: Checkout highlights
+        durationMs:
+          type: number
+          description: Highlight reel duration in milliseconds.
+          example: 120000
+        lastUpdatedAtMs:
+          type: number
+          description: Timestamp of the last highlight reel update in milliseconds.
+          example: 1766051123000
+        numClips:
+          type: number
+          description: Number of clips in the highlight reel.
+          example: 4
+        areAllClipsInReel:
+          type: boolean
+          description: Indicates whether all study clips are included in the reel.
+          example: true
+      required:
+      - uuid
+      - name
+      - durationMs
+      - lastUpdatedAtMs
+      - numClips
+      - areAllClipsInReel
   securitySchemes:
     bearerAuth:
       type: http
