@@ -129,25 +129,6 @@ components:
       example:
         errorCode: BAD_REQUEST
         errorMessage: Not a valid UUID
-    Workspace:
-      properties:
-        id:
-          description: Unique ID of the workspace.
-          type: string
-          example: '12345'
-        name:
-          description: Name of the workspace.
-          type: string
-          example: Research Team Workspace
-        uuid:
-          description: Unique UUID of the workspace.
-          type: string
-          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
-      type: object
-      example:
-        id: '12345'
-        name: Research Team Workspace
-        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
     WorkspaceStudy:
       properties:
         cursor:
@@ -200,6 +181,25 @@ components:
         productType: insight_core
         title: ACME Test
         type: web
+        uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
+    Workspace:
+      properties:
+        id:
+          description: Unique ID of the workspace.
+          type: string
+          example: '12345'
+        name:
+          description: Name of the workspace.
+          type: string
+          example: Research Team Workspace
+        uuid:
+          description: Unique UUID of the workspace.
+          type: string
+          example: ef333003-697b-4add-b19a-8e8e37f8d8b8
+      type: object
+      example:
+        id: '12345'
+        name: Research Team Workspace
         uuid: ef333003-697b-4add-b19a-8e8e37f8d8b8
   securitySchemes:
     bearerAuth:

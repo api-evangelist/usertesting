@@ -120,6 +120,108 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Study:
+      properties:
+        netPromoterScores:
+          items:
+            $ref: '#/components/schemas/StudyNetPromoterScore'
+          type: array
+          description: Net Promoter Score result objects associated with the study.
+          example:
+          - detractorPercentage: 18
+            passivePercentage: 26
+            promoterPercentage: 56
+            score: 38
+        orderedBy:
+          properties:
+            email:
+              description: Email of the user who ordered or created the study.
+              type: string
+              example: support@usertesting.com
+            name:
+              description: Name of the user who ordered or created the study.
+              type: string
+              example: UT Employee
+          type: object
+          description: User information for the person who ordered or created the study.
+          example:
+            email: support@usertesting.com
+            name: UT Employee
+        sessionCount:
+          description: Total number of sessions associated with the study.
+          type: integer
+          example: 50
+        tasks:
+          items:
+            $ref: '#/components/schemas/StudyTaskNode'
+          type: array
+          description: Ordered task definitions that make up the study flow.
+          example:
+          - blurPII: false
+            choices:
+            - Poland
+            - Singapore
+            grouping: INITIAL
+            launchUrl: https://www.microsoft.com/en-us
+            lowerEndpoint: Very difficult
+            multipleAnswers: true
+            position: 1
+            resultType: ''
+            scaleMaximum: 5
+            scaleMinimum: 1
+            taskGroup:
+              id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+              type: MAIN
+            taskType: multiple_choice
+            text: 'ACME offices are located in:'
+            upperEndpoint: Very easy
+        testPlan:
+          properties:
+            shortTest:
+              type: boolean
+              description: Whether the study is configured as a short test.
+              example: false
+          type: object
+          description: Summary of study-level test plan settings.
+          example:
+            shortTest: false
+        title:
+          description: Human-readable study title.
+          type: string
+          example: ACME Test
+      type: object
+      example:
+        netPromoterScores:
+        - detractorPercentage: 18
+          passivePercentage: 26
+          promoterPercentage: 56
+          score: 38
+        orderedBy:
+          email: support@usertesting.com
+          name: UT Employee
+        sessionCount: 50
+        tasks:
+        - blurPII: false
+          choices:
+          - Poland
+          - Singapore
+          grouping: INITIAL
+          launchUrl: https://www.microsoft.com/en-us
+          lowerEndpoint: Very difficult
+          multipleAnswers: true
+          position: 1
+          resultType: ''
+          scaleMaximum: 5
+          scaleMinimum: 1
+          taskGroup:
+            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type: MAIN
+          taskType: multiple_choice
+          text: 'ACME offices are located in:'
+          upperEndpoint: Very easy
+        testPlan:
+          shortTest: false
+        title: ACME Test
     StudyNetPromoterScore:
       properties:
         detractorPercentage:
@@ -144,6 +246,113 @@ components:
         passivePercentage: 26
         promoterPercentage: 56
         score: 38
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    StudyTaskNode:
+      properties:
+        blurPII:
+          type: boolean
+          description: Whether the task should be blurred to hide personally identifiable information.
+          example: false
+        choices:
+          items:
+            type: string
+          type: array
+          description: Available answer choices for a multiple-choice style task.
+          example:
+          - Poland
+          - Singapore
+        grouping:
+          description: Group or category used to organize this task within the study flow.
+          type: string
+          example: INITIAL
+        launchUrl:
+          type: string
+          description: URL automatically opened or associated with this task, when applicable.
+          example: https://www.microsoft.com/en-us
+        lowerEndpoint:
+          description: Display label for the minimum endpoint of a scale-based task.
+          type: string
+          example: Very difficult
+        multipleAnswers:
+          type: boolean
+          description: Whether the participant can select multiple answers for the task.
+          example: true
+        position:
+          type: integer
+          description: Position of the task within the study flow.
+          example: 1
+        resultType:
+          description: 'Expected response format for this task (for example: open-ended, rating, multiple-choice).'
+          type: string
+          example: ''
+        scaleMaximum:
+          type: integer
+          description: Maximum numeric value for rating-scale tasks.
+          example: 5
+        scaleMinimum:
+          type: integer
+          description: Minimum numeric value for rating-scale tasks.
+          example: 1
+        taskGroup:
+          properties:
+            id:
+              type: string
+              description: Identifier of the associated task group.
+              example: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type:
+              type: string
+              description: Classification of the task group.
+              example: MAIN
+          type: object
+          description: Group metadata identifying the task's logical grouping within the study.
+          example:
+            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type: MAIN
+        taskType:
+          type: string
+          description: Legacy task type used to define the task, such as blank, multiple_choice, rating_scale, or launch_url.
+          example: multiple_choice
+        text:
+          type: string
+          description: Instruction text or prompt shown to the participant for the task.
+          example: 'ACME offices are located in:'
+        upperEndpoint:
+          description: Display label for the maximum endpoint of a scale-based task.
+          type: string
+          example: Very easy
+      type: object
+      example:
+        blurPII: false
+        choices:
+        - Poland
+        - Singapore
+        grouping: INITIAL
+        launchUrl: https://www.microsoft.com/en-us
+        lowerEndpoint: Very difficult
+        multipleAnswers: true
+        position: 1
+        resultType: ''
+        scaleMaximum: 5
+        scaleMinimum: 1
+        taskGroup:
+          id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+          type: MAIN
+        taskType: multiple_choice
+        text: 'ACME offices are located in:'
+        upperEndpoint: Very easy
     CompletedSessions:
       properties:
         completedSessionCount:
@@ -433,215 +642,6 @@ components:
           - question: What country do you live in?
             response:
             - United States
-    StudyTaskNode:
-      properties:
-        blurPII:
-          type: boolean
-          description: Whether the task should be blurred to hide personally identifiable information.
-          example: false
-        choices:
-          items:
-            type: string
-          type: array
-          description: Available answer choices for a multiple-choice style task.
-          example:
-          - Poland
-          - Singapore
-        grouping:
-          description: Group or category used to organize this task within the study flow.
-          type: string
-          example: INITIAL
-        launchUrl:
-          type: string
-          description: URL automatically opened or associated with this task, when applicable.
-          example: https://www.microsoft.com/en-us
-        lowerEndpoint:
-          description: Display label for the minimum endpoint of a scale-based task.
-          type: string
-          example: Very difficult
-        multipleAnswers:
-          type: boolean
-          description: Whether the participant can select multiple answers for the task.
-          example: true
-        position:
-          type: integer
-          description: Position of the task within the study flow.
-          example: 1
-        resultType:
-          description: 'Expected response format for this task (for example: open-ended, rating, multiple-choice).'
-          type: string
-          example: ''
-        scaleMaximum:
-          type: integer
-          description: Maximum numeric value for rating-scale tasks.
-          example: 5
-        scaleMinimum:
-          type: integer
-          description: Minimum numeric value for rating-scale tasks.
-          example: 1
-        taskGroup:
-          properties:
-            id:
-              type: string
-              description: Identifier of the associated task group.
-              example: VGFza0dyb3Vwczo6TWFpbi01MDI=
-            type:
-              type: string
-              description: Classification of the task group.
-              example: MAIN
-          type: object
-          description: Group metadata identifying the task's logical grouping within the study.
-          example:
-            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-            type: MAIN
-        taskType:
-          type: string
-          description: Legacy task type used to define the task, such as blank, multiple_choice, rating_scale, or launch_url.
-          example: multiple_choice
-        text:
-          type: string
-          description: Instruction text or prompt shown to the participant for the task.
-          example: 'ACME offices are located in:'
-        upperEndpoint:
-          description: Display label for the maximum endpoint of a scale-based task.
-          type: string
-          example: Very easy
-      type: object
-      example:
-        blurPII: false
-        choices:
-        - Poland
-        - Singapore
-        grouping: INITIAL
-        launchUrl: https://www.microsoft.com/en-us
-        lowerEndpoint: Very difficult
-        multipleAnswers: true
-        position: 1
-        resultType: ''
-        scaleMaximum: 5
-        scaleMinimum: 1
-        taskGroup:
-          id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-          type: MAIN
-        taskType: multiple_choice
-        text: 'ACME offices are located in:'
-        upperEndpoint: Very easy
-    HttpErrorResponse:
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
-      type: object
-      example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
-    Study:
-      properties:
-        netPromoterScores:
-          items:
-            $ref: '#/components/schemas/StudyNetPromoterScore'
-          type: array
-          description: Net Promoter Score result objects associated with the study.
-          example:
-          - detractorPercentage: 18
-            passivePercentage: 26
-            promoterPercentage: 56
-            score: 38
-        orderedBy:
-          properties:
-            email:
-              description: Email of the user who ordered or created the study.
-              type: string
-              example: support@usertesting.com
-            name:
-              description: Name of the user who ordered or created the study.
-              type: string
-              example: UT Employee
-          type: object
-          description: User information for the person who ordered or created the study.
-          example:
-            email: support@usertesting.com
-            name: UT Employee
-        sessionCount:
-          description: Total number of sessions associated with the study.
-          type: integer
-          example: 50
-        tasks:
-          items:
-            $ref: '#/components/schemas/StudyTaskNode'
-          type: array
-          description: Ordered task definitions that make up the study flow.
-          example:
-          - blurPII: false
-            choices:
-            - Poland
-            - Singapore
-            grouping: INITIAL
-            launchUrl: https://www.microsoft.com/en-us
-            lowerEndpoint: Very difficult
-            multipleAnswers: true
-            position: 1
-            resultType: ''
-            scaleMaximum: 5
-            scaleMinimum: 1
-            taskGroup:
-              id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-              type: MAIN
-            taskType: multiple_choice
-            text: 'ACME offices are located in:'
-            upperEndpoint: Very easy
-        testPlan:
-          properties:
-            shortTest:
-              type: boolean
-              description: Whether the study is configured as a short test.
-              example: false
-          type: object
-          description: Summary of study-level test plan settings.
-          example:
-            shortTest: false
-        title:
-          description: Human-readable study title.
-          type: string
-          example: ACME Test
-      type: object
-      example:
-        netPromoterScores:
-        - detractorPercentage: 18
-          passivePercentage: 26
-          promoterPercentage: 56
-          score: 38
-        orderedBy:
-          email: support@usertesting.com
-          name: UT Employee
-        sessionCount: 50
-        tasks:
-        - blurPII: false
-          choices:
-          - Poland
-          - Singapore
-          grouping: INITIAL
-          launchUrl: https://www.microsoft.com/en-us
-          lowerEndpoint: Very difficult
-          multipleAnswers: true
-          position: 1
-          resultType: ''
-          scaleMaximum: 5
-          scaleMinimum: 1
-          taskGroup:
-            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-            type: MAIN
-          taskType: multiple_choice
-          text: 'ACME offices are located in:'
-          upperEndpoint: Very easy
-        testPlan:
-          shortTest: false
-        title: ACME Test
   securitySchemes:
     bearerAuth:
       type: http

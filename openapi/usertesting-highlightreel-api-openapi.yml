@@ -61,44 +61,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HighlightreelClipNode:
-      properties:
-        duration:
-          description: Clip duration
-          type: number
-          example: 18.5
-        id:
-          description: Unique id of clip which belongs to highlight reel. Value not returned due to security constraints
-          type: string
-          example: clip_123
-        securePosterFullUrl:
-          description: Video thumbnail URL. Value not returned due to security constraints
-          type: string
-          example: https://cdn.usertesting.com/posters/clip_123.jpg
-        url:
-          description: URL to access or play the clip resource.
-          type: string
-          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
-      type: object
-      example:
-        duration: 18.5
-        id: clip_123
-        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
-        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
-    HttpErrorResponse:
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
-      type: object
-      example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
     Highlightreel:
       properties:
         clips:
@@ -177,6 +139,44 @@ components:
         title: Key Checkout Moments
         token: b4be664ea2d54f56a455
         updatedAt: '2024-05-01T15:01:07Z'
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
+    HighlightreelClipNode:
+      properties:
+        duration:
+          description: Clip duration
+          type: number
+          example: 18.5
+        id:
+          description: Unique id of clip which belongs to highlight reel. Value not returned due to security constraints
+          type: string
+          example: clip_123
+        securePosterFullUrl:
+          description: Video thumbnail URL. Value not returned due to security constraints
+          type: string
+          example: https://cdn.usertesting.com/posters/clip_123.jpg
+        url:
+          description: URL to access or play the clip resource.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+      type: object
+      example:
+        duration: 18.5
+        id: clip_123
+        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
   securitySchemes:
     bearerAuth:
       type: http

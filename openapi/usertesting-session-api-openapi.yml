@@ -65,20 +65,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HttpErrorResponse:
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
-      type: object
-      example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
     Session:
       properties:
         duration:
@@ -124,6 +110,20 @@ components:
         stateUpdatedAt: '2024-05-01T15:01:07Z'
         title: Participant 1 Session
         uid: 3339d946-3b60-4f09-8433-a2a7598d5d26
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
   securitySchemes:
     bearerAuth:
       type: http

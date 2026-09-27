@@ -105,93 +105,6 @@ paths:
       - QXscore Data
 components:
   schemas:
-    QxScoreMetaDto:
-      type: object
-      properties:
-        totalQxTasks:
-          type: number
-          description: Total number of QX task groups.
-          example: 1
-        completes:
-          type: number
-          description: Number of completed sessions.
-          example: 2
-      required:
-      - totalQxTasks
-      - completes
-    QxScoreComponentsDto:
-      type: object
-      properties:
-        behavioral:
-          type:
-          - number
-          - 'null'
-          description: The average percentage obtained from sessions (participants) of the QXscore's behavioral component.
-          minimum: 0
-          maximum: 100
-          example: null
-        attitudinal:
-          type: number
-          description: The average percentage obtained from sessions (participants) of the QXscore's attitudinal component.
-          minimum: 0
-          maximum: 100
-          example: 50
-      required:
-      - behavioral
-      - attitudinal
-    QxScoreResponseApi:
-      type: object
-      properties:
-        testId:
-          type: string
-          description: UUID of the test.
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        qxScores:
-          description: List of QXscore results for each QX task group within the test.
-          type: array
-          items:
-            $ref: '#/components/schemas/QxScoreItemDto'
-        meta:
-          description: Metadata about the QXscore calculation.
-          allOf:
-          - $ref: '#/components/schemas/QxScoreMetaDto'
-      required:
-      - testId
-      - qxScores
-      - meta
-    QxScoreItemDto:
-      type: object
-      properties:
-        taskGroupId:
-          type: string
-          description: UUID of a QX task group within the test that contains a set of navigational tasks and questions used to measure to the QXscore.
-          example: b1e2c3d4-5678-1234-9abc-def012345678
-        label:
-          type: string
-          description: Label for the QX task group.
-          example: QXscore 1
-        qxScore:
-          type:
-          - number
-          - 'null'
-          description: The aggregate score computed from all sessions (participants) that completed the QX task group within the test.
-          minimum: 0
-          maximum: 100
-          example: null
-        components:
-          description: The behavioral and attitudinal QXscore components used to calculate the overall QXscore.
-          allOf:
-          - $ref: '#/components/schemas/QxScoreComponentsDto'
-        values:
-          description: Detailed QXscore subcomponent values obtained from session (participant) averages used to calculate the behavioral and attitudinal components.
-          allOf:
-          - $ref: '#/components/schemas/QxScoreValuesDto'
-      required:
-      - taskGroupId
-      - label
-      - qxScore
-      - components
-      - values
     QxScoreValuesDto:
       type: object
       properties:
@@ -233,6 +146,93 @@ components:
       - trust
       - appearance
       - loyalty
+    QxScoreComponentsDto:
+      type: object
+      properties:
+        behavioral:
+          type:
+          - number
+          - 'null'
+          description: The average percentage obtained from sessions (participants) of the QXscore's behavioral component.
+          minimum: 0
+          maximum: 100
+          example: null
+        attitudinal:
+          type: number
+          description: The average percentage obtained from sessions (participants) of the QXscore's attitudinal component.
+          minimum: 0
+          maximum: 100
+          example: 50
+      required:
+      - behavioral
+      - attitudinal
+    QxScoreResponseApi:
+      type: object
+      properties:
+        testId:
+          type: string
+          description: UUID of the test.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        qxScores:
+          description: List of QXscore results for each QX task group within the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/QxScoreItemDto'
+        meta:
+          description: Metadata about the QXscore calculation.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreMetaDto'
+      required:
+      - testId
+      - qxScores
+      - meta
+    QxScoreMetaDto:
+      type: object
+      properties:
+        totalQxTasks:
+          type: number
+          description: Total number of QX task groups.
+          example: 1
+        completes:
+          type: number
+          description: Number of completed sessions.
+          example: 2
+      required:
+      - totalQxTasks
+      - completes
+    QxScoreItemDto:
+      type: object
+      properties:
+        taskGroupId:
+          type: string
+          description: UUID of a QX task group within the test that contains a set of navigational tasks and questions used to measure to the QXscore.
+          example: b1e2c3d4-5678-1234-9abc-def012345678
+        label:
+          type: string
+          description: Label for the QX task group.
+          example: QXscore 1
+        qxScore:
+          type:
+          - number
+          - 'null'
+          description: The aggregate score computed from all sessions (participants) that completed the QX task group within the test.
+          minimum: 0
+          maximum: 100
+          example: null
+        components:
+          description: The behavioral and attitudinal QXscore components used to calculate the overall QXscore.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreComponentsDto'
+        values:
+          description: Detailed QXscore subcomponent values obtained from session (participant) averages used to calculate the behavioral and attitudinal components.
+          allOf:
+          - $ref: '#/components/schemas/QxScoreValuesDto'
+      required:
+      - taskGroupId
+      - label
+      - qxScore
+      - components
+      - values
   securitySchemes:
     bearerAuth:
       type: http
