@@ -617,6 +617,206 @@ components:
       - videoUuid
       - hasAudio
       - hasCamera
+    ClipsResponseDto:
+      type: object
+      properties:
+        studyUuid:
+          type: string
+          description: ID of the test associated with the clip list.
+          format: uuid
+          example: e320c95c-2741-49bc-9e04-37b77d6fece3
+        clips:
+          description: Clips available for the session video.
+          type: array
+          items:
+            $ref: '#/components/schemas/ClipDto'
+        videoRegions:
+          description: Screen and camera video regions for the session video.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+      required:
+      - studyUuid
+      - clips
+    RegionType:
+      type: string
+      enum:
+      - SCREEN
+      - CAMERA
+      description: Primary stream shown for the clip.
+    ClipLayoutDto:
+      type: object
+      properties:
+        mainStream:
+          description: Primary stream shown for the clip.
+          example: SCREEN
+          allOf:
+          - $ref: '#/components/schemas/RegionType'
+        pipPosition:
+          description: Picture-in-picture position.
+          example: BOTTOM_RIGHT
+          allOf:
+          - $ref: '#/components/schemas/PipPositionType'
+        pipState:
+          description: Picture-in-picture state.
+          example: OPENED
+          allOf:
+          - $ref: '#/components/schemas/PipStateType'
+      required:
+      - mainStream
+      - pipPosition
+      - pipState
+    VideoDownloadResponseDto:
+      type: object
+      properties:
+        videoUrl:
+          type: string
+          description: Pre-signed URL to download the video file. Valid for one hour.
+          format: url
+          example: https://mock-bucket.s3.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000/session.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+        sessionId:
+          type: string
+          description: ID of the Interaction test session the video corresponds to.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        expiresAt:
+          format: date-time
+          type: string
+          description: Expiration timestamp of the video download URL. UTC time. ISO 8601 format.
+          example: '2025-10-01T12:00:00Z'
+      required:
+      - videoUrl
+      - sessionId
+      - expiresAt
+    ReelDetailsResponseDto:
+      type: object
+      properties:
+        reelId:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        status:
+          type: string
+          description: 'Current state of the highlight reel.
+
+            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        reelUrl:
+          type:
+          - string
+          - 'null'
+          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - reelId
+      - status
+    ClipPointDto:
+      type: object
+      properties:
+        x:
+          type: number
+          description: Horizontal coordinate in pixels.
+          example: 0
+        y:
+          type: number
+          description: Vertical coordinate in pixels.
+          example: 0
+      required:
+      - x
+      - y
+    ClipVideoRegionsDto:
+      type: object
+      properties:
+        screen:
+          description: Screen video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+        camera:
+          description: Camera video region, when present.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+    ClipVideoRegionDto:
+      type: object
+      properties:
+        topLeftPoint:
+          description: Top-left point of the video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipPointDto'
+        widthPx:
+          type: number
+          description: Video region width in pixels.
+          example: 1920
+        heightPx:
+          type: number
+          description: Video region height in pixels.
+          example: 1080
+      required:
+      - widthPx
+      - heightPx
+    ClipDetailsResponseDto:
+      type: object
+      properties:
+        clipUuid:
+          type: string
+          description: ID of the clip.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+        status:
+          type: string
+          description: 'Current state of the clip.
+
+            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        clipUrl:
+          type:
+          - string
+          - 'null'
+          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - clipUuid
+      - status
+    PipPositionType:
+      type: string
+      enum:
+      - TOP_LEFT
+      - TOP_RIGHT
+      - BOTTOM_LEFT
+      - BOTTOM_RIGHT
+      description: Picture-in-picture position.
+    HighlightReelsResponseDto:
+      type: object
+      properties:
+        reels:
+          description: Highlight reels available for the study.
+          type: array
+          items:
+            $ref: '#/components/schemas/HighlightReelDto'
+        studyWithClips:
+          type: boolean
+          description: Indicates whether the study has clips available.
+          example: true
+      required:
+      - reels
+      - studyWithClips
     HighlightReelDto:
       type: object
       properties:
@@ -652,212 +852,12 @@ components:
       - lastUpdatedAtMs
       - numClips
       - areAllClipsInReel
-    ReelDetailsResponseDto:
-      type: object
-      properties:
-        reelId:
-          type: string
-          description: ID of the highlight reel.
-          format: uuid
-          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
-        status:
-          type: string
-          description: 'Current state of the highlight reel.
-
-            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
-
-            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
-
-            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
-          enum:
-          - GENERATING
-          - GENERATED
-          - ERROR
-          example: GENERATED
-        reelUrl:
-          type:
-          - string
-          - 'null'
-          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
-          format: url
-          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
-      required:
-      - reelId
-      - status
-    HighlightReelsResponseDto:
-      type: object
-      properties:
-        reels:
-          description: Highlight reels available for the study.
-          type: array
-          items:
-            $ref: '#/components/schemas/HighlightReelDto'
-        studyWithClips:
-          type: boolean
-          description: Indicates whether the study has clips available.
-          example: true
-      required:
-      - reels
-      - studyWithClips
-    ClipDetailsResponseDto:
-      type: object
-      properties:
-        clipUuid:
-          type: string
-          description: ID of the clip.
-          format: uuid
-          example: 41f72104-5f84-44fa-a16a-03f575159611
-        status:
-          type: string
-          description: 'Current state of the clip.
-
-            - `GENERATING`: the clip is being prepared. Try again in a few seconds.
-
-            - `GENERATED`: the clip is ready and `clipUrl` contains the download link.
-
-            - `ERROR`: something went wrong while preparing the clip. Try the request again to start a new attempt.'
-          enum:
-          - GENERATING
-          - GENERATED
-          - ERROR
-          example: GENERATED
-        clipUrl:
-          type:
-          - string
-          - 'null'
-          description: Link to download the clip file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
-          format: url
-          example: https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
-      required:
-      - clipUuid
-      - status
-    ClipLayoutDto:
-      type: object
-      properties:
-        mainStream:
-          description: Primary stream shown for the clip.
-          example: SCREEN
-          allOf:
-          - $ref: '#/components/schemas/RegionType'
-        pipPosition:
-          description: Picture-in-picture position.
-          example: BOTTOM_RIGHT
-          allOf:
-          - $ref: '#/components/schemas/PipPositionType'
-        pipState:
-          description: Picture-in-picture state.
-          example: OPENED
-          allOf:
-          - $ref: '#/components/schemas/PipStateType'
-      required:
-      - mainStream
-      - pipPosition
-      - pipState
-    PipPositionType:
-      type: string
-      enum:
-      - TOP_LEFT
-      - TOP_RIGHT
-      - BOTTOM_LEFT
-      - BOTTOM_RIGHT
-      description: Picture-in-picture position.
-    RegionType:
-      type: string
-      enum:
-      - SCREEN
-      - CAMERA
-      description: Primary stream shown for the clip.
-    ClipVideoRegionsDto:
-      type: object
-      properties:
-        screen:
-          description: Screen video region.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionDto'
-        camera:
-          description: Camera video region, when present.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionDto'
-    ClipVideoRegionDto:
-      type: object
-      properties:
-        topLeftPoint:
-          description: Top-left point of the video region.
-          allOf:
-          - $ref: '#/components/schemas/ClipPointDto'
-        widthPx:
-          type: number
-          description: Video region width in pixels.
-          example: 1920
-        heightPx:
-          type: number
-          description: Video region height in pixels.
-          example: 1080
-      required:
-      - widthPx
-      - heightPx
     PipStateType:
       type: string
       enum:
       - OPENED
       - CLOSED
       description: Picture-in-picture state.
-    ClipsResponseDto:
-      type: object
-      properties:
-        studyUuid:
-          type: string
-          description: ID of the test associated with the clip list.
-          format: uuid
-          example: e320c95c-2741-49bc-9e04-37b77d6fece3
-        clips:
-          description: Clips available for the session video.
-          type: array
-          items:
-            $ref: '#/components/schemas/ClipDto'
-        videoRegions:
-          description: Screen and camera video regions for the session video.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionsDto'
-      required:
-      - studyUuid
-      - clips
-    ClipPointDto:
-      type: object
-      properties:
-        x:
-          type: number
-          description: Horizontal coordinate in pixels.
-          example: 0
-        y:
-          type: number
-          description: Vertical coordinate in pixels.
-          example: 0
-      required:
-      - x
-      - y
-    VideoDownloadResponseDto:
-      type: object
-      properties:
-        videoUrl:
-          type: string
-          description: Pre-signed URL to download the video file. Valid for one hour.
-          format: url
-          example: https://mock-bucket.s3.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000/session.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
-        sessionId:
-          type: string
-          description: ID of the Interaction test session the video corresponds to.
-          format: uuid
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        expiresAt:
-          format: date-time
-          type: string
-          description: Expiration timestamp of the video download URL. UTC time. ISO 8601 format.
-          example: '2025-10-01T12:00:00Z'
-      required:
-      - videoUrl
-      - sessionId
-      - expiresAt
   securitySchemes:
     bearerAuth:
       type: http

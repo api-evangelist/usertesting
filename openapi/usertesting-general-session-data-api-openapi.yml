@@ -233,202 +233,6 @@ paths:
       - General Session Data
 components:
   schemas:
-    TaskGroupResponseQxScoreDto:
-      type: object
-      properties:
-        score:
-          type: number
-          description: The participant's QXscore (0-100).
-          example: 85
-      required:
-      - score
-    SessionSummaryPaginationDto:
-      type: object
-      properties:
-        limit:
-          type: number
-          description: Maximum number of sessions returned in the result set.
-          example: 25
-        offset:
-          type: number
-          description: Number of sessions skipped before starting to collect the result set.
-          example: 0
-        totalCount:
-          type: number
-          description: Total number of sessions within the test.
-          example: 1
-      required:
-      - limit
-      - offset
-      - totalCount
-    SessionSummaryResultItemDto:
-      type: object
-      properties:
-        sessionId:
-          type: string
-          description: ID of the session.
-          format: uuid
-          example: 41f72104-5f84-44fa-a16a-03f5751596ec
-        audienceId:
-          type:
-          - string
-          - 'null'
-          description: Identifier of the audience that the session participant belongs to. Null if session has no assigned audience.
-          format: uuid
-          example: 41f72104-5f84-44fa-a16a-03f575159611
-        status:
-          type: string
-          description: Session completion status.
-          example: COMPLETE
-        startTime:
-          type: string
-          description: Timestamp representing when the session started. UTC timezone. ISO 8601 format.
-          example: '2024-11-21T12:23:52.614Z'
-          format: date-time
-        finishTime:
-          type:
-          - string
-          - 'null'
-          description: Timestamp representing when the session finished. UTC timezone. ISO 8601 format.
-          example: '2024-11-21T12:25:03.347Z'
-          format: date-time
-      required:
-      - sessionId
-      - status
-      - startTime
-    SessionSummaryResultsResponseDto:
-      type: object
-      properties:
-        testId:
-          type: string
-          description: ID of the test queried for session summaries.
-          format: uuid
-          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-        sessions:
-          description: Collection of session summaries.
-          type: array
-          items:
-            $ref: '#/components/schemas/SessionSummaryResultItemDto'
-        meta:
-          description: Response metadata.
-          allOf:
-          - $ref: '#/components/schemas/SessionSummaryResultsMetaDto'
-      required:
-      - testId
-      - sessions
-      - meta
-    TaskGroupItemDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: ID of the task group.
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        type:
-          type: string
-          description: Type of the task group.
-          enum:
-          - QX_SCORE
-          - BALANCED_COMPARISON
-          - UNRECOGNIZED
-          example: QX_SCORE
-        response:
-          description: "Type-specific response payload. Shape is determined by \"type\": \n  - QX_SCORE → { score }\n  - BALANCED_COMPARISON → { sequence }."
-          oneOf:
-          - $ref: '#/components/schemas/TaskGroupResponseQxScoreDto'
-          - $ref: '#/components/schemas/TaskGroupResponseBalancedComparisonDto'
-      required:
-      - uuid
-      - type
-      - response
-    SessionResultsV3ResponseDto:
-      type: object
-      properties:
-        sessionId:
-          type:
-          - string
-          - 'null'
-          description: ID of the session.
-          format: uuid
-          example: f3c00502-256d-4693-b1b3-7dbd7eb64ca9
-        audienceId:
-          type:
-          - string
-          - 'null'
-          description: ID of the audience.
-          format: uuid
-          example: 550e8400-e29b-41d4-a716-446655440000
-        testPlanId:
-          type:
-          - string
-          - 'null'
-          description: ID of the test plan.
-          format: uuid
-          example: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
-        sessionParticipant:
-          description: Participant ID and their demographic information.
-          allOf:
-          - $ref: '#/components/schemas/SessionParticipantDto'
-        taskGroups:
-          description: List of task groups and their responses. May be empty if the session has no task groups.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskGroupItemDto'
-        tasks:
-          description: List of individual tasks and their responses. May be empty if the session has no tasks.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskItemDto'
-      required:
-      - sessionId
-      - audienceId
-      - testPlanId
-      - sessionParticipant
-      - taskGroups
-      - tasks
-    TaskResponseDataDto:
-      type: object
-      properties:
-        startTimeMs:
-          type: number
-          description: Task start time (ms since session start).
-          example: 15000
-        endTimeMs:
-          type: number
-          description: Task end time (ms since session start).
-          example: 20000
-        skipped:
-          type: boolean
-          description: Whether the participant skipped the task.
-          example: false
-        answer:
-          description: Task-type-specific answer payload.
-          allOf:
-          - $ref: '#/components/schemas/TaskAnswerDto'
-      required:
-      - startTimeMs
-      - endTimeMs
-      - skipped
-      - answer
-    SessionParticipantDto:
-      type: object
-      properties:
-        participantId:
-          type:
-          - string
-          - 'null'
-          description: ID of the participant.
-          format: uuid
-          example: 41f72104-5f84-44fa-a16a-03f575159611
-        demographicsInfo:
-          description: Demographic questions and answers.
-          type: array
-          items:
-            $ref: '#/components/schemas/DemographicInfoDto'
-      required:
-      - participantId
-      - demographicsInfo
     TaskAnswerDto:
       type: object
       properties:
@@ -482,6 +286,15 @@ components:
           - object
           - 'null'
           description: Grid-style question for rating multiple items.
+    TaskGroupResponseBalancedComparisonDto:
+      type: object
+      properties:
+        sequence:
+          type: string
+          description: Order in which the participant saw the comparison groups.
+          example: BA
+      required:
+      - sequence
     DemographicInfoDto:
       type: object
       properties:
@@ -525,6 +338,211 @@ components:
       - label
       - value
       - type
+    TaskResponseDataDto:
+      type: object
+      properties:
+        startTimeMs:
+          type: number
+          description: Task start time (ms since session start).
+          example: 15000
+        endTimeMs:
+          type: number
+          description: Task end time (ms since session start).
+          example: 20000
+        skipped:
+          type: boolean
+          description: Whether the participant skipped the task.
+          example: false
+        answer:
+          description: Task-type-specific answer payload.
+          allOf:
+          - $ref: '#/components/schemas/TaskAnswerDto'
+      required:
+      - startTimeMs
+      - endTimeMs
+      - skipped
+      - answer
+    SessionResultsV3ResponseDto:
+      type: object
+      properties:
+        sessionId:
+          type:
+          - string
+          - 'null'
+          description: ID of the session.
+          format: uuid
+          example: f3c00502-256d-4693-b1b3-7dbd7eb64ca9
+        audienceId:
+          type:
+          - string
+          - 'null'
+          description: ID of the audience.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        testPlanId:
+          type:
+          - string
+          - 'null'
+          description: ID of the test plan.
+          format: uuid
+          example: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+        sessionParticipant:
+          description: Participant ID and their demographic information.
+          allOf:
+          - $ref: '#/components/schemas/SessionParticipantDto'
+        taskGroups:
+          description: List of task groups and their responses. May be empty if the session has no task groups.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskGroupItemDto'
+        tasks:
+          description: List of individual tasks and their responses. May be empty if the session has no tasks.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskItemDto'
+      required:
+      - sessionId
+      - audienceId
+      - testPlanId
+      - sessionParticipant
+      - taskGroups
+      - tasks
+    SessionSummaryResultsResponseDto:
+      type: object
+      properties:
+        testId:
+          type: string
+          description: ID of the test queried for session summaries.
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        sessions:
+          description: Collection of session summaries.
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionSummaryResultItemDto'
+        meta:
+          description: Response metadata.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryResultsMetaDto'
+      required:
+      - testId
+      - sessions
+      - meta
+    SessionSummaryResultItemDto:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: ID of the session.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f5751596ec
+        audienceId:
+          type:
+          - string
+          - 'null'
+          description: Identifier of the audience that the session participant belongs to. Null if session has no assigned audience.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+        status:
+          type: string
+          description: Session completion status.
+          example: COMPLETE
+        startTime:
+          type: string
+          description: Timestamp representing when the session started. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:23:52.614Z'
+          format: date-time
+        finishTime:
+          type:
+          - string
+          - 'null'
+          description: Timestamp representing when the session finished. UTC timezone. ISO 8601 format.
+          example: '2024-11-21T12:25:03.347Z'
+          format: date-time
+      required:
+      - sessionId
+      - status
+      - startTime
+    SessionSummaryResultsMetaDto:
+      type: object
+      properties:
+        pagination:
+          description: Pagination metadata for the response.
+          allOf:
+          - $ref: '#/components/schemas/SessionSummaryPaginationDto'
+      required:
+      - pagination
+    TaskGroupResponseQxScoreDto:
+      type: object
+      properties:
+        score:
+          type: number
+          description: The participant's QXscore (0-100).
+          example: 85
+      required:
+      - score
+    SessionSummaryPaginationDto:
+      type: object
+      properties:
+        limit:
+          type: number
+          description: Maximum number of sessions returned in the result set.
+          example: 25
+        offset:
+          type: number
+          description: Number of sessions skipped before starting to collect the result set.
+          example: 0
+        totalCount:
+          type: number
+          description: Total number of sessions within the test.
+          example: 1
+      required:
+      - limit
+      - offset
+      - totalCount
+    SessionParticipantDto:
+      type: object
+      properties:
+        participantId:
+          type:
+          - string
+          - 'null'
+          description: ID of the participant.
+          format: uuid
+          example: 41f72104-5f84-44fa-a16a-03f575159611
+        demographicsInfo:
+          description: Demographic questions and answers.
+          type: array
+          items:
+            $ref: '#/components/schemas/DemographicInfoDto'
+      required:
+      - participantId
+      - demographicsInfo
+    TaskGroupItemDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the task group.
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        type:
+          type: string
+          description: Type of the task group.
+          enum:
+          - QX_SCORE
+          - BALANCED_COMPARISON
+          - UNRECOGNIZED
+          example: QX_SCORE
+        response:
+          description: "Type-specific response payload. Shape is determined by \"type\": \n  - QX_SCORE → { score }\n  - BALANCED_COMPARISON → { sequence }."
+          oneOf:
+          - $ref: '#/components/schemas/TaskGroupResponseQxScoreDto'
+          - $ref: '#/components/schemas/TaskGroupResponseBalancedComparisonDto'
+      required:
+      - uuid
+      - type
+      - response
     TaskItemDto:
       type: object
       properties:
@@ -561,24 +579,6 @@ components:
       - text
       - type
       - response
-    TaskGroupResponseBalancedComparisonDto:
-      type: object
-      properties:
-        sequence:
-          type: string
-          description: Order in which the participant saw the comparison groups.
-          example: BA
-      required:
-      - sequence
-    SessionSummaryResultsMetaDto:
-      type: object
-      properties:
-        pagination:
-          description: Pagination metadata for the response.
-          allOf:
-          - $ref: '#/components/schemas/SessionSummaryPaginationDto'
-      required:
-      - pagination
   securitySchemes:
     bearerAuth:
       type: http

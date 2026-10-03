@@ -61,6 +61,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    HighlightreelClipNode:
+      properties:
+        duration:
+          description: Clip duration
+          type: number
+          example: 18.5
+        id:
+          description: Unique id of clip which belongs to highlight reel. Value not returned due to security constraints
+          type: string
+          example: clip_123
+        securePosterFullUrl:
+          description: Video thumbnail URL. Value not returned due to security constraints
+          type: string
+          example: https://cdn.usertesting.com/posters/clip_123.jpg
+        url:
+          description: URL to access or play the clip resource.
+          type: string
+          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+      type: object
+      example:
+        duration: 18.5
+        id: clip_123
+        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
+        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
     Highlightreel:
       properties:
         clips:
@@ -153,30 +177,6 @@ components:
       example:
         errorCode: BAD_REQUEST
         errorMessage: Not a valid UUID
-    HighlightreelClipNode:
-      properties:
-        duration:
-          description: Clip duration
-          type: number
-          example: 18.5
-        id:
-          description: Unique id of clip which belongs to highlight reel. Value not returned due to security constraints
-          type: string
-          example: clip_123
-        securePosterFullUrl:
-          description: Video thumbnail URL. Value not returned due to security constraints
-          type: string
-          example: https://cdn.usertesting.com/posters/clip_123.jpg
-        url:
-          description: URL to access or play the clip resource.
-          type: string
-          example: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
-      type: object
-      example:
-        duration: 18.5
-        id: clip_123
-        securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
-        url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
   securitySchemes:
     bearerAuth:
       type: http
