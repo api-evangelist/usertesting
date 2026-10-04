@@ -568,6 +568,164 @@ paths:
       - Video Data
 components:
   schemas:
+    PipStateType:
+      type: string
+      enum:
+      - OPENED
+      - CLOSED
+      description: Picture-in-picture state.
+    HighlightReelDto:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        name:
+          type: string
+          description: Name of the highlight reel.
+          example: Checkout highlights
+        durationMs:
+          type: number
+          description: Highlight reel duration in milliseconds.
+          example: 120000
+        lastUpdatedAtMs:
+          type: number
+          description: Timestamp of the last highlight reel update in milliseconds.
+          example: 1766051123000
+        numClips:
+          type: number
+          description: Number of clips in the highlight reel.
+          example: 4
+        areAllClipsInReel:
+          type: boolean
+          description: Indicates whether all study clips are included in the reel.
+          example: true
+      required:
+      - uuid
+      - name
+      - durationMs
+      - lastUpdatedAtMs
+      - numClips
+      - areAllClipsInReel
+    HighlightReelsResponseDto:
+      type: object
+      properties:
+        reels:
+          description: Highlight reels available for the study.
+          type: array
+          items:
+            $ref: '#/components/schemas/HighlightReelDto'
+        studyWithClips:
+          type: boolean
+          description: Indicates whether the study has clips available.
+          example: true
+      required:
+      - reels
+      - studyWithClips
+    PipPositionType:
+      type: string
+      enum:
+      - TOP_LEFT
+      - TOP_RIGHT
+      - BOTTOM_LEFT
+      - BOTTOM_RIGHT
+      description: Picture-in-picture position.
+    ReelDetailsResponseDto:
+      type: object
+      properties:
+        reelId:
+          type: string
+          description: ID of the highlight reel.
+          format: uuid
+          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
+        status:
+          type: string
+          description: 'Current state of the highlight reel.
+
+            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
+
+            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
+
+            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
+          enum:
+          - GENERATING
+          - GENERATED
+          - ERROR
+          example: GENERATED
+        reelUrl:
+          type:
+          - string
+          - 'null'
+          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
+          format: url
+          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
+      required:
+      - reelId
+      - status
+    ClipsResponseDto:
+      type: object
+      properties:
+        studyUuid:
+          type: string
+          description: ID of the test associated with the clip list.
+          format: uuid
+          example: e320c95c-2741-49bc-9e04-37b77d6fece3
+        clips:
+          description: Clips available for the session video.
+          type: array
+          items:
+            $ref: '#/components/schemas/ClipDto'
+        videoRegions:
+          description: Screen and camera video regions for the session video.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+      required:
+      - studyUuid
+      - clips
+    ClipLayoutDto:
+      type: object
+      properties:
+        mainStream:
+          description: Primary stream shown for the clip.
+          example: SCREEN
+          allOf:
+          - $ref: '#/components/schemas/RegionType'
+        pipPosition:
+          description: Picture-in-picture position.
+          example: BOTTOM_RIGHT
+          allOf:
+          - $ref: '#/components/schemas/PipPositionType'
+        pipState:
+          description: Picture-in-picture state.
+          example: OPENED
+          allOf:
+          - $ref: '#/components/schemas/PipStateType'
+      required:
+      - mainStream
+      - pipPosition
+      - pipState
+    RegionType:
+      type: string
+      enum:
+      - SCREEN
+      - CAMERA
+      description: Primary stream shown for the clip.
+    ClipPointDto:
+      type: object
+      properties:
+        x:
+          type: number
+          description: Horizontal coordinate in pixels.
+          example: 0
+        y:
+          type: number
+          description: Vertical coordinate in pixels.
+          example: 0
+      required:
+      - x
+      - y
     ClipDto:
       type: object
       properties:
@@ -617,54 +775,24 @@ components:
       - videoUuid
       - hasAudio
       - hasCamera
-    ClipsResponseDto:
+    ClipVideoRegionDto:
       type: object
       properties:
-        studyUuid:
-          type: string
-          description: ID of the test associated with the clip list.
-          format: uuid
-          example: e320c95c-2741-49bc-9e04-37b77d6fece3
-        clips:
-          description: Clips available for the session video.
-          type: array
-          items:
-            $ref: '#/components/schemas/ClipDto'
-        videoRegions:
-          description: Screen and camera video regions for the session video.
+        topLeftPoint:
+          description: Top-left point of the video region.
           allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionsDto'
+          - $ref: '#/components/schemas/ClipPointDto'
+        widthPx:
+          type: number
+          description: Video region width in pixels.
+          example: 1920
+        heightPx:
+          type: number
+          description: Video region height in pixels.
+          example: 1080
       required:
-      - studyUuid
-      - clips
-    RegionType:
-      type: string
-      enum:
-      - SCREEN
-      - CAMERA
-      description: Primary stream shown for the clip.
-    ClipLayoutDto:
-      type: object
-      properties:
-        mainStream:
-          description: Primary stream shown for the clip.
-          example: SCREEN
-          allOf:
-          - $ref: '#/components/schemas/RegionType'
-        pipPosition:
-          description: Picture-in-picture position.
-          example: BOTTOM_RIGHT
-          allOf:
-          - $ref: '#/components/schemas/PipPositionType'
-        pipState:
-          description: Picture-in-picture state.
-          example: OPENED
-          allOf:
-          - $ref: '#/components/schemas/PipStateType'
-      required:
-      - mainStream
-      - pipPosition
-      - pipState
+      - widthPx
+      - heightPx
     VideoDownloadResponseDto:
       type: object
       properties:
@@ -687,81 +815,6 @@ components:
       - videoUrl
       - sessionId
       - expiresAt
-    ReelDetailsResponseDto:
-      type: object
-      properties:
-        reelId:
-          type: string
-          description: ID of the highlight reel.
-          format: uuid
-          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
-        status:
-          type: string
-          description: 'Current state of the highlight reel.
-
-            - `GENERATING`: the highlight reel is being prepared. Try again in a few seconds.
-
-            - `GENERATED`: the highlight reel is ready and `reelUrl` contains the download link.
-
-            - `ERROR`: something went wrong while preparing the highlight reel. Try the request again to start a new attempt.'
-          enum:
-          - GENERATING
-          - GENERATED
-          - ERROR
-          example: GENERATED
-        reelUrl:
-          type:
-          - string
-          - 'null'
-          description: Link to download the highlight reel file. Valid for 15 minutes. Returned only when the status is `GENERATED`; call this endpoint again to get a new link after it expires.
-          format: url
-          example: https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890
-      required:
-      - reelId
-      - status
-    ClipPointDto:
-      type: object
-      properties:
-        x:
-          type: number
-          description: Horizontal coordinate in pixels.
-          example: 0
-        y:
-          type: number
-          description: Vertical coordinate in pixels.
-          example: 0
-      required:
-      - x
-      - y
-    ClipVideoRegionsDto:
-      type: object
-      properties:
-        screen:
-          description: Screen video region.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionDto'
-        camera:
-          description: Camera video region, when present.
-          allOf:
-          - $ref: '#/components/schemas/ClipVideoRegionDto'
-    ClipVideoRegionDto:
-      type: object
-      properties:
-        topLeftPoint:
-          description: Top-left point of the video region.
-          allOf:
-          - $ref: '#/components/schemas/ClipPointDto'
-        widthPx:
-          type: number
-          description: Video region width in pixels.
-          example: 1920
-        heightPx:
-          type: number
-          description: Video region height in pixels.
-          example: 1080
-      required:
-      - widthPx
-      - heightPx
     ClipDetailsResponseDto:
       type: object
       properties:
@@ -794,70 +847,17 @@ components:
       required:
       - clipUuid
       - status
-    PipPositionType:
-      type: string
-      enum:
-      - TOP_LEFT
-      - TOP_RIGHT
-      - BOTTOM_LEFT
-      - BOTTOM_RIGHT
-      description: Picture-in-picture position.
-    HighlightReelsResponseDto:
+    ClipVideoRegionsDto:
       type: object
       properties:
-        reels:
-          description: Highlight reels available for the study.
-          type: array
-          items:
-            $ref: '#/components/schemas/HighlightReelDto'
-        studyWithClips:
-          type: boolean
-          description: Indicates whether the study has clips available.
-          example: true
-      required:
-      - reels
-      - studyWithClips
-    HighlightReelDto:
-      type: object
-      properties:
-        uuid:
-          type: string
-          description: ID of the highlight reel.
-          format: uuid
-          example: 8fdc898f-3b2b-4f45-91a2-2a6b618bc987
-        name:
-          type: string
-          description: Name of the highlight reel.
-          example: Checkout highlights
-        durationMs:
-          type: number
-          description: Highlight reel duration in milliseconds.
-          example: 120000
-        lastUpdatedAtMs:
-          type: number
-          description: Timestamp of the last highlight reel update in milliseconds.
-          example: 1766051123000
-        numClips:
-          type: number
-          description: Number of clips in the highlight reel.
-          example: 4
-        areAllClipsInReel:
-          type: boolean
-          description: Indicates whether all study clips are included in the reel.
-          example: true
-      required:
-      - uuid
-      - name
-      - durationMs
-      - lastUpdatedAtMs
-      - numClips
-      - areAllClipsInReel
-    PipStateType:
-      type: string
-      enum:
-      - OPENED
-      - CLOSED
-      description: Picture-in-picture state.
+        screen:
+          description: Screen video region.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
+        camera:
+          description: Camera video region, when present.
+          allOf:
+          - $ref: '#/components/schemas/ClipVideoRegionDto'
   securitySchemes:
     bearerAuth:
       type: http

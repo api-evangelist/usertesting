@@ -85,6 +85,20 @@ components:
         id: clip_123
         securePosterFullUrl: https://cdn.usertesting.com/posters/clip_123.jpg
         url: https://app.usertesting.com/highlightreels/reel_123/clips/clip_123
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
     Highlightreel:
       properties:
         clips:
@@ -163,20 +177,6 @@ components:
         title: Key Checkout Moments
         token: b4be664ea2d54f56a455
         updatedAt: '2024-05-01T15:01:07Z'
-    HttpErrorResponse:
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
-      type: object
-      example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
   securitySchemes:
     bearerAuth:
       type: http
