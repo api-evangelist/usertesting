@@ -120,44 +120,108 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HttpErrorResponse:
+    Study:
       properties:
-        errorCode:
+        netPromoterScores:
+          items:
+            $ref: '#/components/schemas/StudyNetPromoterScore'
+          type: array
+          description: Net Promoter Score result objects associated with the study.
+          example:
+          - detractorPercentage: 18
+            passivePercentage: 26
+            promoterPercentage: 56
+            score: 38
+        orderedBy:
+          properties:
+            email:
+              description: Email of the user who ordered or created the study.
+              type: string
+              example: support@usertesting.com
+            name:
+              description: Name of the user who ordered or created the study.
+              type: string
+              example: UT Employee
+          type: object
+          description: User information for the person who ordered or created the study.
+          example:
+            email: support@usertesting.com
+            name: UT Employee
+        sessionCount:
+          description: Total number of sessions associated with the study.
+          type: integer
+          example: 50
+        tasks:
+          items:
+            $ref: '#/components/schemas/StudyTaskNode'
+          type: array
+          description: Ordered task definitions that make up the study flow.
+          example:
+          - blurPII: false
+            choices:
+            - Poland
+            - Singapore
+            grouping: INITIAL
+            launchUrl: https://www.microsoft.com/en-us
+            lowerEndpoint: Very difficult
+            multipleAnswers: true
+            position: 1
+            resultType: ''
+            scaleMaximum: 5
+            scaleMinimum: 1
+            taskGroup:
+              id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+              type: MAIN
+            taskType: multiple_choice
+            text: 'ACME offices are located in:'
+            upperEndpoint: Very easy
+        testPlan:
+          properties:
+            shortTest:
+              type: boolean
+              description: Whether the study is configured as a short test.
+              example: false
+          type: object
+          description: Summary of study-level test plan settings.
+          example:
+            shortTest: false
+        title:
+          description: Human-readable study title.
           type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
+          example: ACME Test
       type: object
       example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
-    StudyNetPromoterScore:
-      properties:
-        detractorPercentage:
-          type: integer
-          description: Percentage of respondents classified as detractors for this NPS result.
-          example: 18
-        passivePercentage:
-          type: integer
-          description: Percentage of respondents classified as passives for this NPS result.
-          example: 26
-        promoterPercentage:
-          type: integer
-          description: Percentage of respondents classified as promoters for this NPS result.
-          example: 56
-        score:
-          type: integer
-          description: Net Promoter Score value for the study.
-          example: 38
-      type: object
-      example:
-        detractorPercentage: 18
-        passivePercentage: 26
-        promoterPercentage: 56
-        score: 38
+        netPromoterScores:
+        - detractorPercentage: 18
+          passivePercentage: 26
+          promoterPercentage: 56
+          score: 38
+        orderedBy:
+          email: support@usertesting.com
+          name: UT Employee
+        sessionCount: 50
+        tasks:
+        - blurPII: false
+          choices:
+          - Poland
+          - Singapore
+          grouping: INITIAL
+          launchUrl: https://www.microsoft.com/en-us
+          lowerEndpoint: Very difficult
+          multipleAnswers: true
+          position: 1
+          resultType: ''
+          scaleMaximum: 5
+          scaleMinimum: 1
+          taskGroup:
+            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
+            type: MAIN
+          taskType: multiple_choice
+          text: 'ACME offices are located in:'
+          upperEndpoint: Very easy
+        testPlan:
+          shortTest: false
+        title: ACME Test
     CompletedSessions:
       properties:
         completedSessionCount:
@@ -447,108 +511,20 @@ components:
           - question: What country do you live in?
             response:
             - United States
-    Study:
+    HttpErrorResponse:
       properties:
-        netPromoterScores:
-          items:
-            $ref: '#/components/schemas/StudyNetPromoterScore'
-          type: array
-          description: Net Promoter Score result objects associated with the study.
-          example:
-          - detractorPercentage: 18
-            passivePercentage: 26
-            promoterPercentage: 56
-            score: 38
-        orderedBy:
-          properties:
-            email:
-              description: Email of the user who ordered or created the study.
-              type: string
-              example: support@usertesting.com
-            name:
-              description: Name of the user who ordered or created the study.
-              type: string
-              example: UT Employee
-          type: object
-          description: User information for the person who ordered or created the study.
-          example:
-            email: support@usertesting.com
-            name: UT Employee
-        sessionCount:
-          description: Total number of sessions associated with the study.
-          type: integer
-          example: 50
-        tasks:
-          items:
-            $ref: '#/components/schemas/StudyTaskNode'
-          type: array
-          description: Ordered task definitions that make up the study flow.
-          example:
-          - blurPII: false
-            choices:
-            - Poland
-            - Singapore
-            grouping: INITIAL
-            launchUrl: https://www.microsoft.com/en-us
-            lowerEndpoint: Very difficult
-            multipleAnswers: true
-            position: 1
-            resultType: ''
-            scaleMaximum: 5
-            scaleMinimum: 1
-            taskGroup:
-              id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-              type: MAIN
-            taskType: multiple_choice
-            text: 'ACME offices are located in:'
-            upperEndpoint: Very easy
-        testPlan:
-          properties:
-            shortTest:
-              type: boolean
-              description: Whether the study is configured as a short test.
-              example: false
-          type: object
-          description: Summary of study-level test plan settings.
-          example:
-            shortTest: false
-        title:
-          description: Human-readable study title.
+        errorCode:
           type: string
-          example: ACME Test
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
       type: object
       example:
-        netPromoterScores:
-        - detractorPercentage: 18
-          passivePercentage: 26
-          promoterPercentage: 56
-          score: 38
-        orderedBy:
-          email: support@usertesting.com
-          name: UT Employee
-        sessionCount: 50
-        tasks:
-        - blurPII: false
-          choices:
-          - Poland
-          - Singapore
-          grouping: INITIAL
-          launchUrl: https://www.microsoft.com/en-us
-          lowerEndpoint: Very difficult
-          multipleAnswers: true
-          position: 1
-          resultType: ''
-          scaleMaximum: 5
-          scaleMinimum: 1
-          taskGroup:
-            id: VGFza0dyb3Vwczo6TWFpbi01MDI=
-            type: MAIN
-          taskType: multiple_choice
-          text: 'ACME offices are located in:'
-          upperEndpoint: Very easy
-        testPlan:
-          shortTest: false
-        title: ACME Test
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
     StudyTaskNode:
       properties:
         blurPII:
@@ -642,6 +618,30 @@ components:
         taskType: multiple_choice
         text: 'ACME offices are located in:'
         upperEndpoint: Very easy
+    StudyNetPromoterScore:
+      properties:
+        detractorPercentage:
+          type: integer
+          description: Percentage of respondents classified as detractors for this NPS result.
+          example: 18
+        passivePercentage:
+          type: integer
+          description: Percentage of respondents classified as passives for this NPS result.
+          example: 26
+        promoterPercentage:
+          type: integer
+          description: Percentage of respondents classified as promoters for this NPS result.
+          example: 56
+        score:
+          type: integer
+          description: Net Promoter Score value for the study.
+          example: 38
+      type: object
+      example:
+        detractorPercentage: 18
+        passivePercentage: 26
+        promoterPercentage: 56
+        score: 38
   securitySchemes:
     bearerAuth:
       type: http

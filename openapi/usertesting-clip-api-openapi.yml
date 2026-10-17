@@ -65,20 +65,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HttpErrorResponse:
-      properties:
-        errorCode:
-          type: string
-          description: Machine-readable error code derived from the HTTP status returned by the API.
-          example: BAD_REQUEST
-        errorMessage:
-          type: string
-          description: Human-readable error message describing the failure.
-          example: Not a valid UUID
-      type: object
-      example:
-        errorCode: BAD_REQUEST
-        errorMessage: Not a valid UUID
     Clip:
       properties:
         createdAt:
@@ -147,6 +133,20 @@ components:
         sentimentTag: negative
         study:
           title: Checkout Flow Validation
+    HttpErrorResponse:
+      properties:
+        errorCode:
+          type: string
+          description: Machine-readable error code derived from the HTTP status returned by the API.
+          example: BAD_REQUEST
+        errorMessage:
+          type: string
+          description: Human-readable error message describing the failure.
+          example: Not a valid UUID
+      type: object
+      example:
+        errorCode: BAD_REQUEST
+        errorMessage: Not a valid UUID
   securitySchemes:
     bearerAuth:
       type: http
