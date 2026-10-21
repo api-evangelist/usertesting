@@ -70,3 +70,32 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: usertesting-zoom-partner-program
+  label: Zoom Partner Program
+  partner: zoom
+  partner_name: Zoom Partner Program
+  category: Zoom technology partner
+  type: register
+  channel: standard-directory
+  evidence: https://partner.zoom.com/solutions/usertesting/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Zoom Partner Solutions (partner.zoom.com/solutions; /wp-json/wp/v2/isvsolution)
+    standard: Zoom Partner Program
+    spec_file: null
+    role: zoom-technology-partner
+    registered_name: UserTesting
+    register_id: https://partner.zoom.com/solutions/usertesting/
+    matched_domain: usertesting.com
+    matched_by: domain
+    identity_source: a link on the partner page to the partner's own site (name-gated)
+    signal_note: 'participation only: partner type / program tier is partner_tier, never counted; no Zoom certification
+      is printed on the register, so no certified_products'
+    detected_by: sweep-zoom-app-marketplace.py
+    detected: '2026-10-21'
+    context:
+      products:
+      - Meetings
+  status: not-a-workflow
+  arazzo: null
