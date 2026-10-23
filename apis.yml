@@ -222,6 +222,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/usertesting/overview
 - type: Website
   url: https://www.usertesting.com
 - type: DeveloperPortal
