@@ -124,3 +124,16 @@
     detected: '2026-10-21'
   status: not-a-workflow
   arazzo: null
+- slug: usertesting-adobe-creative-cloud-own
+  label: Adobe Creative Cloud (own)
+  partner: adobe-creative-cloud
+  partner_name: Adobe Creative Cloud (own)
+  category: Adobe Exchange Creative Cloud listing (Express)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://exchange.adobe.com/apps/cc/713b61ec/usertesting
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
