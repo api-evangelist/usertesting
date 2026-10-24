@@ -1,1891 +1,1929 @@
 {
+  "info": {
+    "_postman_id": "f6d87dd3-e3b2-4f95-bd56-12bbfed8c72d",
+    "name": "Results Video Data API",
+    "description": "With the Results API, you can access the results of your UserTesting account's Surveys, Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:17:31.000Z",
+    "updatedAt": "2026-10-21T20:17:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f6d87dd3-e3b2-4f95-bd56-12bbfed8c72d"
+  },
   "item": [
     {
-      "id": "44441ec2-8c46-41dc-901d-8fe55c56d89b",
-      "name": "Video Data",
-      "description": {
-        "content": "Access session video data, including transcripts, video download links, clips, and highlight reels.",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "9914302a-2a70-4cad-b63c-f96a09cb7a59",
-          "name": "Obtain a clip download link",
-          "request": {
-            "name": "Obtain a clip download link",
-            "description": {
-              "content": "Returns the details of a clip and a link to download it.\n\nIf the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "sessionResults",
-                ":sessionId",
-                "clips",
-                ":clipUuid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "sessionId",
-                  "description": "(Required) ID of the session that contains the clip."
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "clipUuid",
-                  "description": "(Required) ID of the clip you want to download."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "v2",
+          "item": [
             {
-              "id": "b9d62c76-428d-4001-8581-4a6f6e75f584",
-              "name": "Clip details successfully returned.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips",
-                    ":clipUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+              "name": "sessionResults",
+              "item": [
+                {
+                  "name": "{sessionId}",
+                  "item": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session that contains the clip."
+                      "name": "clips",
+                      "item": [
+                        {
+                          "name": "{clipUuid}",
+                          "item": [
+                            {
+                              "name": "Obtain a clip download link",
+                              "id": "2b911853-c950-4075-a851-817b23492404",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "clips",
+                                    ":clipUuid"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "c8cb7e9e-6ccb-4468-9fbe-a8c922ede82b",
+                                      "key": "sessionId",
+                                      "value": "<uuid>",
+                                      "description": "(Required) ID of the session that contains the clip."
+                                    },
+                                    {
+                                      "id": "bedc3957-e9a4-4518-a062-be7d3ca313dd",
+                                      "key": "clipUuid",
+                                      "value": "<uuid>",
+                                      "description": "(Required) ID of the clip you want to download."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns the details of a clip and a link to download it.\n\nIf the clip is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `clipUrl` to download the clip. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n_Compatibility:_\n- Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details."
+                              },
+                              "response": [
+                                {
+                                  "id": "a26c28be-bd86-4bdc-90b0-c8ca439dd90c",
+                                  "name": "Clip details successfully returned.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "sessionResults",
+                                        ":sessionId",
+                                        "clips",
+                                        ":clipUuid"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "sessionId"
+                                        },
+                                        {
+                                          "key": "clipUuid"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "Caching policy for the response.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Cache-Control",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Pragma",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Strict-Transport-Security",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The length of the response body in bytes.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Content-Length",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The MIME type of the returned response.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Content-Type",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The maximum number of requests allowed in the current period.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The number of requests remaining in the current period.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-remaining",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-reset",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"clipUuid\": \"<uuid>\",\n  \"status\": \"GENERATED\",\n  \"clipUrl\": \"<string,null>\"\n}",
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-a26c28be-bd86-4bdc-90b0-c8ca439dd90c"
+                                },
+                                {
+                                  "id": "859b1c4f-0bbc-4a00-a6e0-86b56fb74194",
+                                  "name": "Missing or invalid access token.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "sessionResults",
+                                        ":sessionId",
+                                        "clips",
+                                        ":clipUuid"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "sessionId"
+                                        },
+                                        {
+                                          "key": "clipUuid"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-859b1c4f-0bbc-4a00-a6e0-86b56fb74194"
+                                },
+                                {
+                                  "id": "af80fe0f-e8ca-48be-884e-eef183ba5829",
+                                  "name": "Clip not found.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "sessionResults",
+                                        ":sessionId",
+                                        "clips",
+                                        ":clipUuid"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "sessionId"
+                                        },
+                                        {
+                                          "key": "clipUuid"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-af80fe0f-e8ca-48be-884e-eef183ba5829"
+                                },
+                                {
+                                  "id": "90591f88-e10a-44e3-ab3c-27d440a789eb",
+                                  "name": "Too many requests. Maximum of 10 requests per minute.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips/:clipUuid",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "sessionResults",
+                                        ":sessionId",
+                                        "clips",
+                                        ":clipUuid"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "sessionId"
+                                        },
+                                        {
+                                          "key": "clipUuid"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Too Many Requests",
+                                  "code": 429,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-90591f88-e10a-44e3-ab3c-27d440a789eb"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-2b911853-c950-4075-a851-817b23492404"
+                            }
+                          ],
+                          "id": "e3aeb0e6-efe3-42cd-8364-23a5e3183583",
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-e3aeb0e6-efe3-42cd-8364-23a5e3183583"
+                        },
+                        {
+                          "name": "Find all clips for a session video",
+                          "id": "e9db843a-f778-4f51-ad8f-6dc023186ea5",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "sessionResults",
+                                ":sessionId",
+                                "clips"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "dd24034e-b32b-4b51-b2cc-853e90d91990",
+                                  "key": "sessionId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) ID of the session whose video clips you want to retrieve."
+                                }
+                              ]
+                            },
+                            "description": "Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.\n\n_Compatibility:_\n- Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details."
+                          },
+                          "response": [
+                            {
+                              "id": "a5028d0a-c339-4670-83ef-2460564d9e41",
+                              "name": "Clips successfully retrieved.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "clips"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Caching policy for the response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Cache-Control",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Pragma",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Strict-Transport-Security",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The length of the response body in bytes.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Length",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The MIME type of the returned response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The maximum number of requests allowed in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests remaining in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-remaining",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-reset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"studyUuid\": \"<uuid>\",\n  \"clips\": [\n    {\n      \"uuid\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"timeStartMs\": \"<number>\",\n      \"timeEndMs\": \"<number>\",\n      \"videoUuid\": \"<uuid>\",\n      \"hasAudio\": \"<boolean>\",\n      \"hasCamera\": \"<boolean>\",\n      \"description\": \"<string>\",\n      \"layout\": {\n        \"mainStream\": \"SCREEN\",\n        \"pipPosition\": \"BOTTOM_RIGHT\",\n        \"pipState\": \"CLOSED\"\n      }\n    },\n    {\n      \"uuid\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"timeStartMs\": \"<number>\",\n      \"timeEndMs\": \"<number>\",\n      \"videoUuid\": \"<uuid>\",\n      \"hasAudio\": \"<boolean>\",\n      \"hasCamera\": \"<boolean>\",\n      \"description\": \"<string>\",\n      \"layout\": {\n        \"mainStream\": \"SCREEN\",\n        \"pipPosition\": \"BOTTOM_RIGHT\",\n        \"pipState\": \"OPENED\"\n      }\n    }\n  ],\n  \"videoRegions\": {\n    \"screen\": {\n      \"widthPx\": \"<number>\",\n      \"heightPx\": \"<number>\",\n      \"topLeftPoint\": {\n        \"x\": \"<number>\",\n        \"y\": \"<number>\"\n      }\n    },\n    \"camera\": {\n      \"widthPx\": \"<number>\",\n      \"heightPx\": \"<number>\",\n      \"topLeftPoint\": {\n        \"x\": \"<number>\",\n        \"y\": \"<number>\"\n      }\n    }\n  }\n}",
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-a5028d0a-c339-4670-83ef-2460564d9e41"
+                            },
+                            {
+                              "id": "b9773685-97f0-402e-9ff6-95903b6b20f3",
+                              "name": "Missing or invalid access token.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "clips"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-b9773685-97f0-402e-9ff6-95903b6b20f3"
+                            },
+                            {
+                              "id": "12aef4d5-08b3-41ec-8540-272634e1ae6d",
+                              "name": "Session video or clips not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "clips"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-12aef4d5-08b3-41ec-8540-272634e1ae6d"
+                            },
+                            {
+                              "id": "edc95787-0853-4744-99c9-cf6f6e9bbc1c",
+                              "name": "Too many requests. Maximum of 10 requests per minute.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/clips",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "clips"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-edc95787-0853-4744-99c9-cf6f6e9bbc1c"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-e9db843a-f778-4f51-ad8f-6dc023186ea5"
+                        }
+                      ],
+                      "id": "73cc14fc-b9ab-49b1-848e-23aeaf3d1d97",
+                      "createdAt": "2026-10-21T20:17:32.000Z",
+                      "updatedAt": "2026-10-21T20:17:32.000Z",
+                      "uid": "35240-73cc14fc-b9ab-49b1-848e-23aeaf3d1d97"
                     },
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "clipUuid",
-                      "description": "(Required) ID of the clip you want to download."
+                      "name": "transcript",
+                      "item": [
+                        {
+                          "name": "Retrieve a video transcript",
+                          "id": "674d2af7-cd68-41c6-bc08-ad6b87a3abff",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "text/vtt"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/transcript",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "sessionResults",
+                                ":sessionId",
+                                "transcript"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "2c08bf7c-199b-4617-a731-6bd06a687dd4",
+                                  "key": "sessionId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
+                                }
+                              ]
+                            },
+                            "description": "Returns the video transcript of a test session in Web Video Text Tracks (WebVTT) format.\n\n_Compatibility:_\n- Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Best practices:_\n- If needed, you can copy and paste the string and save it as a text file with the VTT extension.\n\n_Use case examples:_\n- For an example on how to run AI analysis on transcripts with an LLM, go to Generate Video Transcript Analysis.\n- For an example of how to add transcripts into an automated research data pipeline, go to Create an Automated Pipeline."
+                          },
+                          "response": [
+                            {
+                              "id": "11c877f8-8d1f-466e-826e-55a610990ade",
+                              "name": "Transcript returned in WebVTT format.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "text/vtt"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/transcript",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "transcript"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "text/vtt"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Caching policy for the response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Cache-Control",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Pragma",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Strict-Transport-Security",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The length of the response body in bytes.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Length",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The MIME type of the returned response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The maximum number of requests allowed in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests remaining in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-remaining",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-reset",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Indicates that the resource supports range requests.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Accept-Ranges",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "<string>",
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-11c877f8-8d1f-466e-826e-55a610990ade"
+                            },
+                            {
+                              "id": "7f3c0d52-c40e-499f-a035-338bb971ea85",
+                              "name": "Missing or invalid access token.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/transcript",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "transcript"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-7f3c0d52-c40e-499f-a035-338bb971ea85"
+                            },
+                            {
+                              "id": "37d6734c-e06c-4ef4-973c-f674ca4905d0",
+                              "name": "Transcript not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/transcript",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "transcript"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-37d6734c-e06c-4ef4-973c-f674ca4905d0"
+                            },
+                            {
+                              "id": "44415a3f-df40-4d7c-9e8e-67649dc001bb",
+                              "name": "Too many requests. Maximum of 10 requests per minute.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/transcript",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "transcript"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-44415a3f-df40-4d7c-9e8e-67649dc001bb"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-674d2af7-cd68-41c6-bc08-ad6b87a3abff"
+                        }
+                      ],
+                      "id": "ac888912-ee8e-4556-8f0b-423442622428",
+                      "createdAt": "2026-10-21T20:17:32.000Z",
+                      "updatedAt": "2026-10-21T20:17:32.000Z",
+                      "uid": "35240-ac888912-ee8e-4556-8f0b-423442622428"
+                    },
+                    {
+                      "name": "videoDownloadUrl",
+                      "item": [
+                        {
+                          "name": "Obtain a video download link",
+                          "id": "28735ebb-cdf1-4d20-94f2-8a5e06745cba",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "sessionResults",
+                                ":sessionId",
+                                "videoDownloadUrl"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "0c94357f-564c-4ad2-8d14-875f47479514",
+                                  "key": "sessionId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) ID of the test session the video you want to retrieve belongs to."
+                                }
+                              ]
+                            },
+                            "description": "Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.\n\n_Compatibility:_\n- Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Use case examples:_\n- For an example on how to securely download and manage session videos at scale using pre-signed URLs, go to Process Session Videos at Scale.\n- For an example on how to integrate video downloads into an automated research data pipeline, go to Create an Automated Pipeline."
+                          },
+                          "response": [
+                            {
+                              "id": "bbdea8f5-8476-4fe2-9f6b-8b8db9bfb29c",
+                              "name": "Video download URL successfully returned.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "videoDownloadUrl"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Caching policy for the response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Cache-Control",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Pragma",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Strict-Transport-Security",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The length of the response body in bytes.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Length",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The MIME type of the returned response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The maximum number of requests allowed in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests remaining in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-remaining",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-reset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"videoUrl\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"expiresAt\": \"<dateTime>\"\n}",
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-bbdea8f5-8476-4fe2-9f6b-8b8db9bfb29c"
+                            },
+                            {
+                              "id": "1bdda238-5903-4290-b130-d0c6b7473160",
+                              "name": "Missing or invalid access token.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "videoDownloadUrl"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-1bdda238-5903-4290-b130-d0c6b7473160"
+                            },
+                            {
+                              "id": "a8ace190-6cf2-428b-b2a6-6e8e97b35783",
+                              "name": "Video not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "videoDownloadUrl"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-a8ace190-6cf2-428b-b2a6-6e8e97b35783"
+                            },
+                            {
+                              "id": "454e1f56-403f-40b5-a1e4-bf00aafa9a90",
+                              "name": "Too many requests. Maximum of 10 requests per minute.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/sessionResults/:sessionId/videoDownloadUrl",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "sessionResults",
+                                    ":sessionId",
+                                    "videoDownloadUrl"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sessionId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-454e1f56-403f-40b5-a1e4-bf00aafa9a90"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-28735ebb-cdf1-4d20-94f2-8a5e06745cba"
+                        }
+                      ],
+                      "id": "b4f049a3-0df7-4854-b8dc-0842990ad43d",
+                      "createdAt": "2026-10-21T20:17:32.000Z",
+                      "updatedAt": "2026-10-21T20:17:32.000Z",
+                      "uid": "35240-b4f049a3-0df7-4854-b8dc-0842990ad43d"
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  ],
+                  "id": "a33747d6-3c68-473f-a339-a33199d332c4",
+                  "createdAt": "2026-10-21T20:17:32.000Z",
+                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                  "uid": "35240-a33747d6-3c68-473f-a339-a33199d332c4"
                 }
               ],
-              "body": "{\n  \"clipUuid\": \"41f72104-5f84-44fa-a16a-03f575159611\",\n  \"status\": \"GENERATED\",\n  \"clipUrl\": \"https://s3.amazonaws.com/usertesting-videosprod/clips/41f72104-5f84-44fa-a16a-03f575159611.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "d75d2b9a-e975-48fe-a52c-225d5968833e",
+              "createdAt": "2026-10-21T20:17:32.000Z",
+              "updatedAt": "2026-10-21T20:17:32.000Z",
+              "uid": "35240-d75d2b9a-e975-48fe-a52c-225d5968833e"
             },
             {
-              "id": "22a7f0bd-cd11-4196-801b-3f74f16f2db2",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips",
-                    ":clipUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session that contains the clip."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "clipUuid",
-                      "description": "(Required) ID of the clip you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "name": "testResults",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "name": "{testId}",
+                  "item": [
+                    {
+                      "name": "highlightreels",
+                      "item": [
+                        {
+                          "name": "{reelId}",
+                          "item": [
+                            {
+                              "name": "Obtain a highlight reel download link",
+                              "id": "797bd3a9-47c0-4346-94ff-722845824173",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels/:reelId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "highlightreels",
+                                    ":reelId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "21dccb33-e531-4329-b762-63b5b016359b",
+                                      "key": "testId",
+                                      "value": "<uuid>",
+                                      "description": "(Required) ID of the test the highlight reel belongs to."
+                                    },
+                                    {
+                                      "id": "4974bda8-5d92-4059-810b-55407f3b215c",
+                                      "key": "reelId",
+                                      "value": "<uuid>",
+                                      "description": "(Required) ID of the highlight reel you want to download."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n_Compatibility:_\n- Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details."
+                              },
+                              "response": [
+                                {
+                                  "id": "b817d970-7f64-43ae-80d5-384367caa059",
+                                  "name": "Highlight reel details successfully returned.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels/:reelId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "testResults",
+                                        ":testId",
+                                        "highlightreels",
+                                        ":reelId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "testId"
+                                        },
+                                        {
+                                          "key": "reelId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "Caching policy for the response.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Cache-Control",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Pragma",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Strict-Transport-Security",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The length of the response body in bytes.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Content-Length",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The MIME type of the returned response.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "Content-Type",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The maximum number of requests allowed in the current period.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The number of requests remaining in the current period.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-remaining",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "disabled": false,
+                                      "description": {
+                                        "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                        "type": "text/plain"
+                                      },
+                                      "key": "x-ratelimit-reset",
+                                      "value": "<integer>"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"reelId\": \"<uuid>\",\n  \"status\": \"GENERATING\",\n  \"reelUrl\": \"<string,null>\"\n}",
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-b817d970-7f64-43ae-80d5-384367caa059"
+                                },
+                                {
+                                  "id": "71075baa-e134-475f-b025-43cad5591be8",
+                                  "name": "Missing or invalid access token.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels/:reelId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "testResults",
+                                        ":testId",
+                                        "highlightreels",
+                                        ":reelId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "testId"
+                                        },
+                                        {
+                                          "key": "reelId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-71075baa-e134-475f-b025-43cad5591be8"
+                                },
+                                {
+                                  "id": "7087affd-1128-4c28-8650-74f1974bbaa3",
+                                  "name": "Highlight reel not found.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels/:reelId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "testResults",
+                                        ":testId",
+                                        "highlightreels",
+                                        ":reelId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "testId"
+                                        },
+                                        {
+                                          "key": "reelId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-7087affd-1128-4c28-8650-74f1974bbaa3"
+                                },
+                                {
+                                  "id": "220558ba-8e77-4787-89f9-0f3eb9982b3f",
+                                  "name": "Too many requests. Maximum of 10 requests per minute.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels/:reelId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        "v2",
+                                        "testResults",
+                                        ":testId",
+                                        "highlightreels",
+                                        ":reelId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "testId"
+                                        },
+                                        {
+                                          "key": "reelId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Too Many Requests",
+                                  "code": 429,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T20:17:32.000Z",
+                                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                                  "uid": "35240-220558ba-8e77-4787-89f9-0f3eb9982b3f"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-797bd3a9-47c0-4346-94ff-722845824173"
+                            }
+                          ],
+                          "id": "4ce62332-9ac7-4662-bfeb-2ef1e47b7fea",
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-4ce62332-9ac7-4662-bfeb-2ef1e47b7fea"
+                        },
+                        {
+                          "name": "Find all highlight reels for a test",
+                          "id": "8e107e69-53e2-459f-a936-94a49b6cfbd1",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "testResults",
+                                ":testId",
+                                "highlightreels"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "7307d20c-f64e-471e-bca9-f5ee9e2f55e4",
+                                  "key": "testId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) ID of the test whose highlight reels you want to retrieve."
+                                }
+                              ]
+                            },
+                            "description": "Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.\n\n_Compatibility:_\n- Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test).\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Notes:_\n- Use the returned highlight reel ID to request highlight reel download link from the \"GET /api/v2/testResults/{testId}/highlightreels/{reelId}\" endpoint."
+                          },
+                          "response": [
+                            {
+                              "id": "f07e9805-7322-4d33-b6f0-019233911eea",
+                              "name": "Highlight reels successfully retrieved.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "highlightreels"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Caching policy for the response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Cache-Control",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Pragma",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Strict-Transport-Security",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The length of the response body in bytes.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Length",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The MIME type of the returned response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The maximum number of requests allowed in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests remaining in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-remaining",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-reset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"reels\": [\n    {\n      \"uuid\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"durationMs\": \"<number>\",\n      \"lastUpdatedAtMs\": \"<number>\",\n      \"numClips\": \"<number>\",\n      \"areAllClipsInReel\": \"<boolean>\"\n    },\n    {\n      \"uuid\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"durationMs\": \"<number>\",\n      \"lastUpdatedAtMs\": \"<number>\",\n      \"numClips\": \"<number>\",\n      \"areAllClipsInReel\": \"<boolean>\"\n    }\n  ],\n  \"studyWithClips\": \"<boolean>\"\n}",
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-f07e9805-7322-4d33-b6f0-019233911eea"
+                            },
+                            {
+                              "id": "92cc43e4-1329-47f5-a185-8e128bba2b82",
+                              "name": "Missing or invalid access token.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "highlightreels"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-92cc43e4-1329-47f5-a185-8e128bba2b82"
+                            },
+                            {
+                              "id": "c193c69d-e90c-4fb5-becb-3ce97d5b8d24",
+                              "name": "Test or highlight reels not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "highlightreels"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-c193c69d-e90c-4fb5-becb-3ce97d5b8d24"
+                            },
+                            {
+                              "id": "cf533c38-8dc2-43c7-9d34-edf956746c16",
+                              "name": "Too many requests. Maximum of 10 requests per minute.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/highlightreels",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "highlightreels"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:32.000Z",
+                              "updatedAt": "2026-10-21T20:17:32.000Z",
+                              "uid": "35240-cf533c38-8dc2-43c7-9d34-edf956746c16"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:17:32.000Z",
+                          "updatedAt": "2026-10-21T20:17:32.000Z",
+                          "uid": "35240-8e107e69-53e2-459f-a936-94a49b6cfbd1"
+                        }
+                      ],
+                      "id": "8bdbb1c4-31f7-46db-b393-18dcd2ed0991",
+                      "createdAt": "2026-10-21T20:17:32.000Z",
+                      "updatedAt": "2026-10-21T20:17:32.000Z",
+                      "uid": "35240-8bdbb1c4-31f7-46db-b393-18dcd2ed0991"
+                    }
+                  ],
+                  "id": "0c0dff12-1ee1-4e69-ab74-291803321d1f",
+                  "createdAt": "2026-10-21T20:17:32.000Z",
+                  "updatedAt": "2026-10-21T20:17:32.000Z",
+                  "uid": "35240-0c0dff12-1ee1-4e69-ab74-291803321d1f"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "1c95f9c7-760e-4690-81e7-f7970829416d",
-              "name": "Clip not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips",
-                    ":clipUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session that contains the clip."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "clipUuid",
-                      "description": "(Required) ID of the clip you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "72b97867-8f07-404a-a5f9-34bf7d07dcef",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips",
-                    ":clipUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session that contains the clip."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "clipUuid",
-                      "description": "(Required) ID of the clip you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "6d0927c2-bb83-466c-a3b8-659cefceeacd",
+              "createdAt": "2026-10-21T20:17:32.000Z",
+              "updatedAt": "2026-10-21T20:17:32.000Z",
+              "uid": "35240-6d0927c2-bb83-466c-a3b8-659cefceeacd"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "76c5399f-91ab-409d-bbf3-bb4897d0ee93",
-          "name": "Find all clips for a session video",
-          "request": {
-            "name": "Find all clips for a session video",
-            "description": {
-              "content": "Returns the clips created from a session video, including clip timing, media flags, layout, and video region metadata.\n\n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types that support session video clips:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "sessionResults",
-                ":sessionId",
-                "clips"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "sessionId",
-                  "description": "(Required) ID of the session whose video clips you want to retrieve."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "9738d031-07af-4b65-8a1e-075b036a3350",
-              "name": "Clips successfully retrieved.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session whose video clips you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"studyUuid\": \"e320c95c-2741-49bc-9e04-37b77d6fece3\",\n  \"clips\": [\n    {\n      \"uuid\": \"a0ff28a2-020b-4944-ab5a-ba035269641e\",\n      \"name\": \"Clip #1\",\n      \"timeStartMs\": 3708,\n      \"timeEndMs\": 33708,\n      \"videoUuid\": \"5a1d8707-0cf1-47d4-86f3-7c7b8722921d\",\n      \"hasAudio\": true,\n      \"hasCamera\": false,\n      \"description\": \"Maurice's awesome review\",\n      \"layout\": {\n        \"mainStream\": \"SCREEN\",\n        \"pipPosition\": \"BOTTOM_RIGHT\",\n        \"pipState\": \"OPENED\"\n      }\n    },\n    {\n      \"uuid\": \"a0ff28a2-020b-4944-ab5a-ba035269641e\",\n      \"name\": \"Clip #1\",\n      \"timeStartMs\": 3708,\n      \"timeEndMs\": 33708,\n      \"videoUuid\": \"5a1d8707-0cf1-47d4-86f3-7c7b8722921d\",\n      \"hasAudio\": true,\n      \"hasCamera\": false,\n      \"description\": \"Maurice's awesome review\",\n      \"layout\": {\n        \"mainStream\": \"SCREEN\",\n        \"pipPosition\": \"BOTTOM_RIGHT\",\n        \"pipState\": \"OPENED\"\n      }\n    }\n  ],\n  \"videoRegions\": {\n    \"screen\": {\n      \"widthPx\": 1920,\n      \"heightPx\": 1080,\n      \"topLeftPoint\": {\n        \"x\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"y\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    },\n    \"camera\": {\n      \"widthPx\": 1920,\n      \"heightPx\": 1080,\n      \"topLeftPoint\": {\n        \"x\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"y\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "37c48e81-74bf-4762-91c1-db43893c1f0c",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session whose video clips you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "36447c45-6419-4751-8c01-23f5861faf95",
-              "name": "Session video or clips not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session whose video clips you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "854d5049-d442-467f-a006-7e44aa8c3d2c",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "clips"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session whose video clips you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "75e81f10-f6ab-44ce-84e5-1add42463814",
-          "name": "Retrieve a video transcript",
-          "request": {
-            "name": "Retrieve a video transcript",
-            "description": {
-              "content": "Returns the video transcript of a test session in [Web Video Text Tracks (WebVTT)](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API/Web_Video_Text_Tracks_Format) format.\n    \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Best practices:_\n  - If needed, you can copy and paste the string and save it as a text file with the VTT extension.\n  \n  _Use case examples:_\n  - For an example on how to run AI analysis on transcripts with an LLM, go to [Generate Video Transcript Analysis](https://developer.usertesting.com/v2.0/docs/video-transcript-analysis).\n  - For an example of how to add transcripts into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "sessionResults",
-                ":sessionId",
-                "transcript"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "sessionId",
-                  "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "text/vtt"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "de13c926-3360-43ba-a272-c4eec7de99fc",
-              "name": "Transcript returned in WebVTT format.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "transcript"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "text/vtt"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "disabled": false,
-                  "description": "Indicates that the resource supports range requests.",
-                  "key": "Accept-Ranges",
-                  "value": "bytes"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "text/vtt"
-                }
-              ],
-              "body": "WEBVTT\n\n00:00:00.000 --> 00:00:02.000\nHello, World!\n\n00:00:02.000 --> 00:00:04.000\nThis is a VTT example",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "0816ecd4-1dba-4d09-b776-e3210bd1ad1f",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "transcript"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "6af7f27f-d2b0-460a-aa77-336796afe671",
-              "name": "Transcript not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "transcript"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "52c5c7a6-a9fa-4737-aaaa-490edeb92c13",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "transcript"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session that contains the video transcript you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "776f09d0-0f0d-4b5b-bce8-0c1f8e493ed0",
-          "name": "Obtain a video download link",
-          "request": {
-            "name": "Obtain a video download link",
-            "description": {
-              "content": "Returns a pre-signed URL to download a test session video. The URL is valid for one hour; after expiration, request a new URL.\n  \n  _Compatibility:_\n  - Sessions must be found within tests with the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Use case examples:_\n  - For an example on how to securely download and manage session videos at scale using pre-signed URLs, go to [Process Session Videos at Scale](https://developer.usertesting.com/v2.0/docs/download-and-manage-session-videos-at-scale).\n  - For an example on how to integrate video downloads into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n\n  ",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "sessionResults",
-                ":sessionId",
-                "videoDownloadUrl"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "sessionId",
-                  "description": "(Required) ID of the test session the video you want to retrieve belongs to."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "ad6d270b-dfd7-4564-8dfb-610faeca5844",
-              "name": "Video download URL successfully returned.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "videoDownloadUrl"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session the video you want to retrieve belongs to."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"videoUrl\": \"https://mock-bucket.s3.amazonaws.com/videos/123e4567-e89b-12d3-a456-426614174000/session.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890\",\n  \"sessionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"expiresAt\": \"2025-10-01T12:00:00Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8dbeed24-68a0-4186-9dc8-ced41ce866b2",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "videoDownloadUrl"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session the video you want to retrieve belongs to."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "f01da9fa-0d2c-4e26-8ec2-72f068c12026",
-              "name": "Video not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "videoDownloadUrl"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session the video you want to retrieve belongs to."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "5f7f4805-bde8-4b99-adad-181a077fba7f",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults",
-                    ":sessionId",
-                    "videoDownloadUrl"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the test session the video you want to retrieve belongs to."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "cead395a-1974-48e5-85d9-62e53e30b7dc",
-          "name": "Find all highlight reels for a test",
-          "request": {
-            "name": "Find all highlight reels for a test",
-            "description": {
-              "content": "Returns all highlight reels for the test. Each highlight reel includes its ID, name, duration, last updated timestamp, clip count, and whether all test clips are included in the reel.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Notes:_\n  - Use the returned highlight reel ID to request highlight reel download link from the \"GET /api/v2/testResults/{testId}/highlightreels/{reelId}\" endpoint.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "testResults",
-                ":testId",
-                "highlightreels"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "testId",
-                  "description": "(Required) ID of the test whose highlight reels you want to retrieve."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "98473133-5f2e-4c1a-bec9-a7142d515f54",
-              "name": "Highlight reels successfully retrieved.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test whose highlight reels you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"reels\": [\n    {\n      \"uuid\": \"8fdc898f-3b2b-4f45-91a2-2a6b618bc987\",\n      \"name\": \"Checkout highlights\",\n      \"durationMs\": 120000,\n      \"lastUpdatedAtMs\": 1766051123000,\n      \"numClips\": 4,\n      \"areAllClipsInReel\": true\n    },\n    {\n      \"uuid\": \"8fdc898f-3b2b-4f45-91a2-2a6b618bc987\",\n      \"name\": \"Checkout highlights\",\n      \"durationMs\": 120000,\n      \"lastUpdatedAtMs\": 1766051123000,\n      \"numClips\": 4,\n      \"areAllClipsInReel\": true\n    }\n  ],\n  \"studyWithClips\": true\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e9d64ab7-0286-4a55-b47f-b82eb98e03e3",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test whose highlight reels you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "f2b21659-d9c8-494c-8a0a-12cf5b7729d5",
-              "name": "Test or highlight reels not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test whose highlight reels you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "99b844d5-7ac2-4664-8808-84bcee56a86b",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test whose highlight reels you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "6b6637b8-7ba3-46af-85f7-8d3e03574ece",
-          "name": "Obtain a highlight reel download link",
-          "request": {
-            "name": "Obtain a highlight reel download link",
-            "description": {
-              "content": "Returns the details of a highlight reel and a link to download it.\n\nIf the highlight reel is still being prepared, the response returns a status of `GENERATING` and no link. Call this endpoint again every few seconds until the status becomes `GENERATED`, then use the `reelUrl` to download the highlight reel. The link is valid for 15 minutes; after it expires, call the endpoint again to get a new one.\n\n  _Compatibility:_\n  - Tests must be of the \"STUDYV2\" type and belong to one of the following product types:\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test).\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "testResults",
-                ":testId",
-                "highlightreels",
-                ":reelId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "testId",
-                  "description": "(Required) ID of the test the highlight reel belongs to."
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "reelId",
-                  "description": "(Required) ID of the highlight reel you want to download."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "0b55128d-48c1-4c17-9bd1-5da819972b4d",
-              "name": "Highlight reel details successfully returned.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels",
-                    ":reelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test the highlight reel belongs to."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "reelId",
-                      "description": "(Required) ID of the highlight reel you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"reelId\": \"8fdc898f-3b2b-4f45-91a2-2a6b618bc987\",\n  \"status\": \"GENERATED\",\n  \"reelUrl\": \"https://s3.amazonaws.com/usertesting-videosprod/reels/8fdc898f-3b2b-4f45-91a2-2a6b618bc987.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20260114%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260114T120000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef1234567890\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dede8d8a-1a95-4e58-ac28-169381baf5be",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels",
-                    ":reelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test the highlight reel belongs to."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "reelId",
-                      "description": "(Required) ID of the highlight reel you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "34d2b2e3-cdc7-4b7f-bb96-4a1ca7d8722c",
-              "name": "Highlight reel not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels",
-                    ":reelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test the highlight reel belongs to."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "reelId",
-                      "description": "(Required) ID of the highlight reel you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "3ed600a6-e6b4-45c7-8ddd-6f4a9e922786",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "highlightreels",
-                    ":reelId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the test the highlight reel belongs to."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "reelId",
-                      "description": "(Required) ID of the highlight reel you want to download."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "693227b1-67ec-4316-9876-c32bed99fa8b",
+          "createdAt": "2026-10-21T20:17:32.000Z",
+          "updatedAt": "2026-10-21T20:17:32.000Z",
+          "uid": "35240-693227b1-67ec-4316-9876-c32bed99fa8b"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "//api.use2.usertesting.com/usertesting/api",
-      "key": "baseUrl"
+      "id": "aad284cf-c566-4d37-9c72-814cdd78c225",
+      "createdAt": "2026-10-21T20:17:32.000Z",
+      "updatedAt": "2026-10-21T20:17:32.000Z",
+      "uid": "35240-aad284cf-c566-4d37-9c72-814cdd78c225"
     }
   ],
   "auth": {
@@ -1893,17 +1931,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "5ef11675-27ca-4774-b82b-750101041e86",
-    "name": "Integrations (v1) Clip Video Data API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.use2.usertesting.com"
     }
-  }
+  ]
 }

@@ -1,320 +1,351 @@
 {
+  "info": {
+    "_postman_id": "5d74c5db-8b93-4ddd-8fa9-4a32821d5475",
+    "name": "Results QXscore Data API",
+    "description": "With the Results API, you can access the results of your UserTesting account's Surveys, Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:17:13.000Z",
+    "updatedAt": "2026-10-21T20:17:14.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5d74c5db-8b93-4ddd-8fa9-4a32821d5475"
+  },
   "item": [
     {
-      "id": "1f571cea-8f17-43b5-8f95-61c3960e1314",
-      "name": "QXscore Data",
-      "description": {
-        "content": "Access Quality of Experience Scores (QXscores) calculated from a test's completed sessions.",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "d1cfb513-8783-468e-9961-70e0d38bbcd7",
-          "name": "Obtain QXscores for a test",
-          "request": {
-            "name": "Obtain QXscores for a test",
-            "description": {
-              "content": "Calculates the Quality of Experience Score (QXscore) for an [Interaction test](https://help.usertesting.com/hc/en-us/articles/23596817555101-Interaction-tests) based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.\n    \n   _Compatibility:_\n  - Compatible with interaction tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Note:_\n  - A _QXscore_ is a reliable benchmark metric for evaluating the quality of an experience. This composite score combines behavioral data from navigation tasks with attitudinal data from a standardized questionnaire to effectively balance participants' actions and opinions.  \n  [Learn more about QXscore](https://help.usertesting.com/hc/en-us/articles/22818008129565-QXscore).\n \n  _Use case example:_\n  - For an example on how to create a UX metrics dashboard with QXscore to track experience quality, go to [Build a UX Metrics Dashboard](https://developer.usertesting.com/v2.0/docs/ux-metrics-dashboard).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "testResults",
-                ":testId",
-                "qxScores"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "testId",
-                  "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "v2",
+          "item": [
             {
-              "id": "58bef1c7-5366-43e1-b7b9-43951b58207b",
-              "name": "QXscore successfully returned.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "qxScores"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+              "name": "testResults",
+              "item": [
+                {
+                  "name": "{testId}",
+                  "item": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                      "name": "qxScores",
+                      "item": [
+                        {
+                          "name": "Obtain QXscores for a test",
+                          "id": "9f008a2d-b525-40ed-a255-f67e1a38174a",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v2/testResults/:testId/qxScores",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v2",
+                                "testResults",
+                                ":testId",
+                                "qxScores"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "a04e0b0f-4bb7-4d6b-9aa4-b068732a7a94",
+                                  "key": "testId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
+                                }
+                              ]
+                            },
+                            "description": "Calculates the Quality of Experience Score (QXscore) for an Interaction test based on all completed sessions. The response includes detailed component and subcomponent values that contribute to the overall QXscore.\n\n_Compatibility:_\n- Compatible with interaction tests, i.e., tests with the \"STUDYV2\" type and \"NON_THINK_OUT_LOUD\" product type.\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Note:_\n- A _QXscore_ is a reliable benchmark metric for evaluating the quality of an experience. This composite score combines behavioral data from navigation tasks with attitudinal data from a standardized questionnaire to effectively balance participants' actions and opinions.\nLearn more about QXscore.\n\n_Use case example:_\n- For an example on how to create a UX metrics dashboard with QXscore to track experience quality, go to Build a UX Metrics Dashboard."
+                          },
+                          "response": [
+                            {
+                              "id": "109e0237-355a-4e0a-9c0c-b0430c4611ff",
+                              "name": "QXscore successfully returned.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/qxScores",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "qxScores"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Caching policy for the response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Cache-Control",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Pragma",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Strict-Transport-Security",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The length of the response body in bytes.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Length",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The MIME type of the returned response.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "Content-Type",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The maximum number of requests allowed in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-limit",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The number of requests remaining in the current period.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-remaining",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "disabled": false,
+                                  "description": {
+                                    "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                    "type": "text/plain"
+                                  },
+                                  "key": "x-ratelimit-reset",
+                                  "value": "<integer>"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"testId\": \"<string>\",\n  \"qxScores\": [\n    {\n      \"taskGroupId\": \"<string>\",\n      \"label\": \"<string>\",\n      \"qxScore\": \"<number,null>\",\n      \"components\": {\n        \"behavioral\": \"<number,null>\",\n        \"attitudinal\": \"<number>\"\n      },\n      \"values\": {\n        \"behavioral\": \"<array,null>\",\n        \"usability\": \"<number>\",\n        \"trust\": \"<number>\",\n        \"appearance\": \"<number>\",\n        \"loyalty\": \"<number>\"\n      }\n    },\n    {\n      \"taskGroupId\": \"<string>\",\n      \"label\": \"<string>\",\n      \"qxScore\": \"<number,null>\",\n      \"components\": {\n        \"behavioral\": \"<number,null>\",\n        \"attitudinal\": \"<number>\"\n      },\n      \"values\": {\n        \"behavioral\": \"<array,null>\",\n        \"usability\": \"<number>\",\n        \"trust\": \"<number>\",\n        \"appearance\": \"<number>\",\n        \"loyalty\": \"<number>\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalQxTasks\": \"<number>\",\n    \"completes\": \"<number>\"\n  }\n}",
+                              "createdAt": "2026-10-21T20:17:14.000Z",
+                              "updatedAt": "2026-10-21T20:17:14.000Z",
+                              "uid": "35240-109e0237-355a-4e0a-9c0c-b0430c4611ff"
+                            },
+                            {
+                              "id": "948df6d5-2611-4815-9f8b-c5367d40fe56",
+                              "name": "Missing or invalid access token.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/qxScores",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "qxScores"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:14.000Z",
+                              "updatedAt": "2026-10-21T20:17:14.000Z",
+                              "uid": "35240-948df6d5-2611-4815-9f8b-c5367d40fe56"
+                            },
+                            {
+                              "id": "cbf4def3-452b-4701-b607-2e0a5ac203fd",
+                              "name": "Test not found.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/qxScores",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "qxScores"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:14.000Z",
+                              "updatedAt": "2026-10-21T20:17:14.000Z",
+                              "uid": "35240-cbf4def3-452b-4701-b607-2e0a5ac203fd"
+                            },
+                            {
+                              "id": "167fcf15-8ca6-4813-8632-4daec16a7293",
+                              "name": "Too many requests. Maximum of 10 requests per minute.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/v2/testResults/:testId/qxScores",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "v2",
+                                    "testResults",
+                                    ":testId",
+                                    "qxScores"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "testId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Too Many Requests",
+                              "code": 429,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-10-21T20:17:14.000Z",
+                              "updatedAt": "2026-10-21T20:17:14.000Z",
+                              "uid": "35240-167fcf15-8ca6-4813-8632-4daec16a7293"
+                            }
+                          ],
+                          "createdAt": "2026-10-21T20:17:14.000Z",
+                          "updatedAt": "2026-10-21T20:17:14.000Z",
+                          "uid": "35240-9f008a2d-b525-40ed-a255-f67e1a38174a"
+                        }
+                      ],
+                      "id": "14731b14-da30-483a-b1ae-ba43272d5d8e",
+                      "createdAt": "2026-10-21T20:17:14.000Z",
+                      "updatedAt": "2026-10-21T20:17:14.000Z",
+                      "uid": "35240-14731b14-da30-483a-b1ae-ba43272d5d8e"
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  ],
+                  "id": "07e702f6-670c-4a15-b0f8-b317fe94056b",
+                  "createdAt": "2026-10-21T20:17:14.000Z",
+                  "updatedAt": "2026-10-21T20:17:14.000Z",
+                  "uid": "35240-07e702f6-670c-4a15-b0f8-b317fe94056b"
                 }
               ],
-              "body": "{\n  \"testId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"qxScores\": [\n    {\n      \"taskGroupId\": \"b1e2c3d4-5678-1234-9abc-def012345678\",\n      \"label\": \"QXscore 1\",\n      \"qxScore\": null,\n      \"components\": {\n        \"behavioral\": null,\n        \"attitudinal\": 50\n      },\n      \"values\": {\n        \"behavioral\": null,\n        \"usability\": 50,\n        \"trust\": 50,\n        \"appearance\": 50,\n        \"loyalty\": 50\n      }\n    },\n    {\n      \"taskGroupId\": \"b1e2c3d4-5678-1234-9abc-def012345678\",\n      \"label\": \"QXscore 1\",\n      \"qxScore\": null,\n      \"components\": {\n        \"behavioral\": null,\n        \"attitudinal\": 50\n      },\n      \"values\": {\n        \"behavioral\": null,\n        \"usability\": 50,\n        \"trust\": 50,\n        \"appearance\": 50,\n        \"loyalty\": 50\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalQxTasks\": 1,\n    \"completes\": 2\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8e12d0ce-975e-422a-b536-38f450b57706",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "qxScores"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "cdefe2f2-0d7f-4b50-a148-673e455aaf5d",
-              "name": "Test not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "qxScores"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "9a8f297f-7178-4fe5-9a33-139f02393f69",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "testResults",
-                    ":testId",
-                    "qxScores"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "testId",
-                      "description": "(Required) ID of the Interaction test whose QXscore you want to retrieve."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "9e13d09d-0219-4351-a2f8-18f246be63ad",
+              "createdAt": "2026-10-21T20:17:14.000Z",
+              "updatedAt": "2026-10-21T20:17:14.000Z",
+              "uid": "35240-9e13d09d-0219-4351-a2f8-18f246be63ad"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "c8b7f303-907e-4c1e-a33b-b427460f2514",
+          "createdAt": "2026-10-21T20:17:14.000Z",
+          "updatedAt": "2026-10-21T20:17:14.000Z",
+          "uid": "35240-c8b7f303-907e-4c1e-a33b-b427460f2514"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "//api.use2.usertesting.com/usertesting/api",
-      "key": "baseUrl"
+      "id": "7608921b-badd-42db-b1b3-89c980b5c2e6",
+      "createdAt": "2026-10-21T20:17:14.000Z",
+      "updatedAt": "2026-10-21T20:17:14.000Z",
+      "uid": "35240-7608921b-badd-42db-b1b3-89c980b5c2e6"
     }
   ],
   "auth": {
@@ -322,17 +353,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "e66e4e2e-72a5-4421-adff-0b39752a0ed3",
-    "name": "Integrations (v1) Clip QXscore Data API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.use2.usertesting.com"
     }
-  }
+  ]
 }

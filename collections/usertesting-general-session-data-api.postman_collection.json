@@ -1,687 +1,746 @@
 {
+  "info": {
+    "_postman_id": "34949973-754b-4354-91b7-fa6640ccece7",
+    "name": "Results General Session Data API",
+    "description": "With the Results API, you can access the results of your UserTesting account's Surveys, Live Conversations, Interaction Tests, and Think-out-loud Tests for analysis and reporting purposes.\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:17:05.000Z",
+    "updatedAt": "2026-10-21T20:17:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-34949973-754b-4354-91b7-fa6640ccece7"
+  },
   "item": [
     {
-      "id": "6af84913-55e2-4a0e-b65d-9878ad04d16a",
-      "name": "General Session Data",
-      "description": {
-        "content": "Retrieve session summaries and detailed session results from a test.",
-        "type": "text/plain"
-      },
+      "name": "api",
       "item": [
         {
-          "id": "3c9c86e5-0905-4366-bef3-2d223fce99f5",
-          "name": "Find all sessions in a test",
-          "request": {
-            "name": "Find all sessions in a test",
-            "description": {
-              "content": "Returns a paginated list of summaries for each completed session in a test. Each summary includes the session ID, status, and timestamps. \n\n  In the response, sessions are sorted in descending order, i.e., from newest to oldest.\n  \n  _Compatibility:_\n  - All tests with the \"STUDYV2\" type are compatible. These include tests with the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test) \n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n  \n  _Best practices:_\n  - Always use pagination query parameters (_limit_ and _offset_) along with the appropriate logic to ensure all sessions are retrieved.\n  - Use the response data from _limit_, _offset_, and _totalCount_ in the _meta.pagination_ property to calculate the number of pagination iterations (API requests) needed to collect all sessions in the test.\n  \n  _Use case examples:_\n  - For an example on near real-time polling, go to [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira).\n  - For an example on how to add session summaries into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n  ",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v2",
-                "sessionResults"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "testId",
-                  "value": "<uuid>",
-                  "description": "(Required) ID of the test containing the sessions."
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "25",
-                  "description": "Maximum number of sessions to return in the result set."
-                },
-                {
-                  "disabled": false,
-                  "key": "offset",
-                  "value": "0",
-                  "description": "Number of sessions to skip before starting to collect the result set."
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "v2",
+          "item": [
             {
-              "id": "615daf09-b4fe-489a-91ad-3164d563743a",
-              "name": "Session summaries successfully retrieved.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "testId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "25"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
+              "name": "sessionResults",
+              "item": [
+                {
+                  "name": "Find all sessions in a test",
+                  "id": "964ce401-9f27-4ff3-b9f8-e0cc82560fdf",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
                   },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"testId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"sessions\": [\n    {\n      \"sessionId\": \"41f72104-5f84-44fa-a16a-03f5751596ec\",\n      \"status\": \"COMPLETE\",\n      \"startTime\": \"2024-11-21T12:23:52.614Z\",\n      \"audienceId\": \"41f72104-5f84-44fa-a16a-03f575159611\",\n      \"finishTime\": \"2024-11-21T12:25:03.347Z\"\n    },\n    {\n      \"sessionId\": \"41f72104-5f84-44fa-a16a-03f5751596ec\",\n      \"status\": \"COMPLETE\",\n      \"startTime\": \"2024-11-21T12:23:52.614Z\",\n      \"audienceId\": \"41f72104-5f84-44fa-a16a-03f575159611\",\n      \"finishTime\": \"2024-11-21T12:25:03.347Z\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"limit\": 25,\n      \"offset\": 0,\n      \"totalCount\": 1\n    }\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "96dcaac2-7573-41a8-988a-18fe3f44f862",
-              "name": "Bad request. The offset must be between 0-10000 and limit must be between 1-500.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v2",
+                        "sessionResults"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) ID of the test containing the sessions.",
+                          "key": "testId",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of sessions to return in the result set.",
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Number of sessions to skip before starting to collect the result set.",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    "description": "Returns a paginated list of summaries for each completed session in a test. Each summary includes the session ID, status, and timestamps.\n\nIn the response, sessions are sorted in descending order, i.e., from newest to oldest.\n\n_Compatibility:_\n- All tests with the \"STUDYV2\" type are compatible. These include tests with the following product types:\n- \"SURVEY\" (survey)\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test)\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Best practices:_\n- Always use pagination query parameters (_limit_ and _offset_) along with the appropriate logic to ensure all sessions are retrieved.\n- Use the response data from _limit_, _offset_, and _totalCount_ in the _meta.pagination_ property to calculate the number of pagination iterations (API requests) needed to collect all sessions in the test.\n\n_Use case examples:_\n- For an example on near real-time polling, go to Stream Insights into Slack or Jira.\n- For an example on how to add session summaries into an automated research data pipeline, go to Create an Automated Pipeline."
+                  },
+                  "response": [
                     {
-                      "key": "testId",
-                      "value": "<uuid>"
+                      "id": "14fbea81-8324-475d-a90f-83c12855f686",
+                      "name": "Session summaries successfully retrieved.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "sessionResults"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ID of the test containing the sessions.",
+                              "key": "testId",
+                              "value": "<uuid>"
+                            },
+                            {
+                              "description": "Maximum number of sessions to return in the result set.",
+                              "key": "limit",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Number of sessions to skip before starting to collect the result set.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Caching policy for the response.",
+                            "type": "text/plain"
+                          },
+                          "key": "Cache-Control",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "HTTP/1.0 backward compatibility for no-cache.",
+                            "type": "text/plain"
+                          },
+                          "key": "Pragma",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                            "type": "text/plain"
+                          },
+                          "key": "Strict-Transport-Security",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The length of the response body in bytes.",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Length",
+                          "value": "<integer>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The MIME type of the returned response.",
+                            "type": "text/plain"
+                          },
+                          "key": "Content-Type",
+                          "value": "<string>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The maximum number of requests allowed in the current period.",
+                            "type": "text/plain"
+                          },
+                          "key": "x-ratelimit-limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of requests remaining in the current period.",
+                            "type": "text/plain"
+                          },
+                          "key": "x-ratelimit-remaining",
+                          "value": "<integer>"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                            "type": "text/plain"
+                          },
+                          "key": "x-ratelimit-reset",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"testId\": \"<uuid>\",\n  \"sessions\": [\n    {\n      \"sessionId\": \"<uuid>\",\n      \"status\": \"<string>\",\n      \"startTime\": \"<dateTime>\",\n      \"audienceId\": \"<string,null-uuid>\",\n      \"finishTime\": \"<string,null-date-time>\"\n    },\n    {\n      \"sessionId\": \"<uuid>\",\n      \"status\": \"<string>\",\n      \"startTime\": \"<dateTime>\",\n      \"audienceId\": \"<string,null-uuid>\",\n      \"finishTime\": \"<string,null-date-time>\"\n    }\n  ],\n  \"meta\": {\n    \"pagination\": {\n      \"limit\": \"<number>\",\n      \"offset\": \"<number>\",\n      \"totalCount\": \"<number>\"\n    }\n  }\n}",
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-14fbea81-8324-475d-a90f-83c12855f686"
                     },
                     {
-                      "key": "limit",
-                      "value": "25"
+                      "id": "f4013e48-cf33-4cb7-9925-e1d30b52c75a",
+                      "name": "Bad request. The offset must be between 0-10000 and limit must be between 1-500.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "sessionResults"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ID of the test containing the sessions.",
+                              "key": "testId",
+                              "value": "<uuid>"
+                            },
+                            {
+                              "description": "Maximum number of sessions to return in the result set.",
+                              "key": "limit",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Number of sessions to skip before starting to collect the result set.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-f4013e48-cf33-4cb7-9925-e1d30b52c75a"
                     },
                     {
-                      "key": "offset",
-                      "value": "0"
+                      "id": "4c48f3db-38fd-4689-b807-bc2980441554",
+                      "name": "Missing or invalid access token.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "sessionResults"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ID of the test containing the sessions.",
+                              "key": "testId",
+                              "value": "<uuid>"
+                            },
+                            {
+                              "description": "Maximum number of sessions to return in the result set.",
+                              "key": "limit",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Number of sessions to skip before starting to collect the result set.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-4c48f3db-38fd-4689-b807-bc2980441554"
+                    },
+                    {
+                      "id": "e9e9e245-8ad9-4b64-8f65-67576c4ac372",
+                      "name": "Test not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "sessionResults"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ID of the test containing the sessions.",
+                              "key": "testId",
+                              "value": "<uuid>"
+                            },
+                            {
+                              "description": "Maximum number of sessions to return in the result set.",
+                              "key": "limit",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Number of sessions to skip before starting to collect the result set.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-e9e9e245-8ad9-4b64-8f65-67576c4ac372"
+                    },
+                    {
+                      "id": "a1840da2-cdca-4b52-bffd-71252a3fc045",
+                      "name": "Too many requests. Maximum of 10 requests per minute.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v2/sessionResults?testId=<uuid>&limit=25&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v2",
+                            "sessionResults"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) ID of the test containing the sessions.",
+                              "key": "testId",
+                              "value": "<uuid>"
+                            },
+                            {
+                              "description": "Maximum number of sessions to return in the result set.",
+                              "key": "limit",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Number of sessions to skip before starting to collect the result set.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-a1840da2-cdca-4b52-bffd-71252a3fc045"
                     }
                   ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
+                  "createdAt": "2026-10-21T20:17:06.000Z",
+                  "updatedAt": "2026-10-21T20:17:06.000Z",
+                  "uid": "35240-964ce401-9f27-4ff3-b9f8-e0cc82560fdf"
                 }
               ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "a088bf09-341a-4950-9cce-d51e64191735",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "testId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "25"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "b4574ce1-2d0e-47a4-a547-6be73f28a768",
-              "name": "Test not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "testId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "25"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "d14f406d-5951-430e-b095-25ac595da071",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v2",
-                    "sessionResults"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "testId",
-                      "value": "<uuid>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "25"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "e72774ae-3846-4244-8452-82cea2e81942",
+              "createdAt": "2026-10-21T20:17:06.000Z",
+              "updatedAt": "2026-10-21T20:17:06.000Z",
+              "uid": "35240-e72774ae-3846-4244-8452-82cea2e81942"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "c945b79b-47a5-4c6b-8478-ac3ee59e043c",
+          "createdAt": "2026-10-21T20:17:06.000Z",
+          "updatedAt": "2026-10-21T20:17:06.000Z",
+          "uid": "35240-c945b79b-47a5-4c6b-8478-ac3ee59e043c"
         },
         {
-          "id": "39c25cf3-fac7-4287-bea5-d2cc88d5b388",
-          "name": "Retrieve session details (v3)",
-          "request": {
-            "name": "Retrieve session details (v3)",
-            "description": {
-              "content": "Returns detailed information about a session, including participant demographics, task-group metadata, and individual task responses.\n\n  _Compatibility:_\n  - All sessions found within tests with the \"STUDYV2\" type are compatible. These include tests from the following product types:\n    - \"SURVEY\" (survey)\n    - \"LIVE_CONVERSATION\" (non-classic live conversation)\n    - \"NON_THINK_OUT_LOUD\" (interaction test)\n    - \"THINK_OUT_LOUD\" (think-out-loud test)\n  - Go to [How to Obtain a Test ID (UUID)](https://developer.usertesting.com/docs/how-to-obtain-a-testid-uuid) for details.\n\n  _Use case examples:_\n  - For an example on how to understand and model session-level details and participant demographics, go to [Model Session Details & Demographics](https://developer.usertesting.com/v2.0/docs/understand-and-model-session-details-demographics).\n  - For an example on how to add session details into an automated research data pipeline, go to [Create an Automated Pipeline](https://developer.usertesting.com/v2.0/docs/tutorial).\n  - For an example on near real-time polling, go to [Stream Insights into Slack or Jira](https://developer.usertesting.com/v2.0/docs/stream-insights-into-slack-or-jira).",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "api",
-                "v3",
-                "sessionResults",
-                ":sessionId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<uuid>",
-                  "key": "sessionId",
-                  "description": "(Required) ID of the session."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "v3",
+          "item": [
             {
-              "id": "5660e2df-9048-4702-bcba-75dda9f60e9c",
-              "name": "Session details successfully retrieved.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v3",
-                    "sessionResults",
-                    ":sessionId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+              "name": "sessionResults",
+              "item": [
+                {
+                  "name": "{sessionId}",
+                  "item": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session."
+                      "name": "Retrieve session details (v3)",
+                      "id": "2bef7b0e-3d02-4634-934c-ed28e80e5144",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v3/sessionResults/:sessionId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v3",
+                            "sessionResults",
+                            ":sessionId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "2fcc690c-3aca-4283-8039-244dc858289b",
+                              "key": "sessionId",
+                              "value": "<uuid>",
+                              "description": "(Required) ID of the session."
+                            }
+                          ]
+                        },
+                        "description": "Returns detailed information about a session, including participant demographics, task-group metadata, and individual task responses.\n\n_Compatibility:_\n- All sessions found within tests with the \"STUDYV2\" type are compatible. These include tests from the following product types:\n- \"SURVEY\" (survey)\n- \"LIVE_CONVERSATION\" (non-classic live conversation)\n- \"NON_THINK_OUT_LOUD\" (interaction test)\n- \"THINK_OUT_LOUD\" (think-out-loud test)\n- Go to How to Obtain a Test ID (UUID) for details.\n\n_Use case examples:_\n- For an example on how to understand and model session-level details and participant demographics, go to Model Session Details & Demographics.\n- For an example on how to add session details into an automated research data pipeline, go to Create an Automated Pipeline.\n- For an example on near real-time polling, go to Stream Insights into Slack or Jira."
+                      },
+                      "response": [
+                        {
+                          "id": "026d6fc0-6f58-499e-bdf4-5ef5d9e49cf6",
+                          "name": "Session details successfully retrieved.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v3/sessionResults/:sessionId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v3",
+                                "sessionResults",
+                                ":sessionId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sessionId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Caching policy for the response.",
+                                "type": "text/plain"
+                              },
+                              "key": "Cache-Control",
+                              "value": "<string>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "HTTP/1.0 backward compatibility for no-cache.",
+                                "type": "text/plain"
+                              },
+                              "key": "Pragma",
+                              "value": "<string>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
+                                "type": "text/plain"
+                              },
+                              "key": "Strict-Transport-Security",
+                              "value": "<string>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "The length of the response body in bytes.",
+                                "type": "text/plain"
+                              },
+                              "key": "Content-Length",
+                              "value": "<integer>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "The MIME type of the returned response.",
+                                "type": "text/plain"
+                              },
+                              "key": "Content-Type",
+                              "value": "<string>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "The maximum number of requests allowed in the current period.",
+                                "type": "text/plain"
+                              },
+                              "key": "x-ratelimit-limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "The number of requests remaining in the current period.",
+                                "type": "text/plain"
+                              },
+                              "key": "x-ratelimit-remaining",
+                              "value": "<integer>"
+                            },
+                            {
+                              "disabled": false,
+                              "description": {
+                                "content": "The time (in seconds) remaining in the current period until the rate limit resets.",
+                                "type": "text/plain"
+                              },
+                              "key": "x-ratelimit-reset",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"sessionId\": \"<string,null-uuid>\",\n  \"audienceId\": \"<string,null-uuid>\",\n  \"testPlanId\": \"<string,null-uuid>\",\n  \"sessionParticipant\": {\n    \"participantId\": \"<string,null-uuid>\",\n    \"demographicsInfo\": [\n      {\n        \"id\": \"<string,null>\",\n        \"code\": \"<string,null>\",\n        \"label\": \"<string,null>\",\n        \"value\": \"<string,null>\",\n        \"type\": \"UNRECOGNIZED\"\n      },\n      {\n        \"id\": \"<string,null>\",\n        \"code\": \"<string,null>\",\n        \"label\": \"<string,null>\",\n        \"value\": \"<string,null>\",\n        \"type\": \"DEMOGRAPHIC_QUESTION_TYPE_SINGLE\"\n      }\n    ]\n  },\n  \"taskGroups\": [\n    {\n      \"uuid\": \"<uuid>\",\n      \"type\": \"BALANCED_COMPARISON\",\n      \"response\": {\n        \"score\": \"<number>\"\n      }\n    },\n    {\n      \"uuid\": \"<uuid>\",\n      \"type\": \"UNRECOGNIZED\",\n      \"response\": {\n        \"score\": \"<number>\"\n      }\n    }\n  ],\n  \"tasks\": [\n    {\n      \"uuid\": \"<uuid>\",\n      \"text\": \"<string>\",\n      \"type\": \"IMAGE\",\n      \"response\": {\n        \"startTimeMs\": \"<number>\",\n        \"endTimeMs\": \"<number>\",\n        \"skipped\": \"<boolean>\",\n        \"answer\": {\n          \"blank\": \"<object,null>\",\n          \"ratingScale\": \"<object,null>\",\n          \"multipleChoice\": \"<object,null>\",\n          \"image\": \"<object,null>\",\n          \"nps\": \"<object,null>\",\n          \"url\": \"<object,null>\",\n          \"rankOrder\": \"<object,null>\",\n          \"written\": \"<object,null>\",\n          \"figma\": \"<object,null>\",\n          \"matrix\": \"<object,null>\"\n        }\n      }\n    },\n    {\n      \"uuid\": \"<uuid>\",\n      \"text\": \"<string>\",\n      \"type\": \"RATING_SCALE\",\n      \"response\": {\n        \"startTimeMs\": \"<number>\",\n        \"endTimeMs\": \"<number>\",\n        \"skipped\": \"<boolean>\",\n        \"answer\": {\n          \"blank\": \"<object,null>\",\n          \"ratingScale\": \"<object,null>\",\n          \"multipleChoice\": \"<object,null>\",\n          \"image\": \"<object,null>\",\n          \"nps\": \"<object,null>\",\n          \"url\": \"<object,null>\",\n          \"rankOrder\": \"<object,null>\",\n          \"written\": \"<object,null>\",\n          \"figma\": \"<object,null>\",\n          \"matrix\": \"<object,null>\"\n        }\n      }\n    }\n  ]\n}",
+                          "createdAt": "2026-10-21T20:17:06.000Z",
+                          "updatedAt": "2026-10-21T20:17:06.000Z",
+                          "uid": "35240-026d6fc0-6f58-499e-bdf4-5ef5d9e49cf6"
+                        },
+                        {
+                          "id": "81c26fa3-5a89-4c4e-ad25-f2dd0daa29a7",
+                          "name": "Missing or invalid access token.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v3/sessionResults/:sessionId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v3",
+                                "sessionResults",
+                                ":sessionId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sessionId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T20:17:06.000Z",
+                          "updatedAt": "2026-10-21T20:17:06.000Z",
+                          "uid": "35240-81c26fa3-5a89-4c4e-ad25-f2dd0daa29a7"
+                        },
+                        {
+                          "id": "843b9eee-c623-425b-afea-c98a832582cd",
+                          "name": "Session not found.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v3/sessionResults/:sessionId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v3",
+                                "sessionResults",
+                                ":sessionId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sessionId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T20:17:06.000Z",
+                          "updatedAt": "2026-10-21T20:17:06.000Z",
+                          "uid": "35240-843b9eee-c623-425b-afea-c98a832582cd"
+                        },
+                        {
+                          "id": "d20e1a06-43a1-4885-8fab-52ac144ed14e",
+                          "name": "Too many requests. Maximum of 10 requests per minute.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v3/sessionResults/:sessionId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v3",
+                                "sessionResults",
+                                ":sessionId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sessionId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-10-21T20:17:06.000Z",
+                          "updatedAt": "2026-10-21T20:17:06.000Z",
+                          "uid": "35240-d20e1a06-43a1-4885-8fab-52ac144ed14e"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T20:17:06.000Z",
+                      "updatedAt": "2026-10-21T20:17:06.000Z",
+                      "uid": "35240-2bef7b0e-3d02-4634-934c-ed28e80e5144"
                     }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "disabled": false,
-                  "description": "Caching policy for the response.",
-                  "key": "Cache-Control",
-                  "value": "private, no-store"
-                },
-                {
-                  "disabled": false,
-                  "description": "HTTP/1.0 backward compatibility for no-cache.",
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "disabled": false,
-                  "description": "Enforces secure (HTTP over SSL/TLS) connections to the server.",
-                  "key": "Strict-Transport-Security",
-                  "value": "max-age=31536000; includeSubDomains"
-                },
-                {
-                  "disabled": false,
-                  "description": "The length of the response body in bytes.",
-                  "key": "Content-Length",
-                  "value": "256"
-                },
-                {
-                  "disabled": false,
-                  "description": "The maximum number of requests allowed in the current period.",
-                  "key": "x-ratelimit-limit",
-                  "value": "10"
-                },
-                {
-                  "disabled": false,
-                  "description": "The number of requests remaining in the current period.",
-                  "key": "x-ratelimit-remaining",
-                  "value": "7"
-                },
-                {
-                  "disabled": false,
-                  "description": "The time (in seconds) remaining in the current period until the rate limit resets.",
-                  "key": "x-ratelimit-reset",
-                  "value": "60"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  ],
+                  "id": "6824c290-a16c-4a4d-9dd2-b526d0dd4370",
+                  "createdAt": "2026-10-21T20:17:06.000Z",
+                  "updatedAt": "2026-10-21T20:17:06.000Z",
+                  "uid": "35240-6824c290-a16c-4a4d-9dd2-b526d0dd4370"
                 }
               ],
-              "body": "{\n  \"sessionId\": \"f3c00502-256d-4693-b1b3-7dbd7eb64ca9\",\n  \"audienceId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"testPlanId\": \"6ba7b810-9dad-11d1-80b4-00c04fd430c8\",\n  \"sessionParticipant\": {\n    \"participantId\": \"41f72104-5f84-44fa-a16a-03f575159611\",\n    \"demographicsInfo\": [\n      {\n        \"id\": \"3f1b8c2e-9a44-4c3d-b8b7-1a7f4c0a9d21\",\n        \"code\": \"GENDER\",\n        \"label\": \"What is your gender?\",\n        \"value\": \"Male\",\n        \"type\": \"DEMOGRAPHIC_QUESTION_TYPE_SINGLE\"\n      },\n      {\n        \"id\": \"3f1b8c2e-9a44-4c3d-b8b7-1a7f4c0a9d21\",\n        \"code\": \"GENDER\",\n        \"label\": \"What is your gender?\",\n        \"value\": \"Male\",\n        \"type\": \"DEMOGRAPHIC_QUESTION_TYPE_SINGLE\"\n      }\n    ]\n  },\n  \"taskGroups\": [\n    {\n      \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"type\": \"QX_SCORE\",\n      \"response\": {\n        \"score\": 85\n      }\n    },\n    {\n      \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"type\": \"QX_SCORE\",\n      \"response\": {\n        \"score\": 85\n      }\n    }\n  ],\n  \"tasks\": [\n    {\n      \"uuid\": \"12debc51-0948-4d2e-9abe-9844ddd5c5ff\",\n      \"text\": \"Rate Website A\",\n      \"type\": \"RATING_SCALE\",\n      \"response\": {\n        \"startTimeMs\": 15000,\n        \"endTimeMs\": 20000,\n        \"skipped\": false,\n        \"answer\": {\n          \"blank\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ratingScale\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"multipleChoice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rankOrder\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"written\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"figma\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"matrix\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"uuid\": \"12debc51-0948-4d2e-9abe-9844ddd5c5ff\",\n      \"text\": \"Rate Website A\",\n      \"type\": \"RATING_SCALE\",\n      \"response\": {\n        \"startTimeMs\": 15000,\n        \"endTimeMs\": 20000,\n        \"skipped\": false,\n        \"answer\": {\n          \"blank\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"ratingScale\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"multipleChoice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nps\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rankOrder\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"written\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"figma\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"matrix\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f73f865e-3f5c-4fff-b099-3d56ecab23bf",
-              "name": "Missing or invalid access token.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v3",
-                    "sessionResults",
-                    ":sessionId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "882beb71-e54a-4f88-af5a-3610be101f4a",
-              "name": "Session not found.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v3",
-                    "sessionResults",
-                    ":sessionId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "68312cee-82c2-4e9c-ab42-277ca729ccce",
-              "name": "Too many requests. Maximum of 10 requests per minute.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "v3",
-                    "sessionResults",
-                    ":sessionId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<uuid>",
-                      "key": "sessionId",
-                      "description": "(Required) ID of the session."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Too Many Requests",
-              "code": 429,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
+              "id": "6dd6ed2d-f0a2-4ff2-ba42-1b8be9e918e5",
+              "createdAt": "2026-10-21T20:17:06.000Z",
+              "updatedAt": "2026-10-21T20:17:06.000Z",
+              "uid": "35240-6dd6ed2d-f0a2-4ff2-ba42-1b8be9e918e5"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "018371ab-1e6e-4878-8930-fad47640d754",
+          "createdAt": "2026-10-21T20:17:06.000Z",
+          "updatedAt": "2026-10-21T20:17:06.000Z",
+          "uid": "35240-018371ab-1e6e-4878-8930-fad47640d754"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "//api.use2.usertesting.com/usertesting/api",
-      "key": "baseUrl"
+      "id": "d60fde6e-f940-48a1-b5cb-4b43afebc6c3",
+      "createdAt": "2026-10-21T20:17:06.000Z",
+      "updatedAt": "2026-10-21T20:17:06.000Z",
+      "uid": "35240-d60fde6e-f940-48a1-b5cb-4b43afebc6c3"
     }
   ],
   "auth": {
@@ -689,17 +748,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "a899a1d6-d4e1-432d-8451-5bf572fc6b7c",
-    "name": "Integrations (v1) Clip General Session Data API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.use2.usertesting.com"
     }
-  }
+  ]
 }

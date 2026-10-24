@@ -1,333 +1,327 @@
 {
+  "info": {
+    "_postman_id": "264bc1b4-5fbf-4920-9b09-d1efc4f5f36d",
+    "name": "Integrations (v1) Session API",
+    "description": "API documentation for the legacy UTZ Integrations service (v1).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T20:17:19.000Z",
+    "updatedAt": "2026-10-21T20:17:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-264bc1b4-5fbf-4920-9b09-d1efc4f5f36d"
+  },
   "item": [
     {
-      "id": "fc1e1f12-6828-4c9e-bd2a-e0301b6d7619",
-      "name": "Session",
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
+      "name": "v1",
       "item": [
         {
-          "id": "226c27b4-1e9c-4c10-bc49-240873d9f44c",
-          "name": "Retrieve session metadata",
-          "request": {
-            "name": "Retrieve session metadata",
-            "description": {
-              "content": "Returns session metadata. \n\nA session is an individual participant taking a test (also known as a launched study).",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "v1",
-                "session",
-                ":sessionUuid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "sessionUuid",
-                  "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "session",
+          "item": [
             {
-              "id": "c95032a5-cb37-4a9c-bd96-b618801e4578",
-              "name": "OK",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "session",
-                    ":sessionUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "sessionUuid",
-                      "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{sessionUuid}",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Retrieve session metadata",
+                  "id": "a9c571da-c9ea-44db-a072-f8d18a80faba",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "session",
+                        ":sessionUuid"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f7805e1f-3a08-4208-9345-82c539eb230e",
+                          "key": "sessionUuid",
+                          "value": "<string>",
+                          "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
+                        }
+                      ]
+                    },
+                    "description": "Returns session metadata.\n\nA session is an individual participant taking a test (also known as a launched study)."
+                  },
+                  "response": [
+                    {
+                      "id": "83b74d0c-33f7-4a09-8189-0e5da80055a5",
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "session",
+                            ":sessionUuid"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sessionUuid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"duration\": \"<number>\",\n  \"notes\": \"<string>\",\n  \"securePoster\": \"<string>\",\n  \"sequenceNumber\": \"<integer>\",\n  \"sessionId\": \"<string>\",\n  \"stateUpdatedAt\": \"<dateTime>\",\n  \"title\": \"<string>\",\n  \"uid\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:17:20.000Z",
+                      "updatedAt": "2026-10-21T20:17:20.000Z",
+                      "uid": "35240-83b74d0c-33f7-4a09-8189-0e5da80055a5"
+                    },
+                    {
+                      "id": "cf8cd9af-59ca-484f-b3fc-88e0ee382729",
+                      "name": "Bad Request",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "session",
+                            ":sessionUuid"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sessionUuid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:17:20.000Z",
+                      "updatedAt": "2026-10-21T20:17:20.000Z",
+                      "uid": "35240-cf8cd9af-59ca-484f-b3fc-88e0ee382729"
+                    },
+                    {
+                      "id": "7faccce1-0f8e-4c6c-a37a-9d3515a26172",
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "session",
+                            ":sessionUuid"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sessionUuid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:17:20.000Z",
+                      "updatedAt": "2026-10-21T20:17:20.000Z",
+                      "uid": "35240-7faccce1-0f8e-4c6c-a37a-9d3515a26172"
+                    },
+                    {
+                      "id": "de2197ad-8691-45f0-8e3b-dcfc09d73d00",
+                      "name": "Not Found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "session",
+                            ":sessionUuid"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sessionUuid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:17:20.000Z",
+                      "updatedAt": "2026-10-21T20:17:20.000Z",
+                      "uid": "35240-de2197ad-8691-45f0-8e3b-dcfc09d73d00"
+                    },
+                    {
+                      "id": "6b40d28b-458f-4482-89d2-93daca52115a",
+                      "name": "Internal Server Error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/session/:sessionUuid",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "session",
+                            ":sessionUuid"
+                          ],
+                          "variable": [
+                            {
+                              "key": "sessionUuid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errorCode\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T20:17:20.000Z",
+                      "updatedAt": "2026-10-21T20:17:20.000Z",
+                      "uid": "35240-6b40d28b-458f-4482-89d2-93daca52115a"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T20:17:20.000Z",
+                  "updatedAt": "2026-10-21T20:17:20.000Z",
+                  "uid": "35240-a9c571da-c9ea-44db-a072-f8d18a80faba"
                 }
               ],
-              "body": "{\n  \"duration\": 245.5,\n  \"notes\": \"Participant hesitated at checkout.\",\n  \"securePoster\": \"https://cdn.usertesting.com/posters/session_123.jpg\",\n  \"sequenceNumber\": 1,\n  \"sessionId\": \"15280\",\n  \"stateUpdatedAt\": \"2024-05-01T15:01:07Z\",\n  \"title\": \"Participant 1 Session\",\n  \"uid\": \"3339d946-3b60-4f09-8433-a2a7598d5d26\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "970ddc6d-dd79-4f08-aa76-c6f6b5c324b5",
-              "name": "Bad Request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "session",
-                    ":sessionUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "sessionUuid",
-                      "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "35494024-4d3b-47d4-b052-9320177baf45",
-              "name": "Unauthorized",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "session",
-                    ":sessionUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "sessionUuid",
-                      "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dbbb6478-70b0-4538-8aeb-41db8532fb9b",
-              "name": "Not Found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "session",
-                    ":sessionUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "sessionUuid",
-                      "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "de156a88-1da0-4af5-b621-97a0f6e22e92",
-              "name": "Internal Server Error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "v1",
-                    "session",
-                    ":sessionUuid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "sessionUuid",
-                      "description": "(Required) [UUID of the session](https://developer.usertesting.com/v1.0/docs/how-to-obtain-uuids-for-api-requests#session-uuids) you want to obtain information for."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errorCode\": \"BAD_REQUEST\",\n  \"errorMessage\": \"Not a valid UUID\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "6b56b605-82a1-4e51-91b1-eb3deb785414",
+              "createdAt": "2026-10-21T20:17:20.000Z",
+              "updatedAt": "2026-10-21T20:17:20.000Z",
+              "uid": "35240-6b56b605-82a1-4e51-91b1-eb3deb785414"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "4d2b3bc5-b115-497d-9408-ed0330d8da40",
+          "createdAt": "2026-10-21T20:17:20.000Z",
+          "updatedAt": "2026-10-21T20:17:20.000Z",
+          "uid": "35240-4d2b3bc5-b115-497d-9408-ed0330d8da40"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "//api.use2.usertesting.com/usertesting/api",
-      "key": "baseUrl"
+      "id": "b5b37e65-71eb-4fa4-a669-8cfa38bf2735",
+      "createdAt": "2026-10-21T20:17:20.000Z",
+      "updatedAt": "2026-10-21T20:17:20.000Z",
+      "uid": "35240-b5b37e65-71eb-4fa4-a669-8cfa38bf2735"
     }
   ],
   "auth": {
@@ -335,17 +329,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "9359b012-0310-49db-952a-4892d97a6fdb",
-    "name": "Integrations (v1) Clip Session API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "API documentation for the legacy UTZ Integrations service (v1).\n\nThis API enables partners and external applications to retrieve and embed UserTesting content, including clips, sessions, and highlight reels, and to access study and workspace metadata. Responses are designed to support rich previews and embedded playback experiences in third-party products.\n\nEndpoints require bearer token authentication and return standard HTTP error payloads for unauthorized or invalid requests.\n\n**Note**: This is a revised version of the original OpenAPI specification file. The original file can be found [here](https://github.com/UserTestingEnterprise/integrations/blob/main/docs/swagger.json).\n\nContact Support:\n Name: UserTesting Support\n Email: support@usertesting.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "//api.use2.usertesting.com/usertesting/api"
     }
-  }
+  ]
 }
